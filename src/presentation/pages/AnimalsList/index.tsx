@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView, Text, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,12 +10,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AnimalsList: React.FC = () => (
+const AnimalsList: React.FC = () => {
+  return(
   <SafeAreaView style={styles.container}>
     <Text data-test="welcome-text"
     style={styles.welcome}>Lista de animais!</Text>
   </SafeAreaView>
-);
+)};
 
 export default AnimalsList;
 
