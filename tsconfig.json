@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "CommonJS",
+    "jsx": "react-native",
+    "lib": ["es6"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "es6",
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+
+  },
+  "exclude": [
+    "node_modules",
+    "node_modules/react-native-draggable-flatlist/*",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+}
