@@ -2,10 +2,11 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { enableScreens } from 'react-native-screens';
 import AnimalsList from './presentation/pages/AnimalsList';
 import Randomize from './presentation/pages/Randomize';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+enableScreens();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
