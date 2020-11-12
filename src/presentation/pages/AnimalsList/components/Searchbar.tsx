@@ -1,7 +1,5 @@
 import React, {
-  ElementRef,
   forwardRef,
-  ReactElement,
   useCallback,
   useContext,
   useImperativeHandle,
@@ -14,7 +12,7 @@ import theme, { IColors } from '../../../styles/theme';
 interface IProps {
   initialValue: string;
   onSearch: (text: string) => void;
-  placeholder?: string
+  placeholder?: string;
 }
 
 const Searchbar = forwardRef((props: IProps, ref) => {
@@ -79,7 +77,7 @@ const Container = styled.View`
   flex-direction: row;
   align-items: center;
   background-color: ${(props: ContainerProps) => props.theme.white1};
-  width: 90%;
+  align-self: stretch;
   border-radius: 16px;
   margin: 0px 16px 0px;
   padding: 9px 13px 9px 13px;

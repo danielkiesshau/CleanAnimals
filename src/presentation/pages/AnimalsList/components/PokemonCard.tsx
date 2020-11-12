@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Text } from 'react-native';
+import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
+import { AnimalsNavigationProps } from '..';
 import { getTypeColor } from '../../../../data/services/utils/pokeApiUtils';
 import Pokemon from '../../../../domain/models/Pokemon';
 import Label from '../../../components/Label';
@@ -9,12 +10,17 @@ import theme, { IColors } from '../../../styles/theme';
 
 interface IProps {
   pokemon: Pokemon;
+  onPress: any;
 }
 
 export default function PokemonCard(props: IProps) {
   const themeContext: IColors = useContext(theme);
   return (
-    <Container theme={themeContext}>
+    <Container
+      onPress={(event) => {
+        props.onPress(event, props.pokemon);
+      }}
+      theme={themeContext}>
       <Image
         source={{
           uri: props.pokemon.image,
@@ -39,8 +45,7 @@ export default function PokemonCard(props: IProps) {
     </Container>
   );
 }
-
-const Container = styled.View`
+const Container = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   height: 70px;
@@ -67,7 +72,6 @@ const ContainerTypes = styled.View`
   flex-direction: row;
   align-items: center;
 `;
-
 
 const LabelType = styled(Label)`
   margin: 0px 6px 0px 0px;

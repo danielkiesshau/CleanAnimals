@@ -1,11 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import Pokemon from '../../../domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
 import theme, { IColors } from '../../styles/theme';
@@ -16,17 +10,9 @@ import AnimalsHttp from '../../../domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard from './components/PokemonCard';
 import MockAnimalsHttp from '../../../data/services/MockAnimalsHttp';
-
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../..';
 const FlatListWLoad = withLoading(FlatList);
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    paddingHorizontal: 20,
-  },
-});
 
 const AnimalsList = (props: IProps) => {
   const searchBarRef = useRef();
@@ -53,15 +39,29 @@ const AnimalsList = (props: IProps) => {
     loadPage();
   }, [page]);
 
-  const renderItem = useCallback(({ item }) => {
-    return (
-      <PokemonCard
-        data-test="animal-list-item"
-        pokemon={item}
-        key={item.name}
-      />
-    );
-  }, []);
+  const onPress = useCallback(
+    (event, pokemon: Pokemon) => {
+      event.persist();
+      props.navigation.push('DetailsPage', {
+        pokemon,
+      });
+    },
+    [props.navigation],
+  );
+
+  const renderItem = useCallback(
+    ({ item }) => {
+      return (
+        <PokemonCard
+          data-test="animal-list-item"
+          pokemon={item}
+          key={item.name}
+          onPress={onPress}
+        />
+      );
+    },
+    [onPress],
+  );
 
   const keyExtractor = useCallback((item: Pokemon) => {
     return item.id;
@@ -85,12 +85,12 @@ const AnimalsList = (props: IProps) => {
   const onRefresh = useCallback(() => {
     () => {
       searchBarRef.current.resetInput();
-      loadPage();
+      setPage(0);
     };
   }, [searchBarRef, loadPage]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <StyledSafeArea>
       <StyledList
         data-test="animals-list"
         data={searchData}
@@ -126,14 +126,21 @@ const AnimalsList = (props: IProps) => {
           onSearch={filterList}
         />
       </ContainerSearchBar>
-    </SafeAreaView>
+    </StyledSafeArea>
   );
 };
 
-type IProps = {
+export type AnimalsNavigationProps = StackNavigationProp<
+  RootStackParamList,
+  'AnimalList'
+>;
+
+interface IProps {
   data: Pokemon[];
   client: AnimalsHttp;
-};
+  pokemon: Pokemon;
+  navigation: AnimalsNavigationProps;
+}
 
 AnimalsList.defaultProps = {
   data: [],
@@ -155,9 +162,15 @@ const StyledList = styled(FlatListWLoad).attrs(() => ({
 const ContainerSearchBar = styled.View`
   width: 100%;
   position: absolute;
-  top: 60px;
+  top: 8px;
 `;
 
 const PaginationLoadIcon = styled.ActivityIndicator`
   padding: 15px 0px;
+`;
+
+const StyledSafeArea = styled.SafeAreaView`
+  align-items: center;
+  width: 100%;
+  height: 100%;
 `;

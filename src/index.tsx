@@ -2,17 +2,45 @@ import 'react-native-gesture-handler';
 import React, { useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { enableScreens } from 'react-native-screens';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Theme from './presentation/styles/theme';
+import Theme, { IColors } from './presentation/styles/theme';
 
 import AnimalsList from './presentation/pages/AnimalsList';
 import Randomize from './presentation/pages/Randomize';
+import DetailsPage from './presentation/pages/DetailsPage';
+import Pokemon from './domain/models/Pokemon';
 
 enableScreens();
 
 const Tab = createBottomTabNavigator();
 
+export type RootStackParamList = {
+  AnimalList: undefined;
+  DetailsPage: {
+    pokemon: Pokemon;
+  };
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
+
+const HomePageStack = () => {
+  const themePalette: IColors = useContext(Theme);
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          color: themePalette.black,
+        },
+        headerTintColor: themePalette.primary,
+        headerBackTitle: 'Back',
+      }}>
+      <Stack.Screen name="AnimalList" component={AnimalsList} />
+      <Stack.Screen name="DetailsPage" component={DetailsPage} />
+    </Stack.Navigator>
+  );
+};
 export default function App() {
   const theme = useContext(Theme);
   return (
@@ -41,7 +69,7 @@ export default function App() {
           }}>
           <Tab.Screen
             name="AnimalsList"
-            component={AnimalsList}
+            component={HomePageStack}
             options={{
               tabBarLabel: '',
             }}

@@ -18,8 +18,6 @@ export default function Label(props: IProps) {
     word = capitalize(word);
   }
 
-  console.log('FONT', props.customColor);
-
   const styles = [
     props.style,
     {
