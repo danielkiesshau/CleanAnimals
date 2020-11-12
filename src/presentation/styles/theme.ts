@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
 const themes = {
   light: {
@@ -12,10 +12,24 @@ const themes = {
     gray2: '#A8A8A8',
     gray3: '#0000004D',
     statusColors: {
-      blue: '#F21D1D80'
-    }
-  }
+      blue: '#F21D1D80',
+    },
+    shadow: '#0000002E',
+  },
+};
+export default createContext(themes);
+export type IColors = typeof themes.light;
+
+export enum EColors {
+  primary = 'primary',
+  lightPrimary = 'lightPrimary',
+  secondary = 'secondary',
+  white1 = 'white1',
+  white2 = 'white2',
+  black = 'black',
+  gray1 = 'gray1',
+  gray2 = 'gray2',
+  gray3 = 'gray3',
+  statusColors = 'statusColors',
+  shadow = 'shadow',
 }
-const contextTheme = createContext(themes)
-export default contextTheme
-export type ITheme = typeof themes
