@@ -21,19 +21,23 @@ const AnimalsList = (props: IProps) => {
   const [data, setData] = React.useState(props.data);
   const [searchData, setSearchData] = React.useState(props.data);
   const [loading, setLoading] = React.useState(true);
+  const [isRefreshing, setRefreshing] = React.useState(false);
   const [isPaginating, setPaginating] = React.useState(false);
   const [isSearching, setSearching] = React.useState(false);
   const [page, setPage] = React.useState(1);
 
-  const loadPage = useCallback(async () => {
-    const result = await client.getAnimals(page, 25);
-
-    const newData = page > 1 ? [...data, ...result] : result;
-    setData(newData);
-    setSearchData(newData);
-    setLoading(false);
-    setPaginating(false);
-  }, [client, data, page]);
+  const loadPage = useCallback(
+    async (forcePage?: number) => {
+      const result = await client.getAnimals(forcePage || page, 25);
+      const newData = page > 1 ? [...data, ...result] : result;
+      setData(newData);
+      setSearchData(newData);
+      setLoading(false);
+      setPaginating(false);
+      setRefreshing(false);
+    },
+    [client, data, page],
+  );
 
   useEffect(() => {
     loadPage();
@@ -42,11 +46,13 @@ const AnimalsList = (props: IProps) => {
   const onPress = useCallback(
     (event, pokemon: Pokemon) => {
       event.persist();
+
       props.navigation.push('DetailsPage', {
         pokemon,
+        pokemons: data,
       });
     },
-    [props.navigation],
+    [props.navigation, data],
   );
 
   const renderItem = useCallback(
@@ -83,11 +89,10 @@ const AnimalsList = (props: IProps) => {
   );
 
   const onRefresh = useCallback(() => {
-    () => {
-      searchBarRef.current.resetInput();
-      setPage(0);
-    };
-  }, [searchBarRef, loadPage]);
+    setRefreshing(true);
+    searchBarRef.current.resetInput();
+    loadPage(1);
+  }, [searchBarRef, loadPage, setRefreshing]);
 
   return (
     <StyledSafeArea>
@@ -99,7 +104,7 @@ const AnimalsList = (props: IProps) => {
         refreshControl={
           <RefreshControl
             tintColor={themePalette.primary}
-            refreshing={loading}
+            refreshing={isRefreshing}
             onRefresh={onRefresh}
           />
         }

@@ -17,7 +17,7 @@ export type ResultMoveRest = {
 export type PokemonRest = {
   id: string;
   name: string;
-  forms: ResultPokemonRest[];
+  forms: EvolutionsRest;
   moves: ResultMoveRest[];
   sprites: SpritesRest;
   stats: StatsRest[];
@@ -42,13 +42,28 @@ export type StatsRest = {
 
 export type SpritesRest = {
   front_default: string;
+  front_shiny: string;
 };
 
 export type MoveRest = {
   name: string;
   effect_entries: EffectEntryRest[];
+  effect_chance: string | null;
 };
 
 export type EffectEntryRest = {
   effect: string;
+};
+
+export type EvolutionsRest = {
+  chain: EvolutionRest;
+};
+
+export type EvolutionRest = {
+  evolves_to: [
+    {
+      evolves_to: EvolutionRest[];
+      species: ResultPokemonRest;
+    },
+  ];
 };

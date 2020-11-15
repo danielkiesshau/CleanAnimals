@@ -1,6 +1,7 @@
 import Pokemon, { Stats } from '../../domain/models/Pokemon';
 import AnimalsHttp from '../../domain/services/AnimalsHttp';
 import {
+  EvolutionsRest,
   MoveRest,
   PokemonRest,
   ResultMoveRest,
@@ -9,8 +10,15 @@ import {
   TypeRest,
 } from '../../domain/services/pokeApI/types';
 import HttpClient from '../../infra/http/HttpClient';
-import { getRestResponse } from './utils/pokeApiUtils';
+import { getRandomInt } from '../../utils/numberUtils';
+import { dashToCamelCase } from '../../utils/stringUtils';
+import {
+  formatMoveDescription,
+  getRestResponse,
+  mapEvolutionsMap,
+} from './utils/pokeApiUtils';
 
+const MAX_MOVES = 5;
 export default class PokemonHttpService implements AnimalsHttp {
   animals: Pokemon[];
   client: HttpClient;
@@ -48,8 +56,10 @@ export default class PokemonHttpService implements AnimalsHttp {
     );
   }
 
-  async getAnimal(url: string) {
-    const response = await getRestResponse(this.client, url);
+  async getAnimal(url?: string, id?: string) {
+    const response = await (id
+      ? this.client.get(`pokemon/${id}`)
+      : getRestResponse(this.client, url));
     const pokemonRest: PokemonRest = response.data;
 
     const moves = await this.getMoves(pokemonRest.moves);
@@ -59,41 +69,62 @@ export default class PokemonHttpService implements AnimalsHttp {
     const pokemon: Pokemon = {
       id: pokemonRest.id.toString(),
       image: pokemonRest.sprites.front_default,
+      shinyImage: pokemonRest.sprites.front_shiny,
       name: pokemonRest.name,
       moves,
       stats,
       type,
-      evolutions: pokemonRest.forms,
     };
     return pokemon;
   }
 
   async getMoves(moves: ResultMoveRest[]) {
-    const movesPromisses = [];
+    const movesPromisses: Promise<MoveResponse>[] = [];
+    let randomMin = getRandomInt(moves.length - MAX_MOVES, 0, true);
     moves.map((ability: ResultMoveRest, index) => {
-      if (index < 3) {
+      if (
+        index + MAX_MOVES >= randomMin &&
+        this.haveMaxMoves(index, randomMin, movesPromisses.length)
+      ) {
         movesPromisses.push(getRestResponse(this.client, ability.move.url));
       }
     });
-
     const movesResponses = await Promise.all(movesPromisses);
-    return movesResponses.map((r: MoveResponse) => ({
+    return movesResponses.map((r) => ({
       name: r.data.name || '',
-      description: r.data?.effect_entries[0]?.effect || '',
+      description: formatMoveDescription(
+        r.data?.effect_entries[0]?.effect,
+        r.data?.effect_chance || '',
+      ),
     }));
   }
+  haveMaxMoves = (
+    index: number,
+    randomMin: number,
+    currentLength: number,
+    maxMoves = MAX_MOVES,
+  ) => index <= randomMin && currentLength < maxMoves;
 
   getStats(statsRest: StatsRest[]) {
     const stats = new Stats();
-
     statsRest.map((r: StatsRest) => {
-      stats[r.stat.name] = r.base_stat;
+      stats[dashToCamelCase(r.stat.name)] = r.base_stat;
     });
-
     return stats;
+  }
+
+  async getEvolutions(id: string): Promise<string[]> {
+    const result: EvolutionsResponse = await this.client.get(
+      `evolution-chain/${id}`,
+    );
+
+    return mapEvolutionsMap(result.data);
   }
 }
 
 interface MoveResponse {
   data: MoveRest;
+}
+interface EvolutionsResponse {
+  data: EvolutionsRest;
 }

@@ -1,13 +1,12 @@
-import { ResultPokemonRest } from '../services/pokeApI/types';
-
 export default interface Pokemon {
   id: string;
   name: string;
   image: string;
+  shinyImage: string;
   type: string[];
   stats: Stats;
   moves: Move[];
-  evolutions: ResultPokemonRest[];
+  evolutions?: string[];
 }
 
 export type Move = {
@@ -16,10 +15,10 @@ export type Move = {
 };
 
 export class Stats {
-  hp: number = 0;
-  attack: number = 0;
-  defense: number = 0;
-  specialAttack: number = 0;
-  specialDefense: number = 0;
-  speed: number = 0;
+  hp: number | string = 0;
+  attack: number | string = 0;
+  defense: number | string = 0;
+  specialAttack: number | string = 0;
+  specialDefense: number | string = 0;
+  speed: number | string = 0;
 }

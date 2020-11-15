@@ -9,19 +9,17 @@ const fonts = {
   },
   t1: {
     fontSize: 12,
-    fontWeight: '400',
+    fontWeight: '500',
   },
   t2: {
     fontSize: 12,
-    fontWeight: '100',
+    fontWeight: '300',
+  },
+  icons: {
+    default: 25,
+    header: 35,
+    a: 22,
   },
 };
 
 export default fonts;
-
-export enum fontTypes {
-  h1,
-  h2,
-  t1,
-  t2,
-}

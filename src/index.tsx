@@ -11,6 +11,7 @@ import AnimalsList from './presentation/pages/AnimalsList';
 import Randomize from './presentation/pages/Randomize';
 import DetailsPage from './presentation/pages/DetailsPage';
 import Pokemon from './domain/models/Pokemon';
+import { Platform } from 'react-native';
 
 enableScreens();
 
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   AnimalList: undefined;
   DetailsPage: {
     pokemon: Pokemon;
+    pokemons: Pokemon[];
   };
 };
 
@@ -64,23 +66,12 @@ export default function App() {
             activeTintColor: theme.light.primary,
             inactiveTintColor: theme.light.lightPrimary,
             style: {
-              height: 100,
+              height: Platform.OS === 'ios' ? 90 : 60,
             },
+            showLabel: false,
           }}>
-          <Tab.Screen
-            name="AnimalsList"
-            component={HomePageStack}
-            options={{
-              tabBarLabel: '',
-            }}
-          />
-          <Tab.Screen
-            name="Randomize"
-            component={Randomize}
-            options={{
-              tabBarLabel: '',
-            }}
-          />
+          <Tab.Screen name="AnimalsList" component={HomePageStack} />
+          <Tab.Screen name="Randomize" component={Randomize} />
         </Tab.Navigator>
       </NavigationContainer>
     </Theme.Provider>
