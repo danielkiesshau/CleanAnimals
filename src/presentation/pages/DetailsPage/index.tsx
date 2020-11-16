@@ -29,6 +29,8 @@ import Section from './components/Section';
 import Stat from './components/Stat';
 import Type from './components/Type';
 
+const GET_PER_PAGINATION = 25;
+
 function DetailsPage(props: IProps) {
   let scrollPosition = useRef(0);
   let animatedOpacity = useRef(new Animated.Value(0));
@@ -37,8 +39,9 @@ function DetailsPage(props: IProps) {
 
   const themePalette: IColors = useContext(theme);
   const [showShiny, setShowShiny] = useState(false);
+  const [page, setPage] = useState(2);
   const [pokemon, setPokemon] = useState(props.route?.params?.pokemon);
-  const pokemons = useRef(props.route?.params?.pokemons);
+  const pokemons = useRef(props.route?.params?.pokemons || []);
   const [isLoading, setLoading] = useState(false);
 
   const headerButtonPressed = useCallback(
@@ -46,41 +49,30 @@ function DetailsPage(props: IProps) {
       let newPokemon: Pokemon;
       currentPointer.current += isRightButtonPressed ? 1 : -1;
 
-      if (currentPointer.current < 1) {
-        currentPointer.current = TOTAL_AVAILABLE_POKEMONS;
-      }
-
-      if (!pokemons.current[currentPointer.current]) {
-        setLoading(true);
-        setPokemon({
-          ...pokemon,
-          ...pokemonDetailLoad,
-        });
-        pokemons.current.push(
-          await props.client.getAnimal(
-            undefined,
-            (
-              currentPointer.current + (isRightButtonPressed ? 1 : 0)
-            ).toString(),
-          ),
-        );
-      }
-
       newPokemon = pokemons.current[currentPointer.current];
       props.navigation.setOptions({
         title: capitalize(newPokemon.name),
       });
-
-      setLoading(false);
       setPokemon(newPokemon);
+      if (
+        !isLoading &&
+        currentPointer.current >= (page - 1) * GET_PER_PAGINATION - 10
+      ) {
+        setLoading(true);
+        const result = await props.client.getAnimals(page, GET_PER_PAGINATION);
+        const newPage = page + 1;
+        pokemons.current = [...pokemons.current, ...result];
+        setPage(newPage);
+        setLoading(false);
+      }
     },
-    [pokemon, setPokemon, props.client, props.navigation],
+    [pokemon, setPokemon, props.client, props.navigation, isLoading],
   );
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () =>
-        pokemons.length > 0 && (
+        pokemons.current.length > 0 && (
           <HeaderButtons isLoading={isLoading} onPress={headerButtonPressed} />
         ),
     });
@@ -139,7 +131,7 @@ function DetailsPage(props: IProps) {
       backgroundColor={themePalette.white2}>
       <ImageContainer>
         <ImagePokemonWLoad
-          isLoading={isLoading}
+          isLoading={!pokemon.image}
           source={{
             uri: pokemon.image,
           }}
@@ -148,7 +140,7 @@ function DetailsPage(props: IProps) {
         <Animated.View
           style={[animated.imageContainer, animatedShinyContainer]}>
           <ImagePokemonWLoad
-            isLoading={isLoading}
+            isLoading={!pokemon.image}
             source={{
               uri: pokemon.shinyImage,
             }}
@@ -156,7 +148,7 @@ function DetailsPage(props: IProps) {
           />
         </Animated.View>
         <EyeButton
-          isLoading={isLoading}
+          isLoading={!pokemon.image}
           color={themePalette.primary}
           name={showShiny ? 'visibility-off' : 'visibility'}
           onPress={toggleShiny}

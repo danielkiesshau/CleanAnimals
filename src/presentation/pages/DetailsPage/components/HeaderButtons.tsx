@@ -13,27 +13,22 @@ export default function HeaderButtons(props: IProps) {
   const themePalette: IColors = useContext(theme);
   return (
     <Container>
+      {props.isLoading && (
+        <LoadIndicator color={themePalette.primary} size="small" />
+      )}
       <ChevronButton
-        isLoading={props.isLoading}
         name="chevron-left"
         size={fonts.icons.header}
         color={themePalette.primary}
         onPress={() => {
-          if (props.isLoading) {
-            return;
-          }
           props.onPress(false);
         }}
       />
       <ChevronButton
-        isLoading={props.isLoading}
         name="chevron-right"
         size={fonts.icons.header}
         color={themePalette.primary}
         onPress={() => {
-          if (props.isLoading) {
-            return;
-          }
           props.onPress(true);
         }}
       />
@@ -48,4 +43,8 @@ const Container = styled.View`
 
 const ChevronButton = styled(Icon)`
   opacity: ${(props) => (props.isLoading ? 0.2 : 1)};
+`;
+
+const LoadIndicator = styled.ActivityIndicator`
+  margin-right: 10px;
 `;
