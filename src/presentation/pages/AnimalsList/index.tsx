@@ -20,7 +20,7 @@ const AnimalsList = (props: IProps) => {
   const themePalette: IColors = useContext(theme);
   const [data, setData] = React.useState(props.data);
   const [searchData, setSearchData] = React.useState(props.data);
-  const [loading, setLoading] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(true);
   const [isRefreshing, setRefreshing] = React.useState(false);
   const [isPaginating, setPaginating] = React.useState(false);
   const [isSearching, setSearching] = React.useState(false);
@@ -108,8 +108,9 @@ const AnimalsList = (props: IProps) => {
             onRefresh={onRefresh}
           />
         }
-        refreshing={loading}
-        isLoading={loading}
+        progressViewOffset={1000}
+        refreshing={isLoading}
+        isLoading={isLoading}
         onEndReached={() => {
           if (!isPaginating && !isSearching) {
             setPaginating(true);
@@ -123,10 +124,14 @@ const AnimalsList = (props: IProps) => {
         }
         onEndReachedThreshold={0.1}
       />
-      <ContainerSearchBar>
+      <ContainerSearchBar isRefreshing={isRefreshing}>
         <Searchbar
+          isDisabled={isRefreshing}
+          isEditable={!isLoading}
           placeholder="Write here to search!"
-          ref={searchBarRef}
+          ref={(ref) => {
+            searchBarRef.current = ref;
+          }}
           data-test="search-bar"
           onSearch={filterList}
         />
@@ -168,6 +173,7 @@ const ContainerSearchBar = styled.View`
   width: 100%;
   position: absolute;
   top: 8px;
+  opacity: ${(props) => (props.isRefreshing ? 0.1 : 1)};
 `;
 
 const PaginationLoadIcon = styled.ActivityIndicator`

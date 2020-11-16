@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useContext, useState } from 'react';
-import { ActivityIndicator, Pressable } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../..';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
@@ -17,6 +17,17 @@ interface Props {
 const Randomize = (props: Props) => {
   const themePalette: IColors = useContext(theme);
   const [isLoading, setLoading] = useState(false);
+
+  const discoverPressed = useCallback(async () => {
+    setLoading(true);
+    const pokemon = await props.client.getRandomPokemon();
+    setLoading(false);
+    props.navigation.navigate('DetailsPage', {
+      pokemon,
+      pokemons: [],
+    });
+  }, [props.navigation, setLoading, props.client]);
+
   return (
     <Container backgroundColor={themePalette.white1}>
       <StyledLabel font={fonts.h2} color="secondary">
@@ -26,15 +37,7 @@ const Randomize = (props: Props) => {
         <Pressable
           disabled={isLoading}
           data-test="discover-button"
-          onPress={async () => {
-            setLoading(true);
-            const pokemon = await props.client.getRandomPokemon();
-            setLoading(false);
-            props.navigation.navigate('DetailsPage', {
-              pokemon,
-              pokemons: [],
-            });
-          }}>
+          onPress={discoverPressed}>
           <DiscoverLabel
             font={fonts.h1}
             color="primary"

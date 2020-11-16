@@ -13,6 +13,8 @@ interface IProps {
   initialValue: string;
   onSearch: (text: string) => void;
   placeholder?: string;
+  isDisabled?: boolean;
+  isEditable?: boolean;
 }
 
 const Searchbar = forwardRef((props: IProps, ref) => {
@@ -47,9 +49,10 @@ const Searchbar = forwardRef((props: IProps, ref) => {
   );
 
   return (
-    <Container theme={themeContext}>
+    <Container theme={themeContext} isDisabled={props.isDisabled}>
       <Icon name="search" color={themeContext.gray1} size={27} />
       <SearchText
+        editable={props.isEditable}
         placeholder={props.placeholder}
         ref={ref}
         data-test="search-input"
@@ -81,6 +84,7 @@ const Container = styled.View`
   margin: 0px 4px 0px;
   padding: 9px 13px 9px 13px;
   box-shadow: 0px 3px 6px ${(props: ContainerProps) => props.theme.shadow};
+  elevation: ${(props) => (props.isDisabled ? 0 : 2)};
 `;
 
 interface SearchProps extends TextInputProps {

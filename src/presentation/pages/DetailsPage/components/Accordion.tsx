@@ -12,7 +12,7 @@ interface IProps {
   onAccordionOpened: Function;
 }
 
-const PADDING = 20;
+const PADDING = 25;
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 export default function Accordion(props: IProps) {

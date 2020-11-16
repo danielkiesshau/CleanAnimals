@@ -30,8 +30,8 @@ import Stat from './components/Stat';
 import Type from './components/Type';
 
 function DetailsPage(props: IProps) {
-  let scrollPosition = useRef(0).current;
-  let animatedOpacity = useRef(new Animated.Value(0)).current;
+  let scrollPosition = useRef(0);
+  let animatedOpacity = useRef(new Animated.Value(0));
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
@@ -97,7 +97,7 @@ function DetailsPage(props: IProps) {
     (toValue: number) => {
       InteractionManager.runAfterInteractions(() => {
         scrollView?.scrollTo({
-          y: scrollPosition + toValue,
+          y: scrollPosition.current + toValue,
         });
       });
     },
@@ -108,7 +108,7 @@ function DetailsPage(props: IProps) {
     if (isLoading) {
       return;
     }
-    Animated.timing(animatedOpacity, {
+    Animated.timing(animatedOpacity.current, {
       toValue: !showShiny ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
@@ -119,7 +119,7 @@ function DetailsPage(props: IProps) {
 
   const animatedShinyContainer = {
     backgroundColor: themePalette.gray2,
-    opacity: animatedOpacity,
+    opacity: animatedOpacity.current,
   };
 
   return (
@@ -131,7 +131,9 @@ function DetailsPage(props: IProps) {
         }
       }}
       onScroll={({ nativeEvent }) => {
-        scrollPosition = nativeEvent.contentOffset.y;
+        if (nativeEvent.contentOffset.y > 0) {
+          scrollPosition.current = nativeEvent.contentOffset.y;
+        }
       }}
       scrollEventThrottle={16}
       backgroundColor={themePalette.white2}>
