@@ -78,8 +78,7 @@ const Container = styled.View`
   align-items: center;
   background-color: ${(props: ContainerProps) => props.theme.white1};
   align-self: stretch;
-  border-radius: 16px;
-  margin: 0px 16px 0px;
+  margin: 0px 4px 0px;
   padding: 9px 13px 9px 13px;
   box-shadow: 0px 3px 6px ${(props: ContainerProps) => props.theme.shadow};
 `;
