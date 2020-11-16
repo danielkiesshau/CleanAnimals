@@ -23,6 +23,7 @@ export type RootStackParamList = {
     pokemon: Pokemon;
     pokemons: Pokemon[];
   };
+  Randomize: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -38,7 +39,36 @@ const HomePageStack = () => {
         headerTintColor: themePalette.primary,
         headerBackTitle: 'Back',
       }}>
-      <Stack.Screen name="AnimalList" component={AnimalsList} />
+      <Stack.Screen
+        name="AnimalList"
+        component={AnimalsList}
+        options={{
+          title: 'Pokemons',
+        }}
+      />
+      <Stack.Screen name="DetailsPage" component={DetailsPage} />
+    </Stack.Navigator>
+  );
+};
+
+const RandomizeStack = () => {
+  const themePalette: IColors = useContext(Theme);
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          color: themePalette.black,
+        },
+        headerTintColor: themePalette.primary,
+        headerBackTitle: 'Back',
+      }}>
+      <Stack.Screen
+        name="Randomize"
+        component={Randomize}
+        options={{
+          title: 'Random Pokemon',
+        }}
+      />
       <Stack.Screen name="DetailsPage" component={DetailsPage} />
     </Stack.Navigator>
   );
@@ -71,7 +101,7 @@ export default function App() {
             showLabel: false,
           }}>
           <Tab.Screen name="AnimalsList" component={HomePageStack} />
-          <Tab.Screen name="Randomize" component={Randomize} />
+          <Tab.Screen name="Randomize" component={RandomizeStack} />
         </Tab.Navigator>
       </NavigationContainer>
     </Theme.Provider>

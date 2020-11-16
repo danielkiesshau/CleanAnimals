@@ -16,6 +16,7 @@ import {
   formatMoveDescription,
   getRestResponse,
   mapEvolutionsMap,
+  TOTAL_AVAILABLE_POKEMONS,
 } from './utils/pokeApiUtils';
 
 const MAX_MOVES = 5;
@@ -119,6 +120,13 @@ export default class PokemonHttpService implements AnimalsHttp {
     );
 
     return mapEvolutionsMap(result.data);
+  }
+
+  async getRandomPokemon() {
+    return this.getAnimal(
+      undefined,
+      getRandomInt(1, TOTAL_AVAILABLE_POKEMONS).toString(),
+    );
   }
 }
 

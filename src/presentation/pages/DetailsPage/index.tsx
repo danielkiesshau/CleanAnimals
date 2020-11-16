@@ -79,9 +79,10 @@ function DetailsPage(props: IProps) {
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
-      headerRight: () => (
-        <HeaderButtons isLoading={isLoading} onPress={headerButtonPressed} />
-      ),
+      headerRight: () =>
+        pokemons.length > 0 && (
+          <HeaderButtons isLoading={isLoading} onPress={headerButtonPressed} />
+        ),
     });
   }, [props.navigation, isLoading, headerButtonPressed]);
 
