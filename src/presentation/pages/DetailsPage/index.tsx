@@ -15,7 +15,6 @@ import styled from 'styled-components/native';
 import { RootStackParamList } from '../../..';
 import pokemonDetailLoad from '../../../data/mock/pokemonDetailLoad';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
-import { TOTAL_AVAILABLE_POKEMONS } from '../../../data/services/utils/pokeApiUtils';
 import Pokemon from '../../../domain/models/Pokemon';
 import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
 import { capitalize } from '../../../utils/stringUtils';
@@ -51,9 +50,13 @@ function DetailsPage(props: IProps) {
 
       newPokemon = pokemons.current[currentPointer.current];
       props.navigation.setOptions({
-        title: capitalize(newPokemon.name),
+        title: capitalize(newPokemon?.name || pokemon.name),
       });
-      setPokemon(newPokemon);
+
+      setPokemon(
+        !newPokemon ? { ...pokemon, ...pokemonDetailLoad } : newPokemon,
+      );
+
       if (
         !isLoading &&
         currentPointer.current >= (page - 1) * GET_PER_PAGINATION - 10
@@ -66,7 +69,7 @@ function DetailsPage(props: IProps) {
         setLoading(false);
       }
     },
-    [pokemon, setPokemon, props.client, props.navigation, isLoading],
+    [setPokemon, props.client, props.navigation, isLoading, page, pokemon],
   );
 
   useLayoutEffect(() => {
@@ -76,7 +79,7 @@ function DetailsPage(props: IProps) {
           <HeaderButtons isLoading={isLoading} onPress={headerButtonPressed} />
         ),
     });
-  }, [props.navigation, isLoading, headerButtonPressed]);
+  }, [props.navigation, isLoading, headerButtonPressed, pokemon]);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -86,11 +89,14 @@ function DetailsPage(props: IProps) {
   }, [props.route, props.navigation, props]);
 
   const onAccordionOpened = useCallback(
-    (toValue: number) => {
+    (toValue: number, isOpening: boolean, positionY: number) => {
       InteractionManager.runAfterInteractions(() => {
-        scrollView?.scrollTo({
-          y: scrollPosition.current + toValue,
-        });
+        const outOfFOV = positionY > scrollPosition.current;
+        if (isOpening && outOfFOV) {
+          scrollView?.scrollTo({
+            y: scrollPosition.current + toValue,
+          });
+        }
       });
     },
     [scrollView, scrollPosition],

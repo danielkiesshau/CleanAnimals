@@ -16,6 +16,7 @@ const PADDING = 25;
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 export default function Accordion(props: IProps) {
+  const positionY = useRef();
   const { onAccordionOpened } = props;
   const [isOpen, setOpen] = useState(false);
   const themePalette: IColors = useContext(theme);
@@ -23,7 +24,11 @@ export default function Accordion(props: IProps) {
 
   useEffect(() => {
     if (isOpen) {
-      onAccordionOpened((accordionAnimations.contentHeight || 0) + PADDING);
+      onAccordionOpened(
+        (accordionAnimations.contentHeight || 0) + PADDING,
+        isOpen,
+        positionY.current,
+      );
     }
   }, [onAccordionOpened, accordionAnimations.contentHeight, isOpen]);
 
@@ -55,7 +60,10 @@ export default function Accordion(props: IProps) {
     transform: [{ rotateX: accordionAnimations.chevronAngle }],
   };
   return (
-    <View>
+    <View
+      onLayout={({ nativeEvent }) => {
+        positionY.current = nativeEvent.layout.y;
+      }}>
       <Header backgroundColor={themePalette.white2}>
         <StyledLabel autoCapitalize font={fonts.h2}>
           {props.title}
