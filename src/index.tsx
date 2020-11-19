@@ -1,17 +1,18 @@
 import 'react-native-gesture-handler';
-import React, { useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { enableScreens } from 'react-native-screens';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Theme, { IColors } from './presentation/styles/theme';
-
 import AnimalsList from './presentation/pages/AnimalsList';
 import Randomize from './presentation/pages/Randomize';
 import DetailsPage from './presentation/pages/DetailsPage';
 import Pokemon from './domain/models/Pokemon';
 import { Platform } from 'react-native';
+import styled from 'styled-components/native';
+import fonts from './presentation/styles/fonts';
 
 enableScreens();
 
@@ -29,12 +30,19 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const HomePageStack = () => {
-  const themePalette: IColors = useContext(Theme);
+  const { themePalette, isLightMode }: { themePalette: IColors } = useContext(
+    Theme,
+  );
   return (
     <Stack.Navigator
       screenOptions={{
         headerTitleStyle: {
           color: themePalette.black,
+        },
+        headerStyle: {
+          shadowOpacity: isLightMode ? 1 : 0,
+          elevation: isLightMode ? 3 : 0,
+          backgroundColor: themePalette.white1,
         },
         headerTintColor: themePalette.primary,
         headerBackTitle: 'Back',
@@ -51,13 +59,22 @@ const HomePageStack = () => {
   );
 };
 
-const RandomizeStack = () => {
-  const themePalette: IColors = useContext(Theme);
+const RandomizeStack = (props) => {
+  const {
+    themePalette,
+    toggleLightMode,
+    isLightMode,
+  }: { themePalette: IColors } = useContext(Theme);
   return (
     <Stack.Navigator
       screenOptions={{
         headerTitleStyle: {
           color: themePalette.black,
+        },
+        headerStyle: {
+          shadowOpacity: isLightMode ? 1 : 0,
+          elevation: isLightMode ? 3 : 0,
+          backgroundColor: themePalette.white1,
         },
         headerTintColor: themePalette.primary,
         headerBackTitle: 'Back',
@@ -67,16 +84,42 @@ const RandomizeStack = () => {
         component={Randomize}
         options={{
           title: 'Random Pokemon',
+          headerRight: () => (
+            <ButtonTheme
+              name="model-training"
+              size={fonts.icons.default}
+              color={themePalette.primary}
+              onPress={toggleLightMode}
+            />
+          ),
         }}
       />
       <Stack.Screen name="DetailsPage" component={DetailsPage} />
     </Stack.Navigator>
   );
 };
+
+const ButtonTheme = styled(Icon)`
+  margin-right: 20px;
+`;
+
 export default function App() {
-  const theme = useContext(Theme);
+  const { themePalette } = useContext(Theme);
+
+  const [isLightMode, setLightMode] = useState(true);
+  const themeMode = isLightMode ? 'light' : 'dark';
+
+  const toggleLightMode = useCallback(() => {
+    setLightMode(!isLightMode);
+  }, [isLightMode, setLightMode]);
+
   return (
-    <Theme.Provider value={theme.light}>
+    <Theme.Provider
+      value={{
+        isLightMode,
+        themePalette: themePalette[themeMode],
+        toggleLightMode,
+      }}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -93,10 +136,14 @@ export default function App() {
             },
           })}
           tabBarOptions={{
-            activeTintColor: theme.light.primary,
-            inactiveTintColor: theme.light.lightPrimary,
+            tabStyle: {
+              backgroundColor: themePalette[themeMode].white1,
+            },
+            activeTintColor: themePalette[themeMode].primary,
+            inactiveTintColor: themePalette[themeMode].lightPrimary,
             style: {
               height: Platform.OS === 'ios' ? 90 : 60,
+              backgroundColor: themePalette[themeMode].white1,
             },
             showLabel: false,
           }}>

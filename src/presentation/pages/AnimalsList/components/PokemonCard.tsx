@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
-import { AnimalsNavigationProps } from '..';
 import { getTypeColor } from '../../../../data/services/utils/pokeApiUtils';
 import Pokemon from '../../../../domain/models/Pokemon';
 import Label from '../../../components/Label';
+import withPreventDoubleClick from '../../../HOCs/withPreventDoubleClick';
 import fonts from '../../../styles/fonts';
 import theme, { IColors } from '../../../styles/theme';
 
@@ -12,15 +12,15 @@ interface IProps {
   pokemon: Pokemon;
   onPress: any;
 }
-
+const SinglePress = withPreventDoubleClick(Pressable);
 export default function PokemonCard(props: IProps) {
-  const themeContext: IColors = useContext(theme);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   return (
     <Container
       onPress={(event) => {
         props.onPress(event, props.pokemon);
       }}
-      theme={themeContext}>
+      theme={themePalette}>
       <Image
         source={{
           uri: props.pokemon.image,
@@ -28,7 +28,7 @@ export default function PokemonCard(props: IProps) {
         resizeMode="cover"
       />
       <ContainerLabels>
-        <Label autoCapitalize font={fonts.h1}>
+        <Label customColor={themePalette.black} autoCapitalize font={fonts.h1}>
           {props.pokemon.name}
         </Label>
         <ContainerTypes>
@@ -45,7 +45,7 @@ export default function PokemonCard(props: IProps) {
     </Container>
   );
 }
-const Container = styled(Pressable)`
+const Container = styled(SinglePress)`
   flex-direction: row;
   align-items: center;
   height: 70px;

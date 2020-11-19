@@ -36,7 +36,9 @@ function DetailsPage(props: IProps) {
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
-  const themePalette: IColors = useContext(theme);
+  const { themePalette, isLightMode }: { themePalette: IColors } = useContext(
+    theme,
+  );
   const [showShiny, setShowShiny] = useState(false);
   const [page, setPage] = useState(2);
   const [pokemon, setPokemon] = useState(props.route?.params?.pokemon);
@@ -135,7 +137,7 @@ function DetailsPage(props: IProps) {
       }}
       scrollEventThrottle={16}
       backgroundColor={themePalette.white2}>
-      <ImageContainer>
+      <ImageContainer backgroundColor={themePalette.white1}>
         <ImagePokemonWLoad
           isLoading={!pokemon.image}
           source={{

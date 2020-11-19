@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Animated, View, StyleSheet } from 'react-native';
+import { Animated, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import Label from '../../../components/Label';
@@ -19,7 +19,7 @@ export default function Accordion(props: IProps) {
   const positionY = useRef();
   const { onAccordionOpened } = props;
   const [isOpen, setOpen] = useState(false);
-  const themePalette: IColors = useContext(theme);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   const accordionAnimations = useAccordionAnimation();
 
   useEffect(() => {
@@ -53,23 +53,23 @@ export default function Accordion(props: IProps) {
       : accordionAnimations.animatedHeight,
     padding: accordionAnimations.animatedPadding,
     opacity: accordionAnimations.animatedOpacity,
-    backgroundColor: themePalette.white3,
+    backgroundColor: themePalette.white2,
   };
 
   const animtedChevronStyle = {
     transform: [{ rotateX: accordionAnimations.chevronAngle }],
   };
   return (
-    <View
+    <Pressable
+      onPress={toggleAccordion}
       onLayout={({ nativeEvent }) => {
         positionY.current = nativeEvent.layout.y;
       }}>
-      <Header backgroundColor={themePalette.white2}>
+      <Header backgroundColor={themePalette.white3}>
         <StyledLabel autoCapitalize font={fonts.h2}>
           {props.title}
         </StyledLabel>
         <AnimatedIcon
-          onPress={toggleAccordion}
           color={themePalette.primary}
           name="expand-more"
           size={fonts.icons.default}
@@ -81,7 +81,7 @@ export default function Accordion(props: IProps) {
         onLayout={onContentLayout}>
         {props.children}
       </Animated.View>
-    </View>
+    </Pressable>
   );
 }
 

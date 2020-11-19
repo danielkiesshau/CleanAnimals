@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const Searchbar = forwardRef((props: IProps, ref) => {
-  const themeContext: IColors = useContext(theme);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   const [search, setSearch] = React.useState(props.initialValue);
 
   useImperativeHandle(ref, () => ({
@@ -43,20 +43,21 @@ const Searchbar = forwardRef((props: IProps, ref) => {
         props.onSearch('');
       }}
       name="highlight-off"
-      color={themeContext.primary}
+      color={themePalette.primary}
       size={24}
     />
   );
 
   return (
-    <Container theme={themeContext} isDisabled={props.isDisabled}>
-      <Icon name="search" color={themeContext.gray1} size={27} />
+    <Container theme={themePalette} isDisabled={props.isDisabled}>
+      <Icon name="search" color={themePalette.gray1} size={27} />
       <SearchText
         editable={props.isEditable}
         placeholder={props.placeholder}
+        placeholderTextColor={themePalette.gray3}
         ref={ref}
         data-test="search-input"
-        theme={themeContext}
+        theme={themePalette}
         value={search}
         onChangeText={onSearch}
         autoCapitalize="none"
@@ -79,7 +80,7 @@ interface ContainerProps extends ViewProps {
 const Container = styled.View`
   flex-direction: row;
   align-items: center;
-  background-color: ${(props: ContainerProps) => props.theme.white1};
+  background-color: ${(props: ContainerProps) => props.theme.white2};
   align-self: stretch;
   margin: 0px 4px 0px;
   padding: 9px 13px 9px 13px;

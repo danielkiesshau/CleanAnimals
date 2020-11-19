@@ -12,7 +12,7 @@ interface IProps extends TextProps {
 }
 
 export default function Label(props: IProps) {
-  const themePalette = useContext(theme);
+  const { themePalette } = useContext(theme);
   let word: string = props.children;
   if (word && props.autoCapitalize) {
     word = capitalize(word);

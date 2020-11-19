@@ -8,14 +8,17 @@ import Label from '../../components/Label';
 import fonts from '../../styles/fonts';
 import theme, { IColors } from '../../styles/theme';
 import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
+import withPreventDoubleClick from '../../HOCs/withPreventDoubleClick';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
   client: PokemonHttpService;
 }
 
+const SinglePress = withPreventDoubleClick(Pressable);
+
 const Randomize = (props: Props) => {
-  const themePalette: IColors = useContext(theme);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   const [isLoading, setLoading] = useState(false);
 
   const discoverPressed = useCallback(async () => {
@@ -30,21 +33,21 @@ const Randomize = (props: Props) => {
 
   return (
     <Container backgroundColor={themePalette.white1}>
-      <StyledLabel font={fonts.h2} color="secondary">
+      <StyledLabel font={fonts.h2} customColor={themePalette.black}>
         Press the button to pick a random Pokemon!
       </StyledLabel>
       <ContainerButton>
-        <Pressable
+        <SinglePress
           disabled={isLoading}
           data-test="discover-button"
           onPress={discoverPressed}>
           <DiscoverLabel
             font={fonts.h1}
-            color="primary"
+            customColor={themePalette.primary}
             opacity={isLoading ? 0.25 : 1}>
             Discover a Pokemon!
           </DiscoverLabel>
-        </Pressable>
+        </SinglePress>
         {isLoading && (
           <LoadIndicator color={themePalette.primary} size="small" />
         )}

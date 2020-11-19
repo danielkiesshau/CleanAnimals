@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export default function HeaderButtons(props: IProps) {
-  const themePalette: IColors = useContext(theme);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   return (
     <Container>
       {props.isLoading && (

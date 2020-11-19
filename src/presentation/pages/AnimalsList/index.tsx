@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import Pokemon from '../../../domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
@@ -16,8 +22,8 @@ const FlatListWLoad = withLoading(FlatList);
 
 const AnimalsList = (props: IProps) => {
   const searchBarRef = useRef();
-  const client = useRef(props.client).current;
-  const themePalette: IColors = useContext(theme);
+  const client = useRef(props.client);
+  const { themePalette }: { themePalette: IColors } = useContext(theme);
   const [data, setData] = React.useState(props.data);
   const [searchData, setSearchData] = React.useState(props.data);
   const [isLoading, setLoading] = React.useState(true);
@@ -28,7 +34,7 @@ const AnimalsList = (props: IProps) => {
 
   const loadPage = useCallback(
     async (forcePage?: number) => {
-      const result = await client.getAnimals(forcePage || page, 25);
+      const result = await client.current.getAnimals(forcePage || page, 25);
       const newData = page > 1 ? [...data, ...result] : result;
       setData(newData);
       setSearchData(newData);
@@ -81,7 +87,7 @@ const AnimalsList = (props: IProps) => {
         return;
       }
 
-      const result = await client.getAnimalByName(text, data);
+      const result = await client.current.getAnimalByName(text, data);
       setSearching(true);
       setSearchData(result);
     },
@@ -97,6 +103,7 @@ const AnimalsList = (props: IProps) => {
   return (
     <StyledSafeArea>
       <StyledList
+        backgroundColor={themePalette.white1}
         data-test="animals-list"
         data={searchData}
         renderItem={renderItem}
@@ -162,9 +169,10 @@ AnimalsList.defaultProps = {
 
 export default AnimalsList;
 
-const StyledList = styled(FlatListWLoad).attrs(() => ({
+const StyledList = styled(FlatListWLoad).attrs((props) => ({
   contentContainerStyle: {
     paddingTop: 60,
+    backgroundColor: props.backgroundColor,
   },
 }))`
   width: 100%;

@@ -5,9 +5,9 @@ import theme, { IColors } from '../styles/theme';
 
 export default function withLoading(Component) {
   return (props) => {
-    const themePalette: IColors = useContext(theme);
+    const { themePalette }: { themePalette: IColors } = useContext(theme);
     return props.isLoading ? (
-      <Container>
+      <Container backgroundColor={themePalette.white1}>
         <ActivityIndicator
           data-test="load-icon"
           color={themePalette.primary}
@@ -28,4 +28,5 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  align-self: stretch;
 `;
