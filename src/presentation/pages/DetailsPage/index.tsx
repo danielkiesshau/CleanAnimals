@@ -14,7 +14,10 @@ import styled from 'styled-components/native';
 import { RootStackParamList } from 'config/routes';
 import pokemonDetailLoad from 'data/mock/pokemonDetailLoad';
 import PokemonHttpService from 'data/services/PokemonHttpService';
-import { POKE_BASE_URL } from 'data/services/utils/pokeApiUtils';
+import {
+  POKE_BASE_URL,
+  TOTAL_AVAILABLE_POKEMONS,
+} from 'data/services/utils/pokeApiUtils';
 import Pokemon from 'domain/models/Pokemon';
 import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import { capitalize } from 'utils/stringUtils';
@@ -75,7 +78,12 @@ function DetailsPage(props: Props) {
     props.navigation.setOptions({
       headerRight: () =>
         pokemons.current.length > 0 && (
-          <HeaderButtons isLoading={isLoading} onPress={headerButtonPressed} />
+          <HeaderButtons
+            isLoading={isLoading}
+            onPress={headerButtonPressed}
+            leftDisabled={currentPointer.current === 1}
+            rightDisabled={currentPointer.current === TOTAL_AVAILABLE_POKEMONS}
+          />
         ),
     });
   }, [props.navigation, isLoading, headerButtonPressed, pokemon]);

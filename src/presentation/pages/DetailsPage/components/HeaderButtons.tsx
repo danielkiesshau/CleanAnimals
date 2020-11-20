@@ -7,6 +7,8 @@ import theme from 'presentation/styles/theme';
 interface Props {
   onPress: (isNextPressed: boolean) => void;
   isLoading?: boolean;
+  leftDisabled?: boolean;
+  rightDisabled?: boolean;
 }
 
 export default function HeaderButtons(props: Props) {
@@ -17,19 +19,25 @@ export default function HeaderButtons(props: Props) {
         <LoadIndicator color={themePalette.primary} size="small" />
       )}
       <ChevronButton
+        isDisabled={props.leftDisabled}
         name="chevron-left"
         size={fonts.icons.header}
         color={themePalette.primary}
         onPress={() => {
-          props.onPress(false);
+          if (!props.leftDisabled) {
+            props.onPress(false);
+          }
         }}
       />
       <ChevronButton
+        isDisabled={props.rightDisabled}
         name="chevron-right"
         size={fonts.icons.header}
         color={themePalette.primary}
         onPress={() => {
-          props.onPress(true);
+          if (!props.rightDisabled) {
+            props.onPress(true);
+          }
         }}
       />
     </Container>
@@ -42,7 +50,7 @@ const Container = styled.View`
 `;
 
 const ChevronButton = styled(Icon)`
-  opacity: ${(props) => (props.isLoading ? 0.2 : 1)};
+  opacity: ${(props) => (props.isDisabled ? 0.2 : 1)};
 `;
 
 const LoadIndicator = styled.ActivityIndicator`
