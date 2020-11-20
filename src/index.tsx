@@ -88,7 +88,7 @@ const RandomizeStack = (props) => {
             <ButtonTheme
               name="model-training"
               size={fonts.icons.default}
-              color={themePalette.primary}
+              color={isLightMode ? themePalette.primary : themePalette.black}
               onPress={toggleLightMode}
             />
           ),

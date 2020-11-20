@@ -13,9 +13,6 @@ const themes = {
     gray2: '#0D0D0DC3',
     gray3: '#A8A8A8',
     gray4: '#1212124D',
-    statusColors: {
-      blue: '#F21D1D80',
-    },
     shadow: '#1212122E',
   },
   dark: {
@@ -25,14 +22,11 @@ const themes = {
     white1: '#222222',
     white2: '#333333',
     white3: '#444444',
-    black: '#BBBBBB',
+    black: '#FCFCFC',
     gray1: '#A8A8A8',
     gray2: '#BBBBBB',
     gray3: '#BBBBBB',
     gray4: '#A8A8A8',
-    statusColors: {
-      blue: '#F21D1D80',
-    },
     shadow: '#1212122E',
   },
 };
@@ -55,6 +49,5 @@ export enum EColors {
   gray1 = 'gray1',
   gray2 = 'gray2',
   gray3 = 'gray3',
-  statusColors = 'statusColors',
   shadow = 'shadow',
 }
