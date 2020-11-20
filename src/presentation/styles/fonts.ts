@@ -22,4 +22,9 @@ const fonts = {
   },
 };
 
+export type FontType = {
+  fontSize: number;
+  fontWeight: any;
+};
+
 export default fonts;

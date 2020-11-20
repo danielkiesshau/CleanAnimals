@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import fonts from '../../../styles/fonts';
-import theme, { IColors } from '../../../styles/theme';
+import theme, { Colors } from '../../../styles/theme';
 
-interface IProps {
+interface Props {
   onPress: (isNextPressed: boolean) => void;
   isLoading?: boolean;
 }
 
-export default function HeaderButtons(props: IProps) {
+export default function HeaderButtons(props: Props) {
   const { themePalette } = useContext(theme);
   return (
     <Container>

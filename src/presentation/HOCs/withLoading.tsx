@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import React, { useContext } from 'react';
+import { ActivityIndicator, ViewProps } from 'react-native';
 import styled from 'styled-components/native';
-import theme, { IColors } from '../styles/theme';
+import theme from '../styles/theme';
 
 export default function withLoading(Component) {
   return (props) => {
@@ -24,7 +24,11 @@ export type Loading = {
   isLoading: boolean;
 };
 
-const Container = styled.View`
+interface ContainerProps extends ViewProps {
+  backgroundColor?: string;
+}
+
+const Container = styled.View<ContainerProps>`
   flex: 1;
   justify-content: center;
   align-items: center;

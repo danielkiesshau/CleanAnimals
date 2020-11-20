@@ -38,12 +38,12 @@ export default createContext<ContextTheme>({
 });
 
 export interface ContextTheme {
-  themePalette: IColors;
+  themePalette: Colors;
   toggleLightMode: Function;
   isLightMode: boolean;
 }
 
-export type IColors = typeof themes.light;
+export type Colors = typeof themes.light;
 
 export enum EColors {
   primary = 'primary',

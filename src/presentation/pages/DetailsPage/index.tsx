@@ -21,7 +21,7 @@ import { capitalize } from '../../../utils/stringUtils';
 import Label from '../../components/Label';
 import withLoading from '../../HOCs/withLoading';
 import fonts from '../../styles/fonts';
-import theme, { IColors } from '../../styles/theme';
+import theme, { Colors } from '../../styles/theme';
 import Accordion from './components/Accordion';
 import HeaderButtons from './components/HeaderButtons';
 import Section from './components/Section';
@@ -30,7 +30,7 @@ import Type from './components/Type';
 
 const GET_PER_PAGINATION = 25;
 
-function DetailsPage(props: IProps) {
+function DetailsPage(props: Props) {
   let scrollPosition = useRef(0);
   let animatedOpacity = useRef(new Animated.Value(0));
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
@@ -232,7 +232,7 @@ DetailsPage.defaultProps = {
   ),
 };
 
-interface IProps {
+interface Props {
   route: RouteProp<RootStackParamList, 'DetailsPage'>;
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
   client: PokemonHttpService;

@@ -6,14 +6,14 @@ import Pokemon from '../../../../domain/models/Pokemon';
 import Label from '../../../components/Label';
 import withPreventDoubleClick from '../../../HOCs/withPreventDoubleClick';
 import fonts from '../../../styles/fonts';
-import theme, { IColors } from '../../../styles/theme';
+import theme, { Colors } from '../../../styles/theme';
 
-interface IProps {
+interface Props {
   pokemon: Pokemon;
   onPress: any;
 }
 const SinglePress = withPreventDoubleClick(Pressable);
-export default function PokemonCard(props: IProps) {
+export default function PokemonCard(props: Props) {
   const { themePalette } = useContext(theme);
   return (
     <Container

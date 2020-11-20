@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import Label from '../../../components/Label';
 import fonts from '../../../styles/fonts';
-import theme, { IColors } from '../../../styles/theme';
+import theme, { Colors } from '../../../styles/theme';
 
-interface IProps {
+interface Props {
   title: string;
   children: Array<any> | any;
   onAccordionOpened: Function;
@@ -15,7 +15,7 @@ interface IProps {
 const PADDING = 25;
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
-export default function Accordion(props: IProps) {
+export default function Accordion(props: Props) {
   const positionY = useRef();
   const { onAccordionOpened } = props;
   const [isOpen, setOpen] = useState(false);

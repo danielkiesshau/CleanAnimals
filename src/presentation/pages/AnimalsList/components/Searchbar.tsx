@@ -1,23 +1,26 @@
 import React, {
   forwardRef,
+  Ref,
   useCallback,
   useContext,
   useImperativeHandle,
 } from 'react';
 import { TextInputProps, ViewProps } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import theme, { IColors } from '../../../styles/theme';
+import theme, { Colors } from '../../../styles/theme';
 
-interface IProps {
-  initialValue: string;
+interface Props {
+  initialValue?: string;
   onSearch: (text: string) => void;
   placeholder?: string;
   isDisabled?: boolean;
   isEditable?: boolean;
+  ref?: Ref<TextInput>;
 }
 
-const Searchbar = forwardRef((props: IProps, ref) => {
+const Searchbar = forwardRef((props: Props, ref) => {
   const { themePalette } = useContext(theme);
   const [search, setSearch] = React.useState(props.initialValue);
 
@@ -74,27 +77,28 @@ Searchbar.defaultProps = {
 export default Searchbar;
 
 interface ContainerProps extends ViewProps {
-  theme: IColors;
+  theme: Colors;
+  isDisabled?: boolean;
 }
 
-const Container = styled.View`
+const Container = styled.View<ContainerProps>`
   flex-direction: row;
   align-items: center;
-  background-color: ${(props: ContainerProps) => props.theme.white2};
+  background-color: ${(props) => props.theme.white2};
   align-self: stretch;
   margin: 0px 4px 0px;
   padding: 9px 13px 9px 13px;
-  box-shadow: 0px 3px 6px ${(props: ContainerProps) => props.theme.shadow};
+  box-shadow: 0px 3px 6px ${(props) => props.theme.shadow};
   elevation: ${(props) => (props.isDisabled ? 0 : 2)};
 `;
 
 interface SearchProps extends TextInputProps {
-  theme: IColors;
+  theme: Colors;
 }
 
-const SearchText = styled.TextInput`
+const SearchText = styled.TextInput<SearchProps>`
   flex: 1;
   height: 22px;
   padding: 0px 10px;
-  color: ${(props: SearchProps) => props.theme.gray1};
+  color: ${(props) => props.theme.gray1};
 `;

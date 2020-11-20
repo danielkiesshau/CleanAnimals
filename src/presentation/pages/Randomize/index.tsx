@@ -6,7 +6,7 @@ import { RootStackParamList } from '../../..';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
 import Label from '../../components/Label';
 import fonts from '../../styles/fonts';
-import theme, { IColors } from '../../styles/theme';
+import theme, { Colors } from '../../styles/theme';
 import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
 import withPreventDoubleClick from '../../HOCs/withPreventDoubleClick';
 

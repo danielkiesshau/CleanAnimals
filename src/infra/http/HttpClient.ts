@@ -1,5 +1,3 @@
-export interface HttpClientMethods {}
-
 export type GetParams = {
   endpoint: string;
   params?: object | undefined;

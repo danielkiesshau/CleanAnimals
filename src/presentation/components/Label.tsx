@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import { Text, TextProps } from 'react-native';
-import fonts from '../styles/fonts';
-import styled from 'styled-components/native';
-import theme, { EColors, IColors } from '../styles/theme';
+import fonts, { FontType } from '../styles/fonts';
+import theme, { EColors } from '../styles/theme';
 import { capitalize } from '../../utils/stringUtils';
 
-interface IProps extends TextProps {
-  font: typeof fonts.h1;
+interface Props extends TextProps {
+  font: FontType;
   color: string;
   autoCapitalize: boolean;
+  children: string;
+  customColor?: string;
 }
 
-export default function Label(props: IProps) {
+export default function Label(props: Props) {
   const { themePalette } = useContext(theme);
   let word: string = props.children;
   if (word && props.autoCapitalize) {

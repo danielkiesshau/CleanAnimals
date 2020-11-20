@@ -1,26 +1,19 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import { FlatList, RefreshControl, ViewProps } from 'react-native';
 import Pokemon from '../../../domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
-import theme, { IColors } from '../../styles/theme';
+import theme from '../../styles/theme';
 import withLoading from '../../HOCs/withLoading';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
 import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
 import AnimalsHttp from '../../../domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard from './components/PokemonCard';
-import MockAnimalsHttp from '../../../data/services/MockAnimalsHttp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../..';
 const FlatListWLoad = withLoading(FlatList);
 
-const AnimalsList = (props: IProps) => {
+const AnimalsList = (props: Props) => {
   const searchBarRef = useRef();
   const client = useRef(props.client);
   const { themePalette } = useContext(theme);
@@ -152,7 +145,7 @@ export type AnimalsNavigationProps = StackNavigationProp<
   'AnimalList'
 >;
 
-interface IProps {
+interface Props {
   data: Pokemon[];
   client: AnimalsHttp;
   pokemon: Pokemon;
@@ -177,7 +170,12 @@ const StyledList = styled(FlatListWLoad).attrs((props) => ({
 }))`
   width: 100%;
 `;
-const ContainerSearchBar = styled.View`
+
+interface ContainerSearchBarProps extends ViewProps {
+  isRefreshing?: boolean;
+}
+
+const ContainerSearchBar = styled.View<ContainerSearchBarProps>`
   width: 100%;
   position: absolute;
   top: 8px;

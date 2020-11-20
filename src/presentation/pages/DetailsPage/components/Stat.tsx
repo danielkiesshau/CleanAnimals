@@ -5,13 +5,13 @@ import { getConstratedColor } from '../../../../utils/styleUtils';
 import Label from '../../../components/Label';
 import fonts from '../../../styles/fonts';
 
-interface IProps {
+interface Props {
   stat: string;
   value: number;
   backgroundColor: string;
 }
 
-const Stat = (props: IProps) => {
+const Stat = (props: Props) => {
   return (
     <ContainerState backgroundColor={props.backgroundColor}>
       <TypeLabel
