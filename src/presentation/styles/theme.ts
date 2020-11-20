@@ -31,11 +31,17 @@ const themes = {
   },
 };
 
-export default createContext({
+export default createContext<ContextTheme>({
   themePalette: themes,
   toggleLightMode: () => {},
-  isLight: true,
+  isLightMode: true,
 });
+
+export interface ContextTheme {
+  themePalette: IColors;
+  toggleLightMode: Function;
+  isLightMode: boolean;
+}
 
 export type IColors = typeof themes.light;
 

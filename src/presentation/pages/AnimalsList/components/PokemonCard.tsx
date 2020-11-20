@@ -14,7 +14,7 @@ interface IProps {
 }
 const SinglePress = withPreventDoubleClick(Pressable);
 export default function PokemonCard(props: IProps) {
-  const { themePalette }: { themePalette: IColors } = useContext(theme);
+  const { themePalette } = useContext(theme);
   return (
     <Container
       onPress={(event) => {

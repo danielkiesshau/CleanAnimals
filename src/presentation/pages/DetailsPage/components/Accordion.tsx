@@ -19,7 +19,7 @@ export default function Accordion(props: IProps) {
   const positionY = useRef();
   const { onAccordionOpened } = props;
   const [isOpen, setOpen] = useState(false);
-  const { themePalette }: { themePalette: IColors } = useContext(theme);
+  const { themePalette } = useContext(theme);
   const accordionAnimations = useAccordionAnimation();
 
   useEffect(() => {

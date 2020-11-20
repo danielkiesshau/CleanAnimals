@@ -5,7 +5,7 @@ import theme, { IColors } from '../styles/theme';
 
 export default function withLoading(Component) {
   return (props) => {
-    const { themePalette }: { themePalette: IColors } = useContext(theme);
+    const { themePalette } = useContext(theme);
     return props.isLoading ? (
       <Container backgroundColor={themePalette.white1}>
         <ActivityIndicator

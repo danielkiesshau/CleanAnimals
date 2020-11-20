@@ -18,7 +18,7 @@ interface Props {
 const SinglePress = withPreventDoubleClick(Pressable);
 
 const Randomize = (props: Props) => {
-  const { themePalette }: { themePalette: IColors } = useContext(theme);
+  const { themePalette } = useContext(theme);
   const [isLoading, setLoading] = useState(false);
 
   const discoverPressed = useCallback(async () => {

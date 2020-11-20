@@ -36,7 +36,7 @@ function DetailsPage(props: IProps) {
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
-  const { themePalette, isLightMode }: { themePalette: IColors } = useContext(
+  const { themePalette, isLightMode } = useContext(
     theme,
   );
   const [showShiny, setShowShiny] = useState(false);

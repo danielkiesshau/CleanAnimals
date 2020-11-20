@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const Searchbar = forwardRef((props: IProps, ref) => {
-  const { themePalette }: { themePalette: IColors } = useContext(theme);
+  const { themePalette } = useContext(theme);
   const [search, setSearch] = React.useState(props.initialValue);
 
   useImperativeHandle(ref, () => ({

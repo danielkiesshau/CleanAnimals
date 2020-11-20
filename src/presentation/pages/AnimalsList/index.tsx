@@ -23,7 +23,7 @@ const FlatListWLoad = withLoading(FlatList);
 const AnimalsList = (props: IProps) => {
   const searchBarRef = useRef();
   const client = useRef(props.client);
-  const { themePalette }: { themePalette: IColors } = useContext(theme);
+  const { themePalette } = useContext(theme);
   const [data, setData] = React.useState(props.data);
   const [searchData, setSearchData] = React.useState(props.data);
   const [isLoading, setLoading] = React.useState(true);
