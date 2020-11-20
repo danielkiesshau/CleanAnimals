@@ -41,7 +41,7 @@ export default class PokemonHttpService implements AnimalsHttp {
       console.log('error', e.toString());
     }
 
-    let promissesGetAnimals: Promise<Pokemon | void>[] = [];
+    let promissesGetAnimals: Promise<Pokemon>[] = [];
     const pokemonResults: ResultPokemonPagination = { ...response.data };
 
     pokemonResults.results.forEach((pokemon) => {
@@ -99,6 +99,7 @@ export default class PokemonHttpService implements AnimalsHttp {
       ),
     }));
   }
+
   haveMaxMoves = (
     index: number,
     randomMin: number,

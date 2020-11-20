@@ -1,4 +1,3 @@
-import Pokemon from '../../domain/models/Pokemon';
 import MockAnimalsHttp from './MockAnimalsHttp';
 describe('MockAnimalsHttp', () => {
   let client: MockAnimalsHttp;

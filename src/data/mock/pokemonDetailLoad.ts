@@ -8,5 +8,4 @@ export default {
     specialDefense: '-',
     speed: '-',
   },
-
 };
