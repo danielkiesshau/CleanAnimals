@@ -10,7 +10,7 @@ import AnimalsHttp from '../../../domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard from './components/PokemonCard';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../';
+import { RootStackParamList } from '../../../config/routes';
 import useAnimalsList from './hooks/useAnimalsList';
 const FlatListWLoad = withLoading(FlatList);
 

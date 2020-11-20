@@ -8,11 +8,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { InteractionManager, StyleSheet, Animated } from 'react-native';
+import {
+  InteractionManager,
+  StyleSheet,
+  Animated,
+  ViewProps,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import { RootStackParamList } from '../../..';
+import { RootStackParamList } from '../../../config/routes';
 import pokemonDetailLoad from '../../../data/mock/pokemonDetailLoad';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
 import Pokemon from '../../../domain/models/Pokemon';
@@ -21,11 +26,14 @@ import { capitalize } from '../../../utils/stringUtils';
 import Label from '../../components/Label';
 import withLoading from '../../HOCs/withLoading';
 import fonts from '../../styles/fonts';
-import theme, { Colors } from '../../styles/theme';
+import theme from '../../styles/theme';
 import Accordion from './components/Accordion';
 import HeaderButtons from './components/HeaderButtons';
+import ImageContainer from './components/ImageContainer';
+import Moves from './components/Moves';
 import Section from './components/Section';
 import Stat from './components/Stat';
+import Stats from './components/Stats';
 import Type from './components/Type';
 
 const GET_PER_PAGINATION = 25;
@@ -36,9 +44,8 @@ function DetailsPage(props: Props) {
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
-  const { themePalette, isLightMode } = useContext(
-    theme,
-  );
+  const { themePalette } = useContext(theme);
+  const [showNormal, setShowNormal] = useState(true);
   const [showShiny, setShowShiny] = useState(false);
   const [page, setPage] = useState(2);
   const [pokemon, setPokemon] = useState(props.route?.params?.pokemon);
@@ -105,17 +112,31 @@ function DetailsPage(props: Props) {
   );
 
   const toggleShiny = useCallback(() => {
+    if (showShiny) {
+      setShowNormal(true);
+    }
     if (isLoading) {
       return;
     }
     Animated.timing(animatedOpacity.current, {
-      toValue: !showShiny ? 1 : 0,
+      toValue: showShiny ? 0 : 1,
       duration: 300,
       useNativeDriver: true,
-    }).start();
+    }).start(() => {
+      if (!showShiny) {
+        setShowNormal(!showNormal);
+      }
+    });
 
     setShowShiny(!showShiny);
-  }, [isLoading, setShowShiny, animatedOpacity, showShiny]);
+  }, [
+    isLoading,
+    setShowShiny,
+    animatedOpacity,
+    showShiny,
+    setShowNormal,
+    showNormal,
+  ]);
 
   const animatedShinyContainer = {
     backgroundColor: themePalette.gray2,
@@ -137,89 +158,20 @@ function DetailsPage(props: Props) {
       }}
       scrollEventThrottle={16}
       backgroundColor={themePalette.white2}>
-      <ImageContainer backgroundColor={themePalette.white1}>
-        <ImagePokemonWLoad
-          isLoading={!pokemon.image}
-          source={{
-            uri: pokemon.image,
-          }}
-          resizeMode="cover"
-        />
-        <Animated.View
-          style={[animated.imageContainer, animatedShinyContainer]}>
-          <ImagePokemonWLoad
-            isLoading={!pokemon.image}
-            source={{
-              uri: pokemon.shinyImage,
-            }}
-            resizeMode="cover"
-          />
-        </Animated.View>
-        <EyeButton
-          isLoading={!pokemon.image}
-          color={themePalette.primary}
-          name={showShiny ? 'visibility-off' : 'visibility'}
-          onPress={toggleShiny}
-          size={fonts.icons.a}
-        />
-      </ImageContainer>
+      <ImageContainer
+        pokemon={pokemon}
+        toggleShiny={toggleShiny}
+        showShiny={showShiny}
+        showNormal={showNormal}
+        animatedShinyContainer={animatedShinyContainer}
+      />
       <Section isRow title="Type">
         {pokemon.type.map((type) => (
           <Type key={type} type={type} />
         ))}
       </Section>
-      <StatsContainer isRow isWrap title="Base stats">
-        <Stat
-          stat="hp"
-          value={pokemon.stats.hp}
-          backgroundColor={themePalette.white3}
-        />
-        <Stat
-          stat="attack"
-          value={pokemon.stats.attack}
-          backgroundColor={themePalette.secondary}
-        />
-        <Stat
-          stat="defense"
-          value={pokemon.stats.defense}
-          backgroundColor={themePalette.secondary}
-        />
-        <Stat
-          stat="specialAttack"
-          value={pokemon.stats.specialAttack}
-          backgroundColor={themePalette.white3}
-        />
-        <Stat
-          stat="specialDefense"
-          value={pokemon.stats.specialDefense}
-          backgroundColor={themePalette.white3}
-        />
-        <Stat
-          stat="speed"
-          value={pokemon.stats.speed}
-          backgroundColor={themePalette.secondary}
-        />
-        <Stat
-          stat="specialAttack"
-          value={pokemon.stats.specialAttack}
-          backgroundColor={themePalette.secondary}
-        />
-        <Stat
-          stat="specialDefense"
-          value={pokemon.stats.specialDefense}
-          backgroundColor={themePalette.white3}
-        />
-      </StatsContainer>
-      <Section title="Moves">
-        {pokemon.moves.map((move) => (
-          <Accordion
-            onAccordionOpened={onAccordionOpened}
-            key={move.name}
-            title={move.name}>
-            <Label font={fonts.t2}>{move.description}</Label>
-          </Accordion>
-        ))}
-      </Section>
+      <Stats pokemon={pokemon} />
+      <Moves pokemon={pokemon} onAccordionOpened={onAccordionOpened} />
     </Container>
   );
 }
@@ -238,14 +190,6 @@ interface Props {
   client: PokemonHttpService;
 }
 
-const animated = StyleSheet.create({
-  imageContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    width: '100%',
-  },
-});
-
 const Container = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     paddingBottom: 20,
@@ -254,28 +198,4 @@ const Container = styled.ScrollView.attrs(() => ({
   flex: 1;
   align-self: stretch;
   background-color: ${(props) => props.backgroundColor};
-`;
-
-const ImageContainer = styled.View`
-  align-self: stretch;
-  height: 262px;
-  align-items: center;
-`;
-
-const ImagePokemon = styled.Image`
-  height: 265px;
-  width: 265px;
-`;
-
-const ImagePokemonWLoad = withLoading(ImagePokemon);
-
-const StatsContainer = styled(Section)`
-  height: 200px;
-`;
-
-const EyeButton = styled(Icon)`
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  opacity: ${(props) => (props.isLoading ? 0.2 : 1)};
 `;

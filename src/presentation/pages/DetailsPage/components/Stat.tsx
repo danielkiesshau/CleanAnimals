@@ -1,4 +1,5 @@
 import React from 'react';
+import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
 import { camelCaseDash } from '../../../../utils/stringUtils';
 import { getConstratedColor } from '../../../../utils/styleUtils';
@@ -7,13 +8,13 @@ import fonts from '../../../styles/fonts';
 
 interface Props {
   stat: string;
-  value: number;
+  value: string;
   backgroundColor: string;
 }
 
 const Stat = (props: Props) => {
   return (
-    <ContainerState backgroundColor={props.backgroundColor}>
+    <Container backgroundColor={props.backgroundColor}>
       <TypeLabel
         font={fonts.t1}
         color={getConstratedColor(props.backgroundColor)}>
@@ -24,13 +25,17 @@ const Stat = (props: Props) => {
         color={getConstratedColor(props.backgroundColor)}>
         {props.value}
       </TypeLabel>
-    </ContainerState>
+    </Container>
   );
 };
 
 export default Stat;
 
-const ContainerState = styled.View`
+interface ContainerProps extends ViewProps {
+  backgroundColor: string;
+}
+
+const Container = styled.View<ContainerProps>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
