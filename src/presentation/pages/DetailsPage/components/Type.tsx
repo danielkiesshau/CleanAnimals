@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { getTypeColor } from '../../../../data/services/utils/pokeApiUtils';
-import { getLabelConstrated } from '../../../../utils/styleUtils';
+import { getConstratedColor } from '../../../../utils/styleUtils';
 import Label from '../../../components/Label';
 import fonts from '../../../styles/fonts';
 
@@ -12,7 +12,7 @@ const Type = (props) => {
       <TypeLabel
         autoCapitalize
         font={fonts.h1}
-        color={getLabelConstrated(backgroundColor)}>
+        color={getConstratedColor(backgroundColor)}>
         {props.type}
       </TypeLabel>
     </ContainerType>

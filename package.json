@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll  --detectOpenHandles",
     "lint": "eslint .",
     "tsc:watch": "npx tsc --watch",
     "e2e:build:ios": "detox build --configuration ios.sim.debug",

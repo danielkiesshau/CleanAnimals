@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { dashCamelCase } from '../../../../utils/stringUtils';
-import { getLabelConstrated } from '../../../../utils/styleUtils';
+import { camelCaseDash } from '../../../../utils/stringUtils';
+import { getConstratedColor } from '../../../../utils/styleUtils';
 import Label from '../../../components/Label';
 import fonts from '../../../styles/fonts';
 
@@ -16,12 +16,12 @@ const Stat = (props: IProps) => {
     <ContainerState backgroundColor={props.backgroundColor}>
       <TypeLabel
         font={fonts.t1}
-        color={getLabelConstrated(props.backgroundColor)}>
-        {dashCamelCase(props.stat)}
+        color={getConstratedColor(props.backgroundColor)}>
+        {camelCaseDash(props.stat)}
       </TypeLabel>
       <TypeLabel
         font={fonts.t1}
-        color={getLabelConstrated(props.backgroundColor)}>
+        color={getConstratedColor(props.backgroundColor)}>
         {props.value}
       </TypeLabel>
     </ContainerState>

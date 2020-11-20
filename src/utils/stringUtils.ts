@@ -4,7 +4,7 @@ export const capitalize = (word: string) => {
   return firstLetter + rest;
 };
 
-export const dashCamelCase = (word: string) => {
+export const camelCaseDash = (word: string) => {
   return word.replace(/([A-Z])/g, '-$1').replace(/^./, function (str) {
     return str.toUpperCase();
   });
