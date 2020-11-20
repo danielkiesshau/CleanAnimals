@@ -67,3 +67,5 @@ const mapRecursiveEvolution = (evolution, evolutions: string[]) => {
 };
 
 export const TOTAL_AVAILABLE_POKEMONS = 890;
+
+export const POKE_BASE_URL = 'https://pokeapi.co/api/v2/';

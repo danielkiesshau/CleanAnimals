@@ -8,31 +8,21 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  InteractionManager,
-  StyleSheet,
-  Animated,
-  ViewProps,
-} from 'react-native';
+import { InteractionManager, Animated } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../config/routes';
 import pokemonDetailLoad from '../../../data/mock/pokemonDetailLoad';
 import PokemonHttpService from '../../../data/services/PokemonHttpService';
+import { POKE_BASE_URL } from '../../../data/services/utils/pokeApiUtils';
 import Pokemon from '../../../domain/models/Pokemon';
 import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
 import { capitalize } from '../../../utils/stringUtils';
-import Label from '../../components/Label';
-import withLoading from '../../HOCs/withLoading';
-import fonts from '../../styles/fonts';
 import theme from '../../styles/theme';
-import Accordion from './components/Accordion';
 import HeaderButtons from './components/HeaderButtons';
 import ImageContainer from './components/ImageContainer';
 import Moves from './components/Moves';
 import Section from './components/Section';
-import Stat from './components/Stat';
 import Stats from './components/Stats';
 import Type from './components/Type';
 
@@ -179,9 +169,7 @@ function DetailsPage(props: Props) {
 export default DetailsPage;
 
 DetailsPage.defaultProps = {
-  client: new PokemonHttpService(
-    new AxiosHttpClient('https://pokeapi.co/api/v2/'),
-  ),
+  client: new PokemonHttpService(new AxiosHttpClient(POKE_BASE_URL)),
 };
 
 interface Props {
