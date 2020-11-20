@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import AnimalsList from '.';
-import { findByAttr } from '../../../utils/testUtils';
-import pokemons from '../../../data/mock/pokemons';
+import { findByAttr } from 'utils/testUtils';
+import pokemons from 'data/mock/pokemons';
 
 const setupShallowWrapper = (props = {}) => shallow(<AnimalsList {...props} />);
 

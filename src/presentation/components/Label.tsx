@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Text, TextProps } from 'react-native';
-import fonts, { FontType } from '../styles/fonts';
-import theme, { EColors } from '../styles/theme';
-import { capitalize } from '../../utils/stringUtils';
+import fonts, { FontType } from 'presentation/styles/fonts';
+import theme, { EColors } from 'presentation/styles/theme';
+import { capitalize } from 'utils/stringUtils';
 
 interface Props extends TextProps {
   font: FontType;

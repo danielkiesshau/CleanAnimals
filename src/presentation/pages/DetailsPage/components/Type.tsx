@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { getTypeColor } from '../../../../data/services/utils/pokeApiUtils';
-import { getConstratedColor } from '../../../../utils/styleUtils';
-import Label from '../../../components/Label';
-import fonts from '../../../styles/fonts';
+import { getTypeColor } from 'data/services/utils/pokeApiUtils';
+import { getConstratedColor } from 'utils/styleUtils';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
 
 const Type = (props) => {
   const backgroundColor = getTypeColor(props.type);

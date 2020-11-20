@@ -1,5 +1,5 @@
-import Pokemon, { Stats } from '../../domain/models/Pokemon';
-import AnimalsHttp from '../../domain/services/AnimalsHttp';
+import Pokemon, { Stats } from 'domain/models/Pokemon';
+import AnimalsHttp from 'domain/services/AnimalsHttp';
 import {
   EvolutionsRest,
   MoveRest,
@@ -8,10 +8,10 @@ import {
   ResultPokemonPagination,
   StatsRest,
   TypeRest,
-} from '../../domain/services/pokeApI/types';
-import HttpClient from '../../infra/http/HttpClient';
-import { getRandomInt } from '../../utils/numberUtils';
-import { dashToCamelCase } from '../../utils/stringUtils';
+} from 'domain/services/pokeApI/types';
+import HttpClient from 'infra/http/HttpClient';
+import { getRandomInt } from 'utils/numberUtils';
+import { dashToCamelCase } from 'utils/stringUtils';
 import {
   formatMoveDescription,
   getRestResponse,

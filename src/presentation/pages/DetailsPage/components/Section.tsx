@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Label from '../../../components/Label';
-import fonts from '../../../styles/fonts';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
 
 const Section = (props) => (
   <ContainerSection>
     <StyledLabel font={fonts.h1}>{props.title}</StyledLabel>
-    <SectionContent isRow={props.isRow} isWrap={props.isWrap}>{props.children}</SectionContent>
+    <SectionContent isRow={props.isRow} isWrap={props.isWrap}>
+      {props.children}
+    </SectionContent>
   </ContainerSection>
 );
 

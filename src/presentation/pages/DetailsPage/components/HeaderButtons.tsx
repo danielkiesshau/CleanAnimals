@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import fonts from '../../../styles/fonts';
-import theme, { Colors } from '../../../styles/theme';
+import fonts from 'presentation/styles/fonts';
+import theme from 'presentation/styles/theme';
 
 interface Props {
   onPress: (isNextPressed: boolean) => void;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
-import { camelCaseDash } from '../../../../utils/stringUtils';
-import { getConstratedColor } from '../../../../utils/styleUtils';
-import Label from '../../../components/Label';
-import fonts from '../../../styles/fonts';
+import { camelCaseDash } from 'utils/stringUtils';
+import { getConstratedColor } from 'utils/styleUtils';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
 
 interface Props {
   stat: string;

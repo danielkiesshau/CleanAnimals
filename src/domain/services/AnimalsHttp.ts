@@ -1,4 +1,4 @@
-import Pokemon from '../models/Pokemon';
+import Pokemon from 'domain/models/Pokemon';
 
 export default interface AnimalsHttp {
   getAnimals: (page: number, itemsPerPage: number) => Promise<Pokemon[]>;

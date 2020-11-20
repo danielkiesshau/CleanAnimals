@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ActivityIndicator, ViewProps } from 'react-native';
 import styled from 'styled-components/native';
-import theme from '../styles/theme';
+import theme from 'presentation/styles/theme';
 
 export default function withLoading(Component) {
   return (props) => {

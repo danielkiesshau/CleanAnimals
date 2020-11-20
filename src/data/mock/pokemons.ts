@@ -1,4 +1,4 @@
-import type Pokemon from '../../domain/models/Pokemon';
+import type Pokemon from 'domain/models/Pokemon';
 
 const pokemons: Pokemon[] = [
   {

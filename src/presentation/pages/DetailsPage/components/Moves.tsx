@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Pokemon from '../../../../domain/models/Pokemon';
-import Label from '../../../components/Label';
-import fonts from '../../../styles/fonts';
+import Pokemon from 'domain/models/Pokemon';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
 import Accordion from './Accordion';
 import Section from './Section';
 

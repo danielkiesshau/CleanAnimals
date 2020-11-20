@@ -1,8 +1,8 @@
-import Pokemon from '../../domain/models/Pokemon';
-import AnimalsHttp from '../../domain/services/AnimalsHttp';
-import { getRandomInt } from '../../utils/numberUtils';
-import { sleep } from '../../utils/testUtils';
-import pokemons from '../mock/pokemons';
+import Pokemon from 'domain/models/Pokemon';
+import AnimalsHttp from 'domain/services/AnimalsHttp';
+import { getRandomInt } from 'utils/numberUtils';
+import { sleep } from 'utils/testUtils';
+import pokemons from 'data/mock/pokemons';
 
 export default class MockAnimalsHttp implements AnimalsHttp {
   animals: Pokemon[];

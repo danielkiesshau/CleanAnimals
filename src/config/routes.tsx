@@ -2,13 +2,13 @@ import 'react-native-gesture-handler';
 import React, { useCallback, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Theme from '../presentation/styles/theme';
-import AnimalsList from '../presentation/pages/AnimalsList';
-import Randomize from '../presentation/pages/Randomize';
-import DetailsPage from '../presentation/pages/DetailsPage';
-import Pokemon from '../domain/models/Pokemon';
+import Theme from 'presentation/styles/theme';
+import AnimalsList from 'presentation/pages/AnimalsList';
+import Randomize from 'presentation/pages/Randomize';
+import DetailsPage from 'presentation/pages/DetailsPage';
+import Pokemon from 'domain/models/Pokemon';
 import styled from 'styled-components/native';
-import fonts from '../presentation/styles/fonts';
+import fonts from 'presentation/styles/fonts';
 
 export type RootStackParamList = {
   AnimalList: undefined;

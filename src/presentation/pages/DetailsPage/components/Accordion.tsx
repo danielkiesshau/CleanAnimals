@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Animated, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import Label from '../../../components/Label';
-import fonts from '../../../styles/fonts';
-import theme, { Colors } from '../../../styles/theme';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
+import theme from 'presentation/styles/theme';
 
 interface Props {
   title: string;

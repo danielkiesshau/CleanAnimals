@@ -1,8 +1,8 @@
-import HttpClient from '../../../infra/http/HttpClient';
+import HttpClient from 'infra/http/HttpClient';
 import {
   EvolutionsRest,
   EvolutionRest,
-} from '../../../domain/services/pokeApI/types';
+} from 'domain/services/pokeApI/types';
 
 export const getEndPoint = (url: string) => {
   return url.split('https://pokeapi.co/api/v2/')[1];

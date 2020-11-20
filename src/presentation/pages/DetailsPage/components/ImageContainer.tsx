@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import Pokemon from '../../../../domain/models/Pokemon';
-import withLoading from '../../../HOCs/withLoading';
-import fonts from '../../../styles/fonts';
-import theme from '../../../styles/theme';
+import Pokemon from 'domain/models/Pokemon';
+import withLoading from 'presentation/HOCs/withLoading';
+import fonts from 'presentation/styles/fonts';
+import theme from 'presentation/styles/theme';
 
 interface Props {
   pokemon: Pokemon;

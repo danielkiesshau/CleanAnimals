@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import Randomize from '.';
-import { findByAttr } from '../../../utils/testUtils';
+import { findByAttr } from 'utils/testUtils';
 
 const setupShallowWrapper = (props = {}) => shallow(<Randomize {...props} />);
 

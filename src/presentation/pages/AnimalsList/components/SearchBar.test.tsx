@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { findByAttr } from '../../../../utils/testUtils';
+import { findByAttr } from 'utils/testUtils';
 import Searchbar from './Searchbar';
 
 const setupShallowWrapper = (props = {}) => shallow(<Searchbar {...props} />);

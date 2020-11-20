@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
-import { getTypeColor } from '../../../../data/services/utils/pokeApiUtils';
-import Pokemon from '../../../../domain/models/Pokemon';
-import Label from '../../../components/Label';
-import withPreventDoubleClick from '../../../HOCs/withPreventDoubleClick';
-import fonts from '../../../styles/fonts';
-import theme, { Colors } from '../../../styles/theme';
+import { getTypeColor } from 'data/services/utils/pokeApiUtils';
+import Pokemon from 'domain/models/Pokemon';
+import Label from 'presentation/components/Label';
+import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
+import fonts from 'presentation/styles/fonts';
+import theme from 'presentation/styles/theme';
 
 interface Props {
   pokemon: Pokemon;

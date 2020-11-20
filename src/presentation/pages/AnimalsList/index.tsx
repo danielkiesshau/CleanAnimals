@@ -1,16 +1,16 @@
 import React, { useCallback, useContext } from 'react';
 import { FlatList, RefreshControl, ViewProps } from 'react-native';
-import Pokemon from '../../../domain/models/Pokemon';
+import Pokemon from 'domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
-import theme from '../../styles/theme';
-import withLoading from '../../HOCs/withLoading';
-import PokemonHttpService from '../../../data/services/PokemonHttpService';
-import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
-import AnimalsHttp from '../../../domain/services/AnimalsHttp';
+import theme from 'presentation/styles/theme';
+import withLoading from 'presentation/HOCs/withLoading';
+import PokemonHttpService from 'data/services/PokemonHttpService';
+import AxiosHttpClient from 'infra/http/AxiosHttpClient';
+import AnimalsHttp from 'domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard from './components/PokemonCard';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../config/routes';
+import { RootStackParamList } from 'config/routes';
 import useAnimalsList from './hooks/useAnimalsList';
 const FlatListWLoad = withLoading(FlatList);
 

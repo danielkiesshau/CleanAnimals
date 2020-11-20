@@ -4,7 +4,32 @@ module.exports = {
     [
       'babel-plugin-root-import',
       {
-        rootPathSuffix: 'src',
+        paths: [
+          {
+            rootPathSuffix: './src/data',
+            rootPathPrefix: 'data',
+          },
+          {
+            rootPathSuffix: './src/domain',
+            rootPathPrefix: 'domain',
+          },
+          {
+            rootPathSuffix: './src/infra',
+            rootPathPrefix: 'infra',
+          },
+          {
+            rootPathSuffix: './src/presentation',
+            rootPathPrefix: 'presentation',
+          },
+          {
+            rootPathSuffix: './src/utils',
+            rootPathPrefix: 'utils',
+          },
+          {
+            rootPathSuffix: './src',
+            rootPathPrefix: '~/',
+          },
+        ],
       },
     ],
   ],

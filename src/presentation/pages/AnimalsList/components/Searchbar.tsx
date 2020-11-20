@@ -9,7 +9,7 @@ import { TextInputProps, ViewProps } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import theme, { Colors } from '../../../styles/theme';
+import theme, { Colors } from 'presentation/styles/theme';
 
 interface Props {
   initialValue?: string;

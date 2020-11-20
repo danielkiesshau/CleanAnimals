@@ -2,14 +2,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useContext, useState } from 'react';
 import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
-import { RootStackParamList } from '../../../config/routes';
-import PokemonHttpService from '../../../data/services/PokemonHttpService';
-import Label from '../../components/Label';
-import fonts from '../../styles/fonts';
-import theme from '../../styles/theme';
-import AxiosHttpClient from '../../../infra/http/AxiosHttpClient';
-import withPreventDoubleClick from '../../HOCs/withPreventDoubleClick';
-import { POKE_BASE_URL } from '../../../data/services/utils/pokeApiUtils';
+import { RootStackParamList } from 'config/routes';
+import PokemonHttpService from 'data/services/PokemonHttpService';
+import Label from 'presentation/components/Label';
+import fonts from 'presentation/styles/fonts';
+import theme from 'presentation/styles/theme';
+import AxiosHttpClient from 'infra/http/AxiosHttpClient';
+import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
+import { POKE_BASE_URL } from 'data/services/utils/pokeApiUtils';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
@@ -60,9 +60,7 @@ const Randomize = (props: Props) => {
 export default Randomize;
 
 Randomize.defaultProps = {
-  client: new PokemonHttpService(
-    new AxiosHttpClient(POKE_BASE_URL),
-  ),
+  client: new PokemonHttpService(new AxiosHttpClient(POKE_BASE_URL)),
 };
 
 const Container = styled.SafeAreaView`

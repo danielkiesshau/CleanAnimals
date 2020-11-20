@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/native';
-import Pokemon from '../../../../domain/models/Pokemon';
-import theme from '../../../styles/theme';
+import Pokemon from 'domain/models/Pokemon';
+import theme from 'presentation/styles/theme';
 import Section from './Section';
 import Stat from './Stat';
 

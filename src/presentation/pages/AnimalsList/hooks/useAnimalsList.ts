@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import Pokemon from '../../../../domain/models/Pokemon';
-import AnimalsHttp from '../../../../domain/services/AnimalsHttp';
+import Pokemon from 'domain/models/Pokemon';
+import AnimalsHttp from 'domain/services/AnimalsHttp';
 
 export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
   const searchBarRef = useRef();
