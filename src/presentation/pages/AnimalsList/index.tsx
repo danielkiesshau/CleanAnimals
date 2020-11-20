@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { FlatList, RefreshControl, ViewProps } from 'react-native';
 import Pokemon from '../../../domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
@@ -10,37 +10,13 @@ import AnimalsHttp from '../../../domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard from './components/PokemonCard';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../..';
+import { RootStackParamList } from '../../../';
+import useAnimalsList from './hooks/useAnimalsList';
 const FlatListWLoad = withLoading(FlatList);
 
 const AnimalsList = (props: Props) => {
-  const searchBarRef = useRef();
-  const client = useRef(props.client);
+  const listController = useAnimalsList(props.client, props.data);
   const { themePalette } = useContext(theme);
-  const [data, setData] = React.useState(props.data);
-  const [searchData, setSearchData] = React.useState(props.data);
-  const [isLoading, setLoading] = React.useState(true);
-  const [isRefreshing, setRefreshing] = React.useState(false);
-  const [isPaginating, setPaginating] = React.useState(false);
-  const [isSearching, setSearching] = React.useState(false);
-  const [page, setPage] = React.useState(1);
-
-  const loadPage = useCallback(
-    async (forcePage?: number) => {
-      const result = await client.current.getAnimals(forcePage || page, 25);
-      const newData = page > 1 ? [...data, ...result] : result;
-      setData(newData);
-      setSearchData(newData);
-      setLoading(false);
-      setPaginating(false);
-      setRefreshing(false);
-    },
-    [client, data, page],
-  );
-
-  useEffect(() => {
-    loadPage();
-  }, [page]);
 
   const onPress = useCallback(
     (event, pokemon: Pokemon) => {
@@ -48,10 +24,10 @@ const AnimalsList = (props: Props) => {
 
       props.navigation.push('DetailsPage', {
         pokemon,
-        pokemons: data,
+        pokemons: listController.data,
       });
     },
-    [props.navigation, data],
+    [props.navigation, listController.data],
   );
 
   const renderItem = useCallback(
@@ -72,73 +48,62 @@ const AnimalsList = (props: Props) => {
     return item.id;
   }, []);
 
-  const filterList = useCallback(
-    async (text) => {
-      if (text.length === 0) {
-        setSearching(false);
-        setSearchData(data);
-        return;
-      }
-
-      const result = await client.current.getAnimalByName(text, data);
-      setSearching(true);
-      setSearchData(result);
-    },
-    [data, client, setSearchData],
-  );
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    searchBarRef.current.resetInput();
-    loadPage(1);
-  }, [searchBarRef, loadPage, setRefreshing]);
-
   return (
     <StyledSafeArea>
       <StyledList
         backgroundColor={themePalette.white1}
         data-test="animals-list"
-        data={searchData}
+        data={listController.searchData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         refreshControl={
           <RefreshControl
             tintColor={themePalette.primary}
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
+            refreshing={listController.isRefreshing}
+            onRefresh={listController.onRefresh}
           />
         }
         progressViewOffset={1000}
-        refreshing={isLoading}
-        isLoading={isLoading}
+        refreshing={listController.isLoading}
+        isLoading={listController.isLoading}
         onEndReached={() => {
-          if (!isPaginating && !isSearching) {
-            setPaginating(true);
-            setPage(page + 1);
+          if (!listController.isPaginating && !listController.isSearching) {
+            listController.setPaginating(true);
+            listController.setPage(listController.page + 1);
           }
         }}
         ListFooterComponent={
-          isPaginating && (
+          listController.isPaginating && (
             <PaginationLoadIcon size="large" color={themePalette.primary} />
           )
         }
         onEndReachedThreshold={0.1}
       />
-      <ContainerSearchBar isRefreshing={isRefreshing}>
+      <ContainerSearchBar isRefreshing={listController.isRefreshing}>
         <Searchbar
-          isDisabled={isRefreshing}
-          isEditable={!isLoading}
+          isDisabled={listController.isRefreshing}
+          isEditable={!listController.isLoading}
           placeholder="Write here to search!"
           ref={(ref) => {
-            searchBarRef.current = ref;
+            listController.searchBarRef.current = ref;
           }}
           data-test="search-bar"
-          onSearch={filterList}
+          onSearch={listController.filterList}
         />
       </ContainerSearchBar>
     </StyledSafeArea>
   );
 };
+
+AnimalsList.defaultProps = {
+  data: [],
+  client: new PokemonHttpService(
+    new AxiosHttpClient('https://pokeapi.co/api/v2/'),
+  ),
+  // client: new MockAnimalsHttp(),
+};
+
+export default AnimalsList;
 
 export type AnimalsNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -152,15 +117,9 @@ interface Props {
   navigation: AnimalsNavigationProps;
 }
 
-AnimalsList.defaultProps = {
-  data: [],
-  client: new PokemonHttpService(
-    new AxiosHttpClient('https://pokeapi.co/api/v2/'),
-  ),
-  // client: new MockAnimalsHttp(),
-};
-
-export default AnimalsList;
+interface ContainerSearchBarProps extends ViewProps {
+  isRefreshing?: boolean;
+}
 
 const StyledList = styled(FlatListWLoad).attrs((props) => ({
   contentContainerStyle: {
@@ -170,10 +129,6 @@ const StyledList = styled(FlatListWLoad).attrs((props) => ({
 }))`
   width: 100%;
 `;
-
-interface ContainerSearchBarProps extends ViewProps {
-  isRefreshing?: boolean;
-}
 
 const ContainerSearchBar = styled.View<ContainerSearchBarProps>`
   width: 100%;
