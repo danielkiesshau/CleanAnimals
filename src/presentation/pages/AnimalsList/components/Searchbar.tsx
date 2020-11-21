@@ -40,16 +40,12 @@ const Searchbar = forwardRef((props: Props, ref) => {
 
   const clearButton = search.length > 0 && (
     <BorderlessButton
+      testID="clear-button"
       onPress={() => {
         setSearch('');
         props.onSearch('');
       }}>
-      <Icon
-        data-test="clear-button"
-        name="highlight-off"
-        color={themePalette.primary}
-        size={24}
-      />
+      <Icon name="highlight-off" color={themePalette.primary} size={24} />
     </BorderlessButton>
   );
 
@@ -61,7 +57,7 @@ const Searchbar = forwardRef((props: Props, ref) => {
         placeholder={props.placeholder}
         placeholderTextColor={themePalette.gray3}
         ref={ref}
-        data-test="search-input"
+        testID="search-input"
         theme={themePalette}
         value={search}
         onChangeText={onSearch}

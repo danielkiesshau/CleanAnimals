@@ -40,7 +40,7 @@ const Randomize = (props: Props) => {
       <ContainerButton>
         <SinglePress
           disabled={isLoading}
-          data-test="discover-button"
+          testID="discover-button"
           onPress={discoverPressed}>
           <DiscoverLabel
             font={fonts.h1}

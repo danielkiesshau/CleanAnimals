@@ -9,7 +9,7 @@ export default function withLoading(Component) {
     return props.isLoading ? (
       <Container backgroundColor={themePalette.white1}>
         <ActivityIndicator
-          data-test="load-icon"
+          testID="load-icon"
           color={themePalette.primary}
           size="large"
         />

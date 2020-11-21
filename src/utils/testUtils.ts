@@ -4,7 +4,7 @@ export const findByAttr = (
   wrapper: ShallowWrapper,
   key: string,
 ): ShallowWrapper => {
-  return wrapper.find({ 'data-test': key });
+  return wrapper.find({ 'testID': key });
 };
 
 export const sleep = (ms: number) => {

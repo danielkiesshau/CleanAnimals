@@ -34,7 +34,7 @@ const AnimalsList = (props: Props) => {
     ({ item }) => {
       return (
         <PokemonCard
-          data-test="animal-list-item"
+          testID="animal-list-item"
           pokemon={item}
           key={item.name}
           onPress={onPress}
@@ -49,10 +49,10 @@ const AnimalsList = (props: Props) => {
   }, []);
 
   return (
-    <StyledSafeArea>
+    <StyledSafeArea testID="container">
       <StyledList
         backgroundColor={themePalette.white1}
-        data-test="animals-list"
+        testID="animals-list"
         data={listController.searchData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -88,7 +88,7 @@ const AnimalsList = (props: Props) => {
           ref={(ref) => {
             listController.searchBarRef.current = ref;
           }}
-          data-test="search-bar"
+          testID="search-bar"
           onSearch={listController.filterList}
         />
       </ContainerSearchBar>
