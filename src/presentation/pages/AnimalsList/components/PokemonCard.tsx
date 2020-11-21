@@ -17,6 +17,7 @@ export default function PokemonCard(props: Props) {
   const { themePalette } = useContext(theme);
   return (
     <Container
+      testID={'poke-card'}
       onPress={() => {
         props.onPress(props.pokemon);
       }}

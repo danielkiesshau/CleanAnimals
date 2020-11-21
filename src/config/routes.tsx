@@ -70,7 +70,7 @@ export const RandomizeStack = () => {
 
   const headerRight = useCallback(
     () => (
-      <ButtonTheme onPress={toggleLightMode}>
+      <ButtonTheme onPress={toggleLightMode} testID="change-theme-button">
         <Icon
           name="model-training"
           size={fonts.icons.default}

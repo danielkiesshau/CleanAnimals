@@ -20,6 +20,7 @@ export default function HeaderButtons(props: Props) {
         <LoadIndicator color={themePalette.primary} size="small" />
       )}
       <Button
+        testID="navigate-left-button"
         onPress={() => {
           if (!props.leftDisabled) {
             props.onPress(false);
@@ -33,6 +34,7 @@ export default function HeaderButtons(props: Props) {
         />
       </Button>
       <Button
+        testID="navigate-right-button"
         onPress={() => {
           if (!props.rightDisabled) {
             props.onPress(true);
@@ -55,6 +57,7 @@ const Container = styled.View`
 `;
 
 const Button = styled(BorderlessButton)`
+  flex: 1;
   opacity: ${(props) => (props.isDisabled ? 0.2 : 1)};
 `;
 

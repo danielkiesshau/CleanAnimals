@@ -37,7 +37,14 @@ export default function App() {
           iconName = 'star';
         }
 
-        return <Icon name={iconName} size={size} color={color} />;
+        return (
+          <Icon
+            testID="tab-bar-button"
+            name={iconName}
+            size={size}
+            color={color}
+          />
+        );
       },
     }),
     [],

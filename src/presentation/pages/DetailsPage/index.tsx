@@ -144,6 +144,7 @@ function DetailsPage(props: Props) {
 
   return (
     <Container
+      testID="DetailsPage"
       ref={(ref) => {
         if (ref && !scrollView) {
           setScrollView(ref);
