@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, ViewProps } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import Pokemon from 'domain/models/Pokemon';
 import withLoading from 'presentation/HOCs/withLoading';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface Props {
   pokemon: Pokemon;
@@ -39,13 +40,13 @@ export default function ImageContainer(props: Props) {
           resizeMode="cover"
         />
       </Animated.View>
-      <EyeButton
-        isLoading={!pokemon.image}
-        color={themePalette.primary}
-        name={'visibility'}
-        onPress={props.toggleShiny}
-        size={fonts.icons.a}
-      />
+      <EyeButton isLoading={!pokemon.image} onPress={props.toggleShiny}>
+        <Icon
+          color={themePalette.primary}
+          name={'visibility'}
+          size={fonts.icons.a}
+        />
+      </EyeButton>
     </Container>
   );
 }
@@ -75,7 +76,7 @@ const ImagePokemon = styled.Image`
 
 const ImagePokemonWLoad = withLoading(ImagePokemon);
 
-const EyeButton = styled(Icon)`
+const EyeButton = styled(BorderlessButton)`
   position: absolute;
   top: 15px;
   right: 15px;

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BorderlessButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
@@ -18,28 +19,32 @@ export default function HeaderButtons(props: Props) {
       {props.isLoading && (
         <LoadIndicator color={themePalette.primary} size="small" />
       )}
-      <ChevronButton
-        isDisabled={props.leftDisabled}
-        name="chevron-left"
-        size={fonts.icons.header}
-        color={themePalette.primary}
+      <Button
         onPress={() => {
           if (!props.leftDisabled) {
             props.onPress(false);
           }
-        }}
-      />
-      <ChevronButton
-        isDisabled={props.rightDisabled}
-        name="chevron-right"
-        size={fonts.icons.header}
-        color={themePalette.primary}
+        }}>
+        <Icon
+          isDisabled={props.leftDisabled}
+          name="chevron-left"
+          size={fonts.icons.header}
+          color={themePalette.primary}
+        />
+      </Button>
+      <Button
         onPress={() => {
           if (!props.rightDisabled) {
             props.onPress(true);
           }
-        }}
-      />
+        }}>
+        <Icon
+          isDisabled={props.rightDisabled}
+          name="chevron-right"
+          size={fonts.icons.header}
+          color={themePalette.primary}
+        />
+      </Button>
     </Container>
   );
 }
@@ -49,7 +54,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const ChevronButton = styled(Icon)`
+const Button = styled(BorderlessButton)`
   opacity: ${(props) => (props.isDisabled ? 0.2 : 1)};
 `;
 

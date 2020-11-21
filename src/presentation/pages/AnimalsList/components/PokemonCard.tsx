@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { getTypeColor } from 'data/services/utils/pokeApiUtils';
 import Pokemon from 'domain/models/Pokemon';
@@ -7,18 +6,19 @@ import Label from 'presentation/components/Label';
 import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface Props {
   pokemon: Pokemon;
   onPress: any;
 }
-const SinglePress = withPreventDoubleClick(Pressable);
+const SinglePress = withPreventDoubleClick(RectButton);
 export default function PokemonCard(props: Props) {
   const { themePalette } = useContext(theme);
   return (
     <Container
-      onPress={(event) => {
-        props.onPress(event, props.pokemon);
+      onPress={() => {
+        props.onPress(props.pokemon);
       }}
       theme={themePalette}>
       <Image

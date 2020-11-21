@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, Pressable } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import Label from 'presentation/components/Label';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface Props {
   title: string;
@@ -60,12 +61,13 @@ export default function Accordion(props: Props) {
     transform: [{ rotateX: accordionAnimations.chevronAngle }],
   };
   return (
-    <Pressable
-      onPress={toggleAccordion}
-      onLayout={({ nativeEvent }) => {
-        positionY.current = nativeEvent.layout.y;
-      }}>
-      <Header backgroundColor={themePalette.white3}>
+    <>
+      <Header
+        onLayout={({ nativeEvent }) => {
+          positionY.current = nativeEvent.layout.y;
+        }}
+        onPress={toggleAccordion}
+        backgroundColor={themePalette.white3}>
         <StyledLabel autoCapitalize font={fonts.h2}>
           {props.title}
         </StyledLabel>
@@ -81,7 +83,7 @@ export default function Accordion(props: Props) {
         onLayout={onContentLayout}>
         {props.children}
       </Animated.View>
-    </Pressable>
+    </>
   );
 }
 
@@ -89,7 +91,7 @@ Accordion.defaultProps = {
   onAccordionOpened: () => {},
 };
 
-const Header = styled.View`
+const Header = styled(RectButton)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;

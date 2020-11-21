@@ -98,10 +98,11 @@ function DetailsPage(props: Props) {
   const onAccordionOpened = useCallback(
     (toValue: number, isOpening: boolean, positionY: number) => {
       InteractionManager.runAfterInteractions(() => {
-        const outOfFOV = positionY > scrollPosition.current;
+        const diff = scrollPosition.current - positionY;
+        const outOfFOV = (diff < 150 && diff > 75) || (diff < 0 && diff > -90);
         if (isOpening && outOfFOV) {
           scrollView?.scrollTo({
-            y: scrollPosition.current + toValue,
+            y: scrollPosition.current + toValue + 25,
           });
         }
       });

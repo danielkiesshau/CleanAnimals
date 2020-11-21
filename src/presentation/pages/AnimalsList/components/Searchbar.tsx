@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import { TextInputProps, ViewProps } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { BorderlessButton, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import theme, { Colors } from 'presentation/styles/theme';
@@ -39,16 +39,18 @@ const Searchbar = forwardRef((props: Props, ref) => {
   );
 
   const clearButton = search.length > 0 && (
-    <Icon
-      data-test="clear-button"
+    <BorderlessButton
       onPress={() => {
         setSearch('');
         props.onSearch('');
-      }}
-      name="highlight-off"
-      color={themePalette.primary}
-      size={24}
-    />
+      }}>
+      <Icon
+        data-test="clear-button"
+        name="highlight-off"
+        color={themePalette.primary}
+        size={24}
+      />
+    </BorderlessButton>
   );
 
   return (

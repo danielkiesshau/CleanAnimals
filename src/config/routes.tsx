@@ -9,6 +9,7 @@ import DetailsPage from 'presentation/pages/DetailsPage';
 import Pokemon from 'domain/models/Pokemon';
 import styled from 'styled-components/native';
 import fonts from 'presentation/styles/fonts';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 export type RootStackParamList = {
   AnimalList: undefined;
@@ -69,14 +70,15 @@ export const RandomizeStack = () => {
 
   const headerRight = useCallback(
     () => (
-      <ButtonTheme
-        name="model-training"
-        size={fonts.icons.default}
-        color={isLightMode ? themePalette.primary : themePalette.black}
-        onPress={toggleLightMode}
-      />
+      <ButtonTheme onPress={toggleLightMode}>
+        <Icon
+          name="model-training"
+          size={fonts.icons.default}
+          color={isLightMode ? themePalette.primary : themePalette.black}
+        />
+      </ButtonTheme>
     ),
-    [isLightMode, themePalette],
+    [isLightMode, themePalette, toggleLightMode],
   );
 
   const randomizeOptions = {
@@ -96,6 +98,6 @@ export const RandomizeStack = () => {
   );
 };
 
-const ButtonTheme = styled(Icon)`
+const ButtonTheme = styled(BorderlessButton)`
   margin-right: 20px;
 `;

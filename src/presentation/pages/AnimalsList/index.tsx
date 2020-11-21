@@ -19,9 +19,7 @@ const AnimalsList = (props: Props) => {
   const { themePalette } = useContext(theme);
 
   const onPress = useCallback(
-    (event, pokemon: Pokemon) => {
-      event.persist();
-
+    (pokemon: Pokemon) => {
       props.navigation.push('DetailsPage', {
         pokemon,
         pokemons: listController.data,

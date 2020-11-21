@@ -1,12 +1,16 @@
 import 'react-native-gesture-handler';
 import React, { useCallback, useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBarOptions,
+  BottomTabNavigationOptions,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import { enableScreens } from 'react-native-screens';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Theme from './presentation/styles/theme';
-import { Platform } from 'react-native';
 import { HomePageStack, RandomizeStack } from './config/routes';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Platform } from 'react-native';
 
 enableScreens();
 
@@ -23,7 +27,7 @@ export default function App() {
   }, [isLightMode, setLightMode]);
 
   const screenOptions = useCallback(
-    ({ route }) => ({
+    ({ route }): BottomTabNavigationOptions => ({
       tabBarIcon: ({ color, size }) => {
         let iconName;
 
@@ -39,7 +43,7 @@ export default function App() {
     [],
   );
 
-  const tabBarOptions = {
+  const tabBarOptions: BottomTabBarOptions = {
     tabStyle: {
       backgroundColor: themePalette[themeMode].white1,
     },

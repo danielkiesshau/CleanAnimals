@@ -1,6 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useContext, useState } from 'react';
-import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { RootStackParamList } from 'config/routes';
 import PokemonHttpService from 'data/services/PokemonHttpService';
@@ -10,13 +9,14 @@ import theme from 'presentation/styles/theme';
 import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import { POKE_BASE_URL } from 'data/services/utils/pokeApiUtils';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
   client: PokemonHttpService;
 }
 
-const SinglePress = withPreventDoubleClick(Pressable);
+const SinglePress = withPreventDoubleClick(BorderlessButton);
 
 const Randomize = (props: Props) => {
   const { themePalette } = useContext(theme);
@@ -70,7 +70,7 @@ const Container = styled.SafeAreaView`
   background-color: ${(props) => props.backgroundColor};
 `;
 
-const ContainerButton = styled(Pressable)`
+const ContainerButton = styled.View`
   align-items: center;
 `;
 
