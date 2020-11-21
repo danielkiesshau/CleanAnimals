@@ -19,18 +19,20 @@
           "avdName": "Pixel_2_API_29"
         }
     },
-    "ios": {
+    "ios.emu.debug": {
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CleanAnimals.app",
+      "build": "xcodebuild -workspace ios/CleanAnimals.xcworkspace -scheme CleanAnimals -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
       "type": "ios.simulator",
-      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY",
       "device": {
         "type": "iPhone 11"
       }
     },
-    "android": {
-      "type": "android.emulator",
-      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY",
+    "ios.emu.release": {
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CleanAnimals.app",
+      "build": "xcodebuild -workspace ios/CleanAnimals.xcworkspace -scheme CleanAnimals -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+      "type": "ios.simulator",
       "device": {
-        "avdName": "Pixel_2_API_29"
+        "type": "iPhone 11"
       }
     }
   }
