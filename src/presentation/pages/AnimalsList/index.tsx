@@ -12,6 +12,8 @@ import PokemonCard from './components/PokemonCard';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'config/routes';
 import useAnimalsList from './hooks/useAnimalsList';
+import Label from '../../components/Label';
+import fonts from '../../styles/fonts';
 const FlatListWLoad = withLoading(FlatList);
 
 const AnimalsList = (props: Props) => {
@@ -54,6 +56,7 @@ const AnimalsList = (props: Props) => {
         data={listController.searchData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        ListEmptyComponent={!listController.isLoading && <NoResult />}
         refreshControl={
           <RefreshControl
             tintColor={themePalette.primary}
@@ -121,6 +124,7 @@ interface ContainerSearchBarProps extends ViewProps {
 
 const StyledList = styled(FlatListWLoad).attrs((props) => ({
   contentContainerStyle: {
+    flex: 1,
     paddingTop: 60,
     backgroundColor: props.backgroundColor,
   },
@@ -143,4 +147,24 @@ const StyledSafeArea = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+function NoResult() {
+  const { themePalette } = useContext(theme);
+
+  return (
+    <ContainerNoResult>
+      <Label customColor={themePalette.gray1} font={fonts.h1}>
+        No pokemons found, try a different search!
+      </Label>
+    </ContainerNoResult>
+  );
+}
+
+const ContainerNoResult = styled.View`
+  flex: 1;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
 `;
