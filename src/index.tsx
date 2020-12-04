@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   BottomTabBarOptions,
@@ -11,6 +11,7 @@ import Theme from './presentation/styles/theme';
 import { HomePageStack, RandomizeStack } from './config/routes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Platform } from 'react-native';
+import NotificationService from './infra/notifications/NotificationService';
 
 enableScreens();
 
@@ -18,7 +19,6 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const { themePalette } = useContext(Theme);
-
   const [isLightMode, setLightMode] = useState(true);
   const themeMode = isLightMode ? 'light' : 'dark';
 
@@ -26,29 +26,9 @@ export default function App() {
     setLightMode(!isLightMode);
   }, [isLightMode, setLightMode]);
 
-  const screenOptions = useCallback(
-    ({ route }): BottomTabNavigationOptions => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName;
+  useNotifications();
 
-        if (route.name === 'AnimalsList') {
-          iconName = 'home';
-        } else if (route.name === 'Randomize') {
-          iconName = 'star';
-        }
-
-        return (
-          <Icon
-            testID="tab-bar-button"
-            name={iconName}
-            size={size}
-            color={color}
-          />
-        );
-      },
-    }),
-    [],
-  );
+  const screenOptions = useCallback(configureScreenOptions, []);
 
   const tabBarOptions: BottomTabBarOptions = {
     tabStyle: {
@@ -82,3 +62,27 @@ export default function App() {
     </Theme.Provider>
   );
 }
+
+const useNotifications = () => {
+  useEffect(() => {
+    console.log('note');
+    NotificationService.localNotification('PokeList', 'Welcome to PokeList');
+    return () => {};
+  }, []);
+};
+
+const configureScreenOptions = ({ route }): BottomTabNavigationOptions => ({
+  tabBarIcon: ({ color, size }) => {
+    let iconName;
+
+    if (route.name === 'AnimalsList') {
+      iconName = 'home';
+    } else if (route.name === 'Randomize') {
+      iconName = 'star';
+    }
+
+    return (
+      <Icon testID="tab-bar-button" name={iconName} size={size} color={color} />
+    );
+  },
+});

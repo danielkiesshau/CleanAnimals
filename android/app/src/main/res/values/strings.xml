@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CleanAnimals</string>
+    <string name="default_notification_channel_id">1k2m3klmasklmdkasdif908912u3hpy8zsdp</string>
 </resources>
