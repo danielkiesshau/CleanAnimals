@@ -66,7 +66,7 @@ export default function App() {
 const useNotifications = () => {
   useEffect(() => {
     console.log('note');
-    NotificationService.localNotification('PokeList', 'Welcome to PokeList');
+    NotificationService.localNotification('Clean Animals', 'Welcome!');
     return () => {};
   }, []);
 };
