@@ -1,5 +1,6 @@
 
-# Clean Animals - Simple app to practice quality code techniques
+# Clean Animals
+## Simple app to practice quality code techniques
 
 ## Pages
 ##### List
