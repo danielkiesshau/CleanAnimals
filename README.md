@@ -27,6 +27,8 @@
 
 - [x] Push Notifications
 
+## GIF
+<img src="src/data/screenshots/navigation.gif" height="450"/>
 
 ## Screenshots
 <img src="src/data/screenshots/List.png" height="450"/> <img src="src/data/screenshots/Detail.png" height="450"/>
