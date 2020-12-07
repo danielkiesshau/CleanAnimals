@@ -24,7 +24,8 @@
 
 
 ## Screenshots
-<img src="src/data/List.png" height="450"/> <img src="src/data/Detail.png" height="450"/>
-<img src="src/data/Randomize.png" height="450"/>
-<img src="src/data/List2.png" height="450"/> <img src="src/data/Detail2.png" height="450"/>
-<img src="src/data/Randomize2.png" height="450"/>
+<img src="src/data/screenshots/List.png" height="450"/> <img src="src/data/screenshots/Detail.png" height="450"/>
+<img src="src/data/screenshots/Random.png" height="450"/>
+
+<img src="src/data/screenshots/List2.png" height="450"/> <img src="src/data/screenshots/Detail2.png" height="450"/>
+<img src="src/data/screenshots/Random2.png" height="450"/>
