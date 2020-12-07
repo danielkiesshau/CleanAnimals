@@ -16,11 +16,15 @@
 - preload more pokemons as user get close to the end of the "horizontal" pagination
 
 ## Technical objectives
--[x] Clean Code
--[x] Clean Architecture
--[x] TDD - Unit, Integration, E2E (Jest, Enzyme and Detox)
--[x] Theme functionality
--[x] Push Notifications
+- [x] Clean Code
+
+- [x] Clean Architecture
+
+- [x] TDD - Unit, Integration, E2E (Jest, Enzyme and Detox)
+
+- [x] Theme functionality
+
+- [x] Push Notifications
 
 
 ## Screenshots
