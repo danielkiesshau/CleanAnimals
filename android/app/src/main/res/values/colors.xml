@@ -1,4 +1,5 @@
 <resources>
     <color name="white">#FFF</color>
-    <color name="primary">#32F21D1D</color>
+    <color name="primary">#F21D1D</color>
+    <color name="background">#FFF</color>
 </resources>
