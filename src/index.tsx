@@ -10,7 +10,7 @@ import { enableScreens } from 'react-native-screens';
 import Theme from './presentation/styles/theme';
 import { HomePageStack, RandomizeStack } from './config/routes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Platform } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import NotificationService from './infra/notifications/NotificationService';
 
 enableScreens();
@@ -52,6 +52,10 @@ export default function App() {
   return (
     <Theme.Provider value={value}>
       <NavigationContainer>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={value.themePalette.primary}
+        />
         <Tab.Navigator
           screenOptions={screenOptions}
           tabBarOptions={tabBarOptions}>
