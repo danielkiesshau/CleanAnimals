@@ -23,6 +23,8 @@
 
 - [x] TDD - Unit, Integration, E2E (Jest, Enzyme and Detox)
 
+- [x] Typescript
+
 - [x] Theme functionality
 
 - [x] Push Notifications
