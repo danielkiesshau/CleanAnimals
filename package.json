@@ -20,7 +20,6 @@
     "@react-navigation/bottom-tabs": "^5.10.4",
     "@react-navigation/native": "^5.8.4",
     "@react-navigation/stack": "^5.12.6",
-
     "axios": "^0.21.0",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
@@ -41,7 +40,7 @@
     "@babel/runtime": "^7.12.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/detox": "^16.4.2",
-    "@types/react-navigation/stack": "react-navigation/stack",
+    "@types/react-navigation": "react-navigation/stack",
     "@types/axios": "^0.14.0",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.15",
