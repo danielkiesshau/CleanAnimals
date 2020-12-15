@@ -40,7 +40,6 @@
     "@babel/runtime": "^7.12.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/detox": "^16.4.2",
-    "@types/react-navigation": "react-navigation/stack",
     "@types/axios": "^0.14.0",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.15",
