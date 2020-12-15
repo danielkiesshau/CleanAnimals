@@ -31,6 +31,6 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        run: ./gradlew build
+        run: ./android/gradlew build
 
 
