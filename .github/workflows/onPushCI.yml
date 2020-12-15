@@ -31,12 +31,12 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        run: ./android/gradlew assembleRelease
+        run: ./android/gradlew build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/
 
 
