@@ -1,5 +1,4 @@
 name: On Push CI
-
 on:
   push:
     branches:
@@ -8,9 +7,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
 
       - name: Checkout
@@ -31,7 +28,7 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        run: ./android/gradlew build
+        run: ./android/gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
