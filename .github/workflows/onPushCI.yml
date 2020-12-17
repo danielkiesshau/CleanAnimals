@@ -28,7 +28,7 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        run: ./android/gradlew assembleRelease
+        run: cd android && ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
