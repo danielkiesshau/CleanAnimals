@@ -124,7 +124,7 @@ interface ContainerSearchBarProps extends ViewProps {
 
 const StyledList = styled(FlatListWLoad).attrs((props) => ({
   contentContainerStyle: {
-    flex: 1,
+    flexGrow: 1,
     paddingTop: 60,
     backgroundColor: props.backgroundColor,
   },
