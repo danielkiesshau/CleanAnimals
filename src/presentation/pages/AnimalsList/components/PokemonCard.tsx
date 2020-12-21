@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { getTypeColor } from 'data/services/utils/pokeApiUtils';
 import Pokemon from 'domain/models/Pokemon';
@@ -7,6 +8,7 @@ import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { RectButton } from 'react-native-gesture-handler';
+import ContentLoader, { Circle, Rect } from 'react-content-loader/native';
 
 interface Props {
   pokemon: Pokemon;
@@ -46,14 +48,37 @@ export default function PokemonCard(props: Props) {
     </Container>
   );
 }
-const Container = styled(SinglePress)`
-  flex-direction: row;
-  align-items: center;
+
+export const PokemonCardSkeleton = () => {
+  const { themePalette } = useContext(theme);
+  return (
+    <SkeletonContainer theme={themePalette}>
+      <ContentLoader
+        viewBox="0 0 380 70"
+        backgroundColor={themePalette.white3}
+        foregroundColor={themePalette.lightPrimary}>
+        <Rect y="10" rx="4" ry="4" height="60" width="60" />
+        <Rect x="80" rx="4" ry="4" y="32" width="125" height="10" />
+        <Rect x="325" rx="4" ry="4" y="32" width="50" height="10" />
+      </ContentLoader>
+    </SkeletonContainer>
+  );
+};
+
+const BaseView = styled(SinglePress)`
   height: 70px;
   width: 100%;
-  padding: 10px;
   background-color: ${(props) => props.theme.white2};
   margin: 2px 0px;
+`;
+const SkeletonContainer = styled(BaseView).attrs((props) => ({
+  onPress: () => {},
+  activeOpacity: 0,
+}))``;
+
+const Container = styled(BaseView)`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Image = styled.Image`

@@ -6,6 +6,11 @@ import theme from 'presentation/styles/theme';
 export default function withLoading(Component) {
   return (props) => {
     const { themePalette } = useContext(theme);
+    if (props.isLoading && props.Skeleton) {
+      const { Skeleton } = props;
+      return <Skeleton />;
+    }
+
     return props.isLoading ? (
       <Container backgroundColor={themePalette.white1}>
         <ActivityIndicator

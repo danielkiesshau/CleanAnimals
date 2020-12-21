@@ -8,13 +8,16 @@ import PokemonHttpService from 'data/services/PokemonHttpService';
 import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import AnimalsHttp from 'domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
-import PokemonCard from './components/PokemonCard';
+import PokemonCard, { PokemonCardSkeleton } from './components/PokemonCard';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'config/routes';
 import useAnimalsList from './hooks/useAnimalsList';
 import Label from '../../components/Label';
 import fonts from '../../styles/fonts';
+
 const FlatListWLoad = withLoading(FlatList);
+const PokemonCardWSkeleton = withLoading(PokemonCard);
+const fakeData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 const AnimalsList = (props: Props) => {
   const listController = useAnimalsList(props.client, props.data);
@@ -33,7 +36,9 @@ const AnimalsList = (props: Props) => {
   const renderItem = useCallback(
     ({ item }) => {
       return (
-        <PokemonCard
+        <PokemonCardWSkeleton
+          isLoading={listController.isLoading}
+          Skeleton={PokemonCardSkeleton}
           testID="animal-list-item"
           pokemon={item}
           key={item.name}
@@ -41,7 +46,7 @@ const AnimalsList = (props: Props) => {
         />
       );
     },
-    [onPress],
+    [onPress, listController.isLoading],
   );
 
   const keyExtractor = useCallback((item: Pokemon) => {
@@ -53,7 +58,7 @@ const AnimalsList = (props: Props) => {
       <StyledList
         backgroundColor={themePalette.white1}
         testID="animals-list"
-        data={listController.searchData}
+        data={listController.isLoading ? fakeData : listController.searchData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListEmptyComponent={!listController.isLoading && <NoResult />}
@@ -66,9 +71,12 @@ const AnimalsList = (props: Props) => {
         }
         progressViewOffset={1000}
         refreshing={listController.isLoading}
-        isLoading={listController.isLoading}
         onEndReached={() => {
-          if (!listController.isPaginating && !listController.isSearching) {
+          if (
+            !listController.isPaginating &&
+            !listController.isSearching &&
+            !listController.isLoading
+          ) {
             listController.setPaginating(true);
             listController.setPage(listController.page + 1);
           }
