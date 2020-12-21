@@ -40,7 +40,10 @@ export default function ImageContainer(props: Props) {
           resizeMode="cover"
         />
       </Animated.View>
-      <EyeButton testID="shiny-button" isLoading={!pokemon.image} onPress={props.toggleShiny}>
+      <EyeButton
+        testID="shiny-button"
+        isLoading={!pokemon.image}
+        onPress={props.toggleShiny}>
         <Icon
           color={themePalette.primary}
           name={'visibility'}

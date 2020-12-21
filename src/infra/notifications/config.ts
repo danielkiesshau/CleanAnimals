@@ -1,9 +1,8 @@
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 
 PushNotification.configure({
   onRegister: function (token) {
-    console.log("TOKEN:", token);
+    console.log('TOKEN:', token);
   },
 
   onNotification: function (notification) {

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { getTypeColor } from 'data/services/utils/pokeApiUtils';
 import Pokemon from 'domain/models/Pokemon';
@@ -8,7 +7,7 @@ import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { RectButton } from 'react-native-gesture-handler';
-import ContentLoader, { Circle, Rect } from 'react-content-loader/native';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 
 interface Props {
   pokemon: Pokemon;
@@ -71,7 +70,7 @@ const BaseView = styled(SinglePress)`
   background-color: ${(props) => props.theme.white2};
   margin: 2px 0px;
 `;
-const SkeletonContainer = styled(BaseView).attrs((props) => ({
+const SkeletonContainer = styled(BaseView).attrs(() => ({
   onPress: () => {},
   activeOpacity: 0,
 }))``;

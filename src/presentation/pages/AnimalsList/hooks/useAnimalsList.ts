@@ -43,12 +43,13 @@ export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    searchBarRef.current.resetInput();
+    searchBarRef.current?.resetInput();
     loadPage(1);
   }, [searchBarRef, loadPage, setRefreshing]);
 
   useEffect(() => {
     loadPage();
+    // eslint-disable-next-line
   }, [page]);
 
   return {
