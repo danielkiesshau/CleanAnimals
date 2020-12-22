@@ -40,6 +40,7 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+clean-animals.keystore
 
 # fastlane
 #
