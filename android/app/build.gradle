@@ -18,7 +18,7 @@ import com.android.build.OutputFile
  *   // the entry file for bundle generation. If none specified and
  *   // "index.android.js" exists, it will be used. Otherwise "index.js" is
  *   // default. Can be overridden with ENTRY_FILE environment variable.
- *   entryFile: "index.android.js",
+ *   entryFile: "index.android.js",z
  *
  *   // https://reactnative.dev/docs/performance#enable-the-ram-format
  *   bundleCommand: "ram-bundle",
@@ -160,8 +160,8 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
