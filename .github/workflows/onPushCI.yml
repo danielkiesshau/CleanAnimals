@@ -28,8 +28,7 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        run: ./gradlew build
-          npm install
+        run:  cd android && ./gradlew build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
