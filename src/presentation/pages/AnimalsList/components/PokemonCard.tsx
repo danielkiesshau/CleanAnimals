@@ -8,6 +8,7 @@ import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { RectButton } from 'react-native-gesture-handler';
 import ContentLoader, { Rect } from 'react-content-loader/native';
+import { getConstratedColor } from '../../../../utils/styleUtils';
 
 interface Props {
   pokemon: Pokemon;
@@ -35,12 +36,15 @@ export default function PokemonCard(props: Props) {
         </Label>
         <ContainerTypes>
           {props.pokemon.type.map((type) => (
-            <LabelType
-              autoCapitalize
-              key={type}
-              customColor={getTypeColor(type)}>
-              {type}
-            </LabelType>
+            <ContainerType backgroundColor={getTypeColor(type)}>
+              <LabelType
+                autoCapitalize
+                font={fonts.h3}
+                key={type}
+                customColor={getConstratedColor(getTypeColor(type))}>
+                {type}
+              </LabelType>
+            </ContainerType>
           ))}
         </ContainerTypes>
       </ContainerLabels>
@@ -53,7 +57,9 @@ export const PokemonCardSkeleton = () => {
   return (
     <SkeletonContainer theme={themePalette}>
       <ContentLoader
-        viewBox="0 0 380 70"
+        viewBox="0 0 100 70"
+        width="100%"
+        height="70"
         backgroundColor={themePalette.white3}
         foregroundColor={themePalette.lightPrimary}>
         <Rect y="10" rx="4" ry="4" height="60" width="60" />
@@ -66,8 +72,9 @@ export const PokemonCardSkeleton = () => {
 
 const BaseView = styled(SinglePress)`
   height: 70px;
+  padding: 0px 0px 0px 0px;
   width: 100%;
-  background-color: ${(props) => props.theme.white2};
+  background-color: ${(props) => props.theme.white3};
   margin: 2px 0px;
 `;
 const SkeletonContainer = styled(BaseView).attrs(() => ({
@@ -78,6 +85,7 @@ const SkeletonContainer = styled(BaseView).attrs(() => ({
 const Container = styled(BaseView)`
   flex-direction: row;
   align-items: center;
+  padding: 0px 10px;
 `;
 
 const Image = styled.Image`
@@ -88,16 +96,23 @@ const Image = styled.Image`
 
 const ContainerLabels = styled.View`
   flex: 1;
+  align-self: stretch;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
 
 const ContainerTypes = styled.View`
+  height: 100%;
   flex-direction: row;
   align-items: center;
 `;
 
-const LabelType = styled(Label)`
-  margin: 0px 6px 0px 0px;
+const ContainerType = styled.View`
+  height: 100%;
+  width: 75px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.backgroundColor};
 `;
+const LabelType = styled(Label)``;

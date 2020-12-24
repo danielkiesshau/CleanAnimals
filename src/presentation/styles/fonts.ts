@@ -7,6 +7,10 @@ const fonts = {
     fontSize: 17,
     fontWeight: '300',
   },
+  h3: {
+    fontSize: 15,
+    fontWeight: '800',
+  },
   t1: {
     fontSize: 12,
     fontWeight: '500',

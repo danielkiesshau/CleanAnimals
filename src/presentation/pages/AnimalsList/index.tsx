@@ -54,7 +54,18 @@ const AnimalsList = (props: Props) => {
   }, []);
 
   return (
-    <StyledSafeArea testID="container">
+    <StyledSafeArea testID="container" backgrounColor={themePalette.white1}>
+      <ContainerSearchBar>
+        <Searchbar
+          isEditable={!listController.isLoading}
+          placeholder="Write here to search!"
+          ref={(ref) => {
+            listController.searchBarRef.current = ref;
+          }}
+          testID="search-bar"
+          onSearch={listController.filterList}
+        />
+      </ContainerSearchBar>
       <StyledList
         backgroundColor={themePalette.white1}
         testID="animals-list"
@@ -64,6 +75,7 @@ const AnimalsList = (props: Props) => {
         ListEmptyComponent={!listController.isLoading && <NoResult />}
         refreshControl={
           <RefreshControl
+            colors={[themePalette.primary]}
             tintColor={themePalette.primary}
             refreshing={listController.isRefreshing}
             onRefresh={listController.onRefresh}
@@ -88,18 +100,6 @@ const AnimalsList = (props: Props) => {
         }
         onEndReachedThreshold={0.1}
       />
-      <ContainerSearchBar isRefreshing={listController.isRefreshing}>
-        <Searchbar
-          isDisabled={listController.isRefreshing}
-          isEditable={!listController.isLoading}
-          placeholder="Write here to search!"
-          ref={(ref) => {
-            listController.searchBarRef.current = ref;
-          }}
-          testID="search-bar"
-          onSearch={listController.filterList}
-        />
-      </ContainerSearchBar>
     </StyledSafeArea>
   );
 };
@@ -133,7 +133,6 @@ interface ContainerSearchBarProps extends ViewProps {
 const StyledList = styled(FlatListWLoad).attrs((props) => ({
   contentContainerStyle: {
     flexGrow: 1,
-    paddingTop: 60,
     backgroundColor: props.backgroundColor,
   },
 }))`
@@ -142,8 +141,8 @@ const StyledList = styled(FlatListWLoad).attrs((props) => ({
 
 const ContainerSearchBar = styled.View<ContainerSearchBarProps>`
   width: 100%;
-  position: absolute;
-  top: 8px;
+  margin-top: 5px;
+  z-index: 2;
   opacity: ${(props) => (props.isRefreshing ? 0.1 : 1)};
 `;
 
@@ -155,6 +154,7 @@ const StyledSafeArea = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: ${props => props.backgrounColor}
 `;
 
 function NoResult() {
