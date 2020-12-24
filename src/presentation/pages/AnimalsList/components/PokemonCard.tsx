@@ -57,14 +57,13 @@ export const PokemonCardSkeleton = () => {
   return (
     <SkeletonContainer theme={themePalette}>
       <ContentLoader
-        viewBox="0 0 100 70"
         width="100%"
         height="70"
         backgroundColor={themePalette.white3}
         foregroundColor={themePalette.lightPrimary}>
-        <Rect y="10" rx="4" ry="4" height="60" width="60" />
-        <Rect x="80" rx="4" ry="4" y="32" width="125" height="10" />
-        <Rect x="325" rx="4" ry="4" y="32" width="50" height="10" />
+        <Rect x="15" y="4" rx="4" ry="4" height="60" width="60" />
+        <Rect x="20%" rx="4" ry="4" y="28" width="25%" height="10" />
+        <Rect x="89%" rx="4" ry="4" y="28" width="10%" height="10" />
       </ContentLoader>
     </SkeletonContainer>
   );
