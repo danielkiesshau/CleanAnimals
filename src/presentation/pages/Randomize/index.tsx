@@ -10,6 +10,7 @@ import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import { POKE_BASE_URL } from 'data/services/utils/pokeApiUtils';
 import { BorderlessButton } from 'react-native-gesture-handler';
+const packageJson = require('../../../../package.json');
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
@@ -52,6 +53,11 @@ const Randomize = (props: Props) => {
         {isLoading && (
           <LoadIndicator color={themePalette.primary} size="small" />
         )}
+        <VersionContainer>
+          <Label font={fonts.h1} customColor={themePalette.lightPrimary}>
+            v{packageJson.version}
+          </Label>
+        </VersionContainer>
       </ContainerButton>
     </Container>
   );
@@ -87,4 +93,9 @@ const DiscoverLabel = styled(Label)`
 const LoadIndicator = styled.ActivityIndicator`
   position: absolute;
   top: 35px;
+`;
+
+const VersionContainer = styled.View`
+  padding-bottom: 20px;
+  margin-top: 20px;
 `;
