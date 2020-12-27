@@ -97,5 +97,5 @@ const LoadIndicator = styled.ActivityIndicator`
 
 const VersionContainer = styled.View`
   padding-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 50px;
 `;
