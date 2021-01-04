@@ -9,7 +9,7 @@ const fonts = {
   },
   h3: {
     fontSize: 15,
-    fontWeight: '800',
+    fontWeight: '600',
   },
   t1: {
     fontSize: 12,

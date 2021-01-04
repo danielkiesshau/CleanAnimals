@@ -1,8 +1,9 @@
 import HttpClient from 'infra/http/HttpClient';
 import { EvolutionsRest } from 'domain/services/pokeApI/types';
+import { API_BASE_URL } from '@env';
 
 export const getEndPoint = (url: string) => {
-  return url.split('https://pokeapi.co/api/v2/')[1];
+  return url.split(API_BASE_URL)[1];
 };
 
 export const getRestResponse = async (client: HttpClient, url: string) => {
@@ -64,5 +65,3 @@ const mapRecursiveEvolution = (evolution, evolutions: string[]) => {
 };
 
 export const TOTAL_AVAILABLE_POKEMONS = 890;
-
-export const POKE_BASE_URL = 'https://pokeapi.co/api/v2/';

@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Pokemon from 'domain/models/Pokemon';
 import AnimalsHttp from 'domain/services/AnimalsHttp';
+import { ContextClientAPI } from '../../../../domain/services/Factories/ClientAPI';
 
 export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
+  const { client, setClientAPI } = useContext(ContextClientAPI);
   const searchBarRef = useRef();
-  const client = useRef(clientProp);
   const [data, setData] = React.useState(dataProp);
   const [searchData, setSearchData] = React.useState(data);
   const [isLoading, setLoading] = React.useState(true);
@@ -15,9 +16,10 @@ export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
 
   const loadPage = useCallback(
     async (forcePage?: number) => {
-      const result = await client.current.getAnimals(forcePage || page, 25);
+      const result = await client.getAnimals(forcePage || page, 25);
       const newData = page > 1 ? [...data, ...result] : result;
       setData(newData);
+      client.animals = newData;
       setSearchData(newData);
       setLoading(false);
       setPaginating(false);
@@ -34,7 +36,7 @@ export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
         return;
       }
 
-      const result = await client.current.getAnimalByName(text, data);
+      const result = await client.getAnimalByName(text, data);
       setSearching(true);
       setSearchData(result);
     },
@@ -43,7 +45,7 @@ export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    searchBarRef.current?.resetInput();
+    searchBarRef?.resetInput();
     loadPage(1);
   }, [searchBarRef, loadPage, setRefreshing]);
 

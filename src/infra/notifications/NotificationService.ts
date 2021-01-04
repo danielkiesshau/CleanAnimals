@@ -1,10 +1,12 @@
 import PushNotification from 'react-native-push-notification';
+import { API_KEY, NOTIFICATION_ICON_URL } from '@env';
 import './config';
+
 class NotificationService {
   static localNotification(title: string, message: string) {
     PushNotification.localNotification({
-      channelId: '1k2m3klmasklmdkasdif908912u3hpy8zsdp',
-      largeIconUrl: 'https://i.imgur.com/QK6xMNu.png',
+      channelId: API_KEY,
+      largeIconUrl: NOTIFICATION_ICON_URL,
       message,
       title,
     });

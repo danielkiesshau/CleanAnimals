@@ -36,11 +36,10 @@ export default function PokemonCard(props: Props) {
         </Label>
         <ContainerTypes>
           {props.pokemon.type.map((type) => (
-            <ContainerType backgroundColor={getTypeColor(type)}>
+            <ContainerType key={type} backgroundColor={getTypeColor(type)}>
               <LabelType
                 autoCapitalize
                 font={fonts.h3}
-                key={type}
                 customColor={getConstratedColor(getTypeColor(type))}>
                 {type}
               </LabelType>

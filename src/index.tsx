@@ -12,6 +12,7 @@ import { HomePageStack, RandomizeStack } from './config/routes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Platform, StatusBar } from 'react-native';
 import NotificationService from './infra/notifications/NotificationService';
+import { ContextClientAPI } from './domain/services/Factories/ClientAPI';
 
 enableScreens();
 
@@ -19,6 +20,8 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const { themePalette } = useContext(Theme);
+  const { client: clientAPI } = useContext(ContextClientAPI);
+  const [client, setClientAPI] = useState(clientAPI);
   const [isLightMode, setLightMode] = useState(true);
   const themeMode = isLightMode ? 'light' : 'dark';
 
@@ -50,26 +53,31 @@ export default function App() {
   };
 
   return (
-    <Theme.Provider value={value}>
-      <NavigationContainer>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={value.themePalette.primary}
-        />
-        <Tab.Navigator
-          screenOptions={screenOptions}
-          tabBarOptions={tabBarOptions}>
-          <Tab.Screen name="AnimalsList" component={HomePageStack} />
-          <Tab.Screen name="Randomize" component={RandomizeStack} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Theme.Provider>
+    <ContextClientAPI.Provider
+      value={{
+        client,
+        setClientAPI,
+      }}>
+      <Theme.Provider value={value}>
+        <NavigationContainer>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={value.themePalette.primary}
+          />
+          <Tab.Navigator
+            screenOptions={screenOptions}
+            tabBarOptions={tabBarOptions}>
+            <Tab.Screen name="AnimalsList" component={HomePageStack} />
+            <Tab.Screen name="Randomize" component={RandomizeStack} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Theme.Provider>
+    </ContextClientAPI.Provider>
   );
 }
 
 const useNotifications = () => {
   useEffect(() => {
-    console.log('note');
     NotificationService.localNotification('Clean Animals', 'Welcome!');
     return () => {};
   }, []);

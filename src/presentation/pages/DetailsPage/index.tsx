@@ -14,12 +14,8 @@ import styled from 'styled-components/native';
 import { RootStackParamList } from 'config/routes';
 import pokemonDetailLoad from 'data/mock/pokemonDetailLoad';
 import PokemonHttpService from 'data/services/PokemonHttpService';
-import {
-  POKE_BASE_URL,
-  TOTAL_AVAILABLE_POKEMONS,
-} from 'data/services/utils/pokeApiUtils';
+import { TOTAL_AVAILABLE_POKEMONS } from 'data/services/utils/pokeApiUtils';
 import Pokemon from 'domain/models/Pokemon';
-import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import { capitalize } from 'utils/stringUtils';
 import theme from 'presentation/styles/theme';
 import HeaderButtons from './components/HeaderButtons';
@@ -28,15 +24,18 @@ import Moves from './components/Moves';
 import Section from './components/Section';
 import Stats from './components/Stats';
 import Type from './components/Type';
+import { ContextClientAPI } from '../../../domain/services/Factories/ClientAPI';
 
 const GET_PER_PAGINATION = 25;
 
 function DetailsPage(props: Props) {
+  let isMounted = useRef(true);
   let scrollPosition = useRef(0);
   let animatedOpacity = useRef(new Animated.Value(0));
   let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
+  const { client } = useContext(ContextClientAPI);
   const { themePalette } = useContext(theme);
   const [showNormal, setShowNormal] = useState(true);
   const [showShiny, setShowShiny] = useState(false);
@@ -64,14 +63,16 @@ function DetailsPage(props: Props) {
         currentPointer.current >= (page - 1) * GET_PER_PAGINATION - 10
       ) {
         setLoading(true);
-        const result = await props.client.getAnimals(page, GET_PER_PAGINATION);
+        const result = await client.getAnimals(page, GET_PER_PAGINATION);
         const newPage = page + 1;
         pokemons.current = [...pokemons.current, ...result];
-        setPage(newPage);
-        setLoading(false);
+        if (isMounted.current) {
+          setPage(newPage);
+          setLoading(false);
+        }
       }
     },
-    [setPokemon, props.client, props.navigation, isLoading, page, pokemon],
+    [setPokemon, client, props.navigation, isLoading, page, pokemon],
   );
 
   useLayoutEffect(() => {
@@ -177,10 +178,6 @@ function DetailsPage(props: Props) {
 }
 
 export default DetailsPage;
-
-DetailsPage.defaultProps = {
-  client: new PokemonHttpService(new AxiosHttpClient(POKE_BASE_URL)),
-};
 
 interface Props {
   route: RouteProp<RootStackParamList, 'DetailsPage'>;

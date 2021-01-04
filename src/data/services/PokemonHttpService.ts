@@ -123,7 +123,7 @@ export default class PokemonHttpService implements AnimalsHttp {
     return mapEvolutionsMap(result.data);
   }
 
-  async getRandomPokemon() {
+  async getRandomAnimal() {
     return this.getAnimal(
       undefined,
       getRandomInt(1, TOTAL_AVAILABLE_POKEMONS).toString(),

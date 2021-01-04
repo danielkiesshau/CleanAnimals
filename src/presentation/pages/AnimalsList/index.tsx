@@ -4,8 +4,6 @@ import Pokemon from 'domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
 import theme from 'presentation/styles/theme';
 import withLoading from 'presentation/HOCs/withLoading';
-import PokemonHttpService from 'data/services/PokemonHttpService';
-import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import AnimalsHttp from 'domain/services/AnimalsHttp';
 import styled from 'styled-components/native';
 import PokemonCard, { PokemonCardSkeleton } from './components/PokemonCard';
@@ -20,7 +18,7 @@ const PokemonCardWSkeleton = withLoading(PokemonCard);
 const fakeData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 const AnimalsList = (props: Props) => {
-  const listController = useAnimalsList(props.client, props.data);
+  const listController = useAnimalsList(props.data);
   const { themePalette } = useContext(theme);
 
   const onPress = useCallback(
@@ -41,7 +39,6 @@ const AnimalsList = (props: Props) => {
           Skeleton={PokemonCardSkeleton}
           testID="animal-list-item"
           pokemon={item}
-          key={item.name}
           onPress={onPress}
         />
       );
@@ -106,10 +103,6 @@ const AnimalsList = (props: Props) => {
 
 AnimalsList.defaultProps = {
   data: [],
-  client: new PokemonHttpService(
-    new AxiosHttpClient('https://pokeapi.co/api/v2/'),
-  ),
-  // client: new MockAnimalsHttp(),
 };
 
 export default AnimalsList;

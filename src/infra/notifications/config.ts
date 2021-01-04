@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import { API_KEY } from '@env';
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -17,7 +18,7 @@ PushNotification.configure({
 
 PushNotification.createChannel(
   {
-    channelId: '1k2m3klmasklmdkasdif908912u3hpy8zsdp',
+    channelId: API_KEY,
     channelName: 'Local channel',
   },
   (created) => console.log(`createChannel returned '${created}'`),

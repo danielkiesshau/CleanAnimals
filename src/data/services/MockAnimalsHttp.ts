@@ -12,7 +12,7 @@ export default class MockAnimalsHttp implements AnimalsHttp {
 
   async getAnimals(page, itemsPerPage) {
     await sleep(350);
-    const offset = page * itemsPerPage;
+    const offset = (page - 1) * itemsPerPage;
     return this.animals.splice(offset, itemsPerPage);
   }
 
@@ -30,8 +30,9 @@ export default class MockAnimalsHttp implements AnimalsHttp {
     );
   }
 
-  async getRandomPokemon() {
+  async getRandomAnimal() {
     await sleep(350);
+    console.log('RANDOM', this.animals);
     return this.animals[getRandomInt(0, this.animals.length)];
   }
 }

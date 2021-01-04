@@ -6,10 +6,9 @@ import PokemonHttpService from 'data/services/PokemonHttpService';
 import Label from 'presentation/components/Label';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
-import AxiosHttpClient from 'infra/http/AxiosHttpClient';
 import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
-import { POKE_BASE_URL } from 'data/services/utils/pokeApiUtils';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { ContextClientAPI } from 'domain/services/Factories/ClientAPI';
 const packageJson = require('../../../../package.json');
 
 interface Props {
@@ -20,18 +19,19 @@ interface Props {
 const SinglePress = withPreventDoubleClick(BorderlessButton);
 
 const Randomize = (props: Props) => {
+  const { client } = useContext(ContextClientAPI);
   const { themePalette } = useContext(theme);
   const [isLoading, setLoading] = useState(false);
 
   const discoverPressed = useCallback(async () => {
     setLoading(true);
-    const pokemon = await props.client.getRandomPokemon();
+    const pokemon = await client.getRandomAnimal();
     setLoading(false);
     props.navigation.navigate('DetailsPage', {
       pokemon,
       pokemons: [],
     });
-  }, [props.navigation, setLoading, props.client]);
+  }, [props.navigation, setLoading, client]);
 
   return (
     <Container backgroundColor={themePalette.white1}>
@@ -55,7 +55,7 @@ const Randomize = (props: Props) => {
         )}
         <VersionContainer>
           <Label font={fonts.h1} customColor={themePalette.lightPrimary}>
-            v{packageJson.version}
+            {`v${packageJson.version}`}
           </Label>
         </VersionContainer>
       </ContainerButton>
@@ -64,10 +64,6 @@ const Randomize = (props: Props) => {
 };
 
 export default Randomize;
-
-Randomize.defaultProps = {
-  client: new PokemonHttpService(new AxiosHttpClient(POKE_BASE_URL)),
-};
 
 const Container = styled.SafeAreaView`
   flex: 1;
