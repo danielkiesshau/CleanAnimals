@@ -22,7 +22,7 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export const HomePageStack = (props) => {
+export const HomePageStack = () => {
   const { themePalette, isLightMode } = useContext(Theme);
 
   const screenOptions = {

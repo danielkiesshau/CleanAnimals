@@ -4,7 +4,7 @@ import AnimalsHttp from 'domain/services/AnimalsHttp';
 import { ContextClientAPI } from '../../../../domain/services/Factories/ClientAPI';
 
 export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
-  const { client, setClientAPI } = useContext(ContextClientAPI);
+  const { client } = useContext(ContextClientAPI);
   const searchBarRef = useRef();
   const [data, setData] = React.useState(dataProp);
   const [searchData, setSearchData] = React.useState(data);

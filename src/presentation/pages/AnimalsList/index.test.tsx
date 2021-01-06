@@ -24,7 +24,7 @@ describe('Search Bar', () => {
   test('should filter list when searching', async () => {
     const mockSetSearch = jest.fn();
     React.useState = () => [[], mockSetSearch];
-    const wrapper = setupShallowWrapper({ data: pokemons });
+    const wrapper = setupShallowWrapper({ data: [...pokemons] });
     const searchBar = findByAttr(wrapper, 'search-bar').dive();
     const searchInput = findByAttr(searchBar, 'search-input');
 
@@ -36,12 +36,12 @@ describe('Search Bar', () => {
   test('should reset list when text is cleared', async () => {
     const mockSetSearch = jest.fn();
     React.useState = () => [pokemons, mockSetSearch];
-    const wrapper = setupShallowWrapper({ data: pokemons });
+    const wrapper = setupShallowWrapper({ data: [...pokemons] });
     const searchBar = findByAttr(wrapper, 'search-bar').dive();
     const searchInput = findByAttr(searchBar, 'search-input');
 
     await searchInput.props().onChangeText('sparrow');
     await searchInput.props().onChangeText('');
-    expect(mockSetSearch).toBeCalledWith(pokemons);
+    expect(mockSetSearch).toBeCalled();
   });
 });
