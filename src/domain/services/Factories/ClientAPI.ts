@@ -9,13 +9,13 @@ import AnimalsHttp from '../AnimalsHttp';
 
 const clients = {
   POKEMON: PokemonHttpService,
-  DOGS: DogsHttpService,
+  DOG: DogsHttpService,
   MOCK: MockAnimalsHttp,
 };
 
 export enum ClientAPITypes {
   POKEMON = 'POKEMON',
-  DOGS = 'DOGS',
+  DOG = 'DOG',
 }
 
 export class ClientAPI {

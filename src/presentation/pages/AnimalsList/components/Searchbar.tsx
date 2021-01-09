@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   Ref,
+  useRef,
   useCallback,
   useContext,
   useImperativeHandle,
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const Searchbar = forwardRef((props: Props, ref) => {
+  let timeout = useRef();
   const { themePalette } = useContext(theme);
   const [search, setSearch] = React.useState(props.initialValue);
 
@@ -32,10 +34,15 @@ const Searchbar = forwardRef((props: Props, ref) => {
 
   const onSearch = useCallback(
     (text) => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
       setSearch(text);
-      props.onSearch(text);
+      timeout.current = setTimeout(() => {
+        props.onSearch(text);
+      }, 300);
     },
-    [props],
+    [props, timeout],
   );
 
   const clearButton = search.length > 0 && (

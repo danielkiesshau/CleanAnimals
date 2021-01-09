@@ -1,4 +1,10 @@
+import { API_CLASS } from '@env';
 import MockAnimalsHttp from './MockAnimalsHttp';
+const APIs = {
+  DOG: 'Standard Schnauzer',
+  POKEMON: 'sparrow',
+};
+
 describe('MockAnimalsHttp', () => {
   let client: MockAnimalsHttp;
 
@@ -11,12 +17,12 @@ describe('MockAnimalsHttp', () => {
     expect(isArray).toBeTruthy();
   });
 
-  const testWord = 'sparrow';
+  const testWord = APIs[API_CLASS];
   test(`filter '${testWord}' should return results that contain that word`, async () => {
     const result = await client.getAnimalByName(testWord);
 
     expect(
-      result.find((a) => a.name.toLowerCase().includes(testWord.toLowerCase())),
+      result.find((a) => a.name?.toLowerCase() === testWord.toLowerCase()),
     ).toBeTruthy();
   });
 

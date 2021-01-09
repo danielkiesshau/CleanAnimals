@@ -30,13 +30,16 @@ export default (clientProp: AnimalsHttp, dataProp: Pokemon[]) => {
 
   const filterList = useCallback(
     async (text) => {
+      setLoading(true);
       if (text.length === 0) {
+        setLoading(false);
         setSearching(false);
         setSearchData(data);
         return;
       }
 
       const result = await client.getAnimalByName(text, data);
+      setLoading(false);
       setSearching(true);
       setSearchData(result);
     },

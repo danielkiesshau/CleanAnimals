@@ -8,7 +8,7 @@ import pokemons from '../mock/pokemons';
 
 const mocks = {
   POKEMON: pokemons,
-  DOGS: dogs,
+  DOG: dogs,
 };
 
 export default class MockAnimalsHttp implements AnimalsHttp {
@@ -26,7 +26,7 @@ export default class MockAnimalsHttp implements AnimalsHttp {
   async getAnimalByName(searchValue: string) {
     await sleep(350);
     const returnedArray = [...this.animals];
-    return returnedArray.filter((animal: Pokemon) =>
+    return returnedArray.filter((animal) =>
       animal.name.toLowerCase().includes(searchValue.toLowerCase()),
     );
   }

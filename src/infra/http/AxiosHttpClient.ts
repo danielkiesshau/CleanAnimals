@@ -9,9 +9,9 @@ export default class AxiosHttpClient implements HttpClient {
     });
   }
 
-  async get(endpoint, params) {
+  get = async (endpoint, params) => {
     return this.client.get(endpoint, {
       params,
     });
-  }
+  };
 }

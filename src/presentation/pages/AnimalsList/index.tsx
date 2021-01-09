@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react';
 import { FlatList, RefreshControl, ViewProps } from 'react-native';
-import Pokemon from 'domain/models/Pokemon';
 import Searchbar from './components/Searchbar';
 import theme from 'presentation/styles/theme';
 import withLoading from 'presentation/HOCs/withLoading';
@@ -12,9 +11,16 @@ import { RootStackParamList } from 'config/routes';
 import useAnimalsList from './hooks/useAnimalsList';
 import Label from '../../components/Label';
 import fonts from '../../styles/fonts';
+import DogCard from './components/DogCard';
+import { API_CLASS } from '@env';
+
+const cards = {
+  POKEMON: PokemonCard,
+  DOG: DogCard,
+};
 
 const FlatListWLoad = withLoading(FlatList);
-const PokemonCardWSkeleton = withLoading(PokemonCard);
+const AnimalCardWSkeleton = withLoading(cards[API_CLASS]);
 const fakeData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 const AnimalsList = (props: Props) => {
@@ -22,10 +28,10 @@ const AnimalsList = (props: Props) => {
   const { themePalette } = useContext(theme);
 
   const onPress = useCallback(
-    (pokemon: Pokemon) => {
+    (animal) => {
       props.navigation.push('DetailsPage', {
-        pokemon,
-        pokemons: listController.data,
+        animal,
+        animals: listController.data,
       });
     },
     [props.navigation, listController.data],
@@ -34,11 +40,11 @@ const AnimalsList = (props: Props) => {
   const renderItem = useCallback(
     ({ item }) => {
       return (
-        <PokemonCardWSkeleton
+        <AnimalCardWSkeleton
           isLoading={listController.isLoading}
           Skeleton={PokemonCardSkeleton}
           testID="animal-list-item"
-          pokemon={item}
+          animal={item}
           onPress={onPress}
         />
       );
@@ -46,8 +52,8 @@ const AnimalsList = (props: Props) => {
     [onPress, listController.isLoading],
   );
 
-  const keyExtractor = useCallback((item: Pokemon) => {
-    return item.id;
+  const keyExtractor = useCallback((item, index) => {
+    return index.toString();
   }, []);
 
   return (
@@ -95,7 +101,7 @@ const AnimalsList = (props: Props) => {
             <PaginationLoadIcon size="large" color={themePalette.primary} />
           )
         }
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.6}
       />
     </StyledSafeArea>
   );
@@ -113,9 +119,9 @@ export type AnimalsNavigationProps = StackNavigationProp<
 >;
 
 interface Props {
-  data: Pokemon[];
+  data: Array<any>;
   client: AnimalsHttp;
-  pokemon: Pokemon;
+  animal: any;
   navigation: AnimalsNavigationProps;
 }
 
@@ -156,7 +162,7 @@ function NoResult() {
   return (
     <ContainerNoResult>
       <Label customColor={themePalette.gray1} font={fonts.h1}>
-        No pokemons found, try a different search!
+        {`No ${API_CLASS.toLowerCase()}s found, try a different search!`}
       </Label>
     </ContainerNoResult>
   );

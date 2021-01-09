@@ -1,8 +1,6 @@
-import Pokemon from 'domain/models/Pokemon';
-
 export default interface AnimalsHttp {
-  getAnimals: (page: number, itemsPerPage: number) => Promise<Pokemon[]>;
-  getAnimalByName: (searchValue: string, animals: any[]) => Promise<Pokemon[]>;
-  getAnimal: (ref: string, id?: string) => Promise<Pokemon | void>;
-  getRandomAnimal: () => Promise<Pokemon>;
+  getAnimals: (page: number, itemsPerPage: number) => Promise<any[]>;
+  getAnimalByName: (searchValue: string, animals: any[]) => Promise<any[]>;
+  getAnimal: (ref: string, id?: string) => Promise<any | void>;
+  getRandomAnimal: () => Promise<any>;
 }

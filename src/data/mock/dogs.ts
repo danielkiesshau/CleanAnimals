@@ -1,5 +1,6 @@
 export default [
   {
+    name: 'Standard Schnauzer',
     breeds: [
       {
         weight: {
@@ -26,6 +27,7 @@ export default [
     height: 1920,
   },
   {
+    name: 'Standard Schnauzer',
     breeds: [
       {
         weight: {
@@ -52,6 +54,7 @@ export default [
     height: 800,
   },
   {
+    name: 'Tibetan Terrier',
     breeds: [
       {
         weight: {
@@ -79,6 +82,7 @@ export default [
     height: 1226,
   },
   {
+    name: 'Tibetan Terrier',
     breeds: [
       {
         weight: {
@@ -106,6 +110,7 @@ export default [
     height: 1080,
   },
   {
+    name: 'Tibetan Terrier',
     breeds: [
       {
         weight: {

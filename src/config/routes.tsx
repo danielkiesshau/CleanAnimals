@@ -6,17 +6,15 @@ import Theme from 'presentation/styles/theme';
 import AnimalsList from 'presentation/pages/AnimalsList';
 import Randomize from 'presentation/pages/Randomize';
 import DetailsPage from 'presentation/pages/DetailsPage';
-import Pokemon from 'domain/models/Pokemon';
 import styled from 'styled-components/native';
 import fonts from 'presentation/styles/fonts';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { API_CLASS } from '@env';
+import { capitalize } from 'utils/stringUtils';
 
 export type RootStackParamList = {
   AnimalList: undefined;
-  DetailsPage: {
-    pokemon: Pokemon;
-    pokemons: Pokemon[];
-  };
+  DetailsPage: any;
   Randomize: undefined;
 };
 
@@ -44,7 +42,7 @@ export const HomePageStack = () => {
         name="AnimalList"
         component={AnimalsList}
         options={{
-          title: 'Pokemons',
+          title: capitalize(API_CLASS.toLowerCase()) + 's',
         }}
       />
       <Stack.Screen name="DetailsPage" component={DetailsPage} />

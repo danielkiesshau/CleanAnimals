@@ -1,21 +1,19 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/native';
-import { getTypeColor } from 'data/services/utils/pokeApiUtils';
-import Pokemon from 'domain/models/Pokemon';
+import Dog from 'domain/models/Dog';
 import Label from 'presentation/components/Label';
 import withPreventDoubleClick from 'presentation/HOCs/withPreventDoubleClick';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { RectButton } from 'react-native-gesture-handler';
 import ContentLoader, { Rect } from 'react-content-loader/native';
-import { getConstratedColor } from '../../../../utils/styleUtils';
 
 interface Props {
-  pokemon: Pokemon;
+  dog: Dog;
   onPress: any;
 }
 const SinglePress = withPreventDoubleClick(RectButton);
-export default function PokemonCard(props: Props) {
+export default function DogCard(props: Props) {
   const { themePalette } = useContext(theme);
   return (
     <Container
@@ -34,24 +32,20 @@ export default function PokemonCard(props: Props) {
         <Label customColor={themePalette.black} autoCapitalize font={fonts.h1}>
           {props.animal.name}
         </Label>
-        <ContainerTypes>
-          {props.animal.type.map((type) => (
-            <ContainerType key={type} backgroundColor={getTypeColor(type)}>
-              <LabelType
-                autoCapitalize
-                font={fonts.h3}
-                customColor={getConstratedColor(getTypeColor(type))}>
-                {type}
-              </LabelType>
-            </ContainerType>
-          ))}
-        </ContainerTypes>
+        <RightContainer>
+          <Label
+            customColor={themePalette.black}
+            autoCapitalize
+            font={fonts.h1}>
+            {props.animal.breedGroup}
+          </Label>
+        </RightContainer>
       </ContainerLabels>
     </Container>
   );
 }
 
-export const PokemonCardSkeleton = () => {
+export const DogCardSkeleton = () => {
   const { themePalette } = useContext(theme);
   return (
     <SkeletonContainer theme={themePalette}>
@@ -100,17 +94,8 @@ const ContainerLabels = styled.View`
   justify-content: space-between;
 `;
 
-const ContainerTypes = styled.View`
+const RightContainer = styled.View`
   height: 100%;
   flex-direction: row;
   align-items: center;
 `;
-
-const ContainerType = styled.View`
-  height: 100%;
-  width: 75px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${(props) => props.backgroundColor};
-`;
-const LabelType = styled(Label)``;

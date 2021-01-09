@@ -19,27 +19,52 @@ export default class DogsHttpService implements AnimalsHttp {
       offset: offset,
     });
 
-    const m = response.data.map(this.mapDog).filter((d) => d.name);
-    console.log('M', m);
-    return m;
+    // TODO: tratar alguns momentos que o load inicial traz menos do que
+    // o itemsPerPage
+    const dogs: Dog[] = response.data.map(this.mapDog).filter((d) => d.name);
+    const removeDuplicates = [];
+
+    return dogs.filter((dog) => {
+      if (!removeDuplicates.includes(dog.name)) {
+        removeDuplicates.push(dog.name);
+        return true;
+      }
+      return false;
+    });
   }
 
-  getAnimalByName() {}
+  async getAnimalByName(searchValue: string) {
+    const dogResponse = await this.client.get('/breeds/search', {
+      q: searchValue.toLocaleLowerCase(),
+    });
 
-  getAnimal() {}
+    const getCompleteDogs = dogResponse.data.map((dogRest: DogRest) =>
+      this.getAnimal(dogRest.id),
+    );
+
+    const dogs = await Promise.all(getCompleteDogs);
+    return dogs.filter((d) => d);
+  }
+
+  async getAnimal(id: string) {
+    const result = await this.client.get('/images/search', {
+      breed_id: id,
+    });
+
+    return result.data.length > 0 ? this.mapDog(result.data[0]) : null;
+  }
 
   getRandomAnimal() {}
 
   mapDog(dogRest: DogRest) {
-    console.log('DUREGS', dogRest);
     const breed = dogRest.breeds[0];
     const dog: Dog = {
       id: dogRest.id,
       image: dogRest.url,
-      breedGroup: breed?.breed_group,
-      lifeSpan: breed?.life_span,
-      name: breed?.name,
-      temperament: breed?.temperament,
+      breedGroup: breed?.breed_group || '',
+      lifeSpan: breed?.life_span || '',
+      name: breed?.name || '',
+      temperament: breed?.temperament || '',
     };
 
     return dog;
