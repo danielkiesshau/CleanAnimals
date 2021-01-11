@@ -80,7 +80,7 @@ export const RandomizeStack = () => {
   );
 
   const randomizeOptions = {
-    title: 'Random Pokemon',
+    title: 'Random ' + capitalize(API_CLASS.toLocaleLowerCase()),
     headerRight,
   };
 
