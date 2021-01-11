@@ -13,9 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { RootStackParamList } from 'config/routes';
 import pokemonDetailLoad from 'data/mock/pokemonDetailLoad';
-import PokemonHttpService from 'data/services/PokemonHttpService';
 import { TOTAL_AVAILABLE_POKEMONS } from 'data/services/utils/pokeApiUtils';
-import Pokemon from 'domain/models/Pokemon';
 import { capitalize } from 'utils/stringUtils';
 import theme from 'presentation/styles/theme';
 import HeaderButtons from './components/HeaderButtons';
@@ -25,6 +23,7 @@ import Section from './components/Section';
 import Stats from './components/Stats';
 import Type from './components/Type';
 import { ContextClientAPI } from '../../../domain/services/Factories/ClientAPI';
+import HttpClient from '../../../infra/http/HttpClient';
 
 const GET_PER_PAGINATION = 25;
 
@@ -32,7 +31,7 @@ function DetailsPage(props: Props) {
   let isMounted = useRef(true);
   let scrollPosition = useRef(0);
   let animatedOpacity = useRef(new Animated.Value(0));
-  let currentPointer = useRef(Number(props.route?.params?.pokemon.id));
+  let currentPointer = useRef(Number(props.route?.params?.animal.id));
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
   const { client } = useContext(ContextClientAPI);
@@ -40,23 +39,21 @@ function DetailsPage(props: Props) {
   const [showNormal, setShowNormal] = useState(true);
   const [showShiny, setShowShiny] = useState(false);
   const [page, setPage] = useState(2);
-  const [pokemon, setPokemon] = useState(props.route?.params?.pokemon);
-  const pokemons = useRef(props.route?.params?.pokemons || []);
+  const [animal, setAnimal] = useState(props.route?.params?.animal);
+  const animals = useRef(props.route?.params?.animals || []);
   const [isLoading, setLoading] = useState(false);
 
   const headerButtonPressed = useCallback(
     async (isRightButtonPressed) => {
-      let newPokemon: Pokemon;
+      let newAnimal;
       currentPointer.current += isRightButtonPressed ? 1 : -1;
 
-      newPokemon = pokemons.current[currentPointer.current];
+      newAnimal = animals.current[currentPointer.current];
       props.navigation.setOptions({
-        title: capitalize(newPokemon?.name || pokemon.name),
+        title: capitalize(newAnimal?.name || animal.name),
       });
 
-      setPokemon(
-        !newPokemon ? { ...pokemon, ...pokemonDetailLoad } : newPokemon,
-      );
+      setAnimal(!newAnimal ? { ...animal, ...pokemonDetailLoad } : newAnimal);
 
       if (
         !isLoading &&
@@ -65,20 +62,20 @@ function DetailsPage(props: Props) {
         setLoading(true);
         const result = await client.getAnimals(page, GET_PER_PAGINATION);
         const newPage = page + 1;
-        pokemons.current = [...pokemons.current, ...result];
+        animals.current = [...animals.current, ...result];
         if (isMounted.current) {
           setPage(newPage);
           setLoading(false);
         }
       }
     },
-    [setPokemon, client, props.navigation, isLoading, page, pokemon],
+    [setAnimal, client, props.navigation, isLoading, page, animal],
   );
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () =>
-        pokemons.current.length > 0 && (
+        animals.current.length > 0 && (
           <HeaderButtons
             isLoading={isLoading}
             onPress={headerButtonPressed}
@@ -87,11 +84,11 @@ function DetailsPage(props: Props) {
           />
         ),
     });
-  }, [props.navigation, isLoading, headerButtonPressed, pokemon]);
+  }, [props.navigation, isLoading, headerButtonPressed, animal]);
 
   useEffect(() => {
     props.navigation.setOptions({
-      title: capitalize(props.route?.params?.pokemon?.name),
+      title: capitalize(props.route?.params?.animal?.name),
     });
     return () => {};
   }, [props.route, props.navigation, props]);
@@ -160,19 +157,19 @@ function DetailsPage(props: Props) {
       scrollEventThrottle={16}
       backgroundColor={themePalette.white2}>
       <ImageContainer
-        pokemon={pokemon}
+        animal={animal}
         toggleShiny={toggleShiny}
         showShiny={showShiny}
         showNormal={showNormal}
         animatedShinyContainer={animatedShinyContainer}
       />
       <Section isRow title="Type">
-        {pokemon.type.map((type) => (
+        {animal.type?.map((type) => (
           <Type key={type} type={type} />
         ))}
       </Section>
-      <Stats pokemon={pokemon} />
-      <Moves pokemon={pokemon} onAccordionOpened={onAccordionOpened} />
+      <Stats animal={animal} />
+      <Moves animal={animal} onAccordionOpened={onAccordionOpened} />
     </Container>
   );
 }
@@ -182,7 +179,7 @@ export default DetailsPage;
 interface Props {
   route: RouteProp<RootStackParamList, 'DetailsPage'>;
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
-  client: PokemonHttpService;
+  client: HttpClient;
 }
 
 const Container = styled.ScrollView.attrs(() => ({

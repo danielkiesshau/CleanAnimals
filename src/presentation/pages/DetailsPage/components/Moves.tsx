@@ -6,16 +6,16 @@ import Accordion from './Accordion';
 import Section from './Section';
 
 interface Props {
-  pokemon: Pokemon;
+  animal: Pokemon;
   onAccordionOpened: Function;
 }
 
 export default function Moves(props: Props) {
-  const { pokemon, onAccordionOpened } = props;
+  const { animal, onAccordionOpened } = props;
 
   return (
     <Section title="Moves">
-      {pokemon.moves.map((move) => (
+      {animal.moves?.map((move) => (
         <Accordion
           onAccordionOpened={onAccordionOpened}
           key={move.name}

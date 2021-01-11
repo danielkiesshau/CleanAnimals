@@ -6,53 +6,53 @@ import Section from './Section';
 import Stat from './Stat';
 
 interface Props {
-  pokemon: Pokemon;
+  animal: Pokemon;
 }
 
 export default function Stats(props: Props) {
   const { themePalette } = useContext(theme);
-  const { pokemon } = props;
+  const { animal } = props;
 
   return (
     <StatsContainer isRow isWrap title="Base stats">
       <Stat
         stat="hp"
-        value={pokemon.stats.hp.toString()}
+        value={animal.stats?.hp.toString()}
         backgroundColor={themePalette.white3}
       />
       <Stat
         stat="attack"
-        value={pokemon.stats.attack.toString()}
+        value={animal.stats?.attack.toString()}
         backgroundColor={themePalette.secondary}
       />
       <Stat
         stat="defense"
-        value={pokemon.stats.defense.toString()}
+        value={animal.stats?.defense.toString()}
         backgroundColor={themePalette.secondary}
       />
       <Stat
         stat="specialAttack"
-        value={pokemon.stats.specialAttack.toString()}
+        value={animal.stats?.specialAttack.toString()}
         backgroundColor={themePalette.white3}
       />
       <Stat
         stat="specialDefense"
-        value={pokemon.stats.specialDefense.toString()}
+        value={animal.stats?.specialDefense.toString()}
         backgroundColor={themePalette.white3}
       />
       <Stat
         stat="speed"
-        value={pokemon.stats.speed.toString()}
+        value={animal.stats?.speed.toString()}
         backgroundColor={themePalette.secondary}
       />
       <Stat
         stat="specialAttack"
-        value={pokemon.stats.specialAttack.toString()}
+        value={animal.stats?.specialAttack.toString()}
         backgroundColor={themePalette.secondary}
       />
       <Stat
         stat="specialDefense"
-        value={pokemon.stats.specialDefense.toString()}
+        value={animal.stats?.specialDefense.toString()}
         backgroundColor={themePalette.white3}
       />
     </StatsContainer>

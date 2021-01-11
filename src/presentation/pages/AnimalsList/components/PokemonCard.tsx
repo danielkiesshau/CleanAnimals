@@ -11,7 +11,7 @@ import ContentLoader, { Rect } from 'react-content-loader/native';
 import { getConstratedColor } from '../../../../utils/styleUtils';
 
 interface Props {
-  pokemon: Pokemon;
+  animal: Pokemon;
   onPress: any;
 }
 const SinglePress = withPreventDoubleClick(RectButton);
@@ -35,7 +35,7 @@ export default function PokemonCard(props: Props) {
           {props.animal.name}
         </Label>
         <ContainerTypes>
-          {props.animal.type.map((type) => (
+          {props.animal.type?.map((type) => (
             <ContainerType key={type} backgroundColor={getTypeColor(type)}>
               <LabelType
                 autoCapitalize

@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import { StyleSheet, Animated, ViewProps } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
-import Pokemon from 'domain/models/Pokemon';
 import withLoading from 'presentation/HOCs/withLoading';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface Props {
-  pokemon: Pokemon;
+  animal: any;
   animatedShinyContainer?: any;
   toggleShiny: Function;
   showShiny?: boolean;
@@ -18,31 +17,31 @@ interface Props {
 
 export default function ImageContainer(props: Props) {
   const { themePalette } = useContext(theme);
-  const { pokemon } = props;
+  const { animal } = props;
   return (
     <Container backgroundColor={themePalette.white1}>
       {props.showNormal && (
-        <ImagePokemonWLoad
-          isLoading={!pokemon.image}
+        <ImageAnimalWLoad
+          isLoading={!animal.image}
           source={{
-            uri: pokemon.image,
+            uri: animal.image,
           }}
           resizeMode="cover"
         />
       )}
       <Animated.View
         style={[animated.imageContainer, props.animatedShinyContainer]}>
-        <ImagePokemonWLoad
-          isLoading={!pokemon.image}
+        <ImageAnimalWLoad
+          isLoading={!animal.image}
           source={{
-            uri: pokemon.shinyImage,
+            uri: animal.shinyImage,
           }}
           resizeMode="cover"
         />
       </Animated.View>
       <EyeButton
         testID="shiny-button"
-        isLoading={!pokemon.image}
+        isLoading={!animal.image}
         onPress={props.toggleShiny}>
         <Icon
           color={themePalette.primary}
@@ -77,7 +76,7 @@ const ImagePokemon = styled.Image`
   width: 265px;
 `;
 
-const ImagePokemonWLoad = withLoading(ImagePokemon);
+const ImageAnimalWLoad = withLoading(ImagePokemon);
 
 const EyeButton = styled(BorderlessButton)`
   position: absolute;
