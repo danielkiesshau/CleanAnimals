@@ -2,7 +2,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useContext, useState } from 'react';
 import styled from 'styled-components/native';
 import { RootStackParamList } from 'config/routes';
-import PokemonHttpService from 'data/services/PokemonHttpService';
 import Label from 'presentation/components/Label';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
@@ -11,11 +10,12 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { ContextClientAPI } from 'domain/services/Factories/ClientAPI';
 import { API_CLASS } from '@env';
 import { capitalize } from '../../../utils/stringUtils';
+import HttpClient from '../../../infra/http/HttpClient';
 const packageJson = require('../../../../package.json');
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DetailsPage'>;
-  client: PokemonHttpService;
+  client: HttpClient;
 }
 
 const SinglePress = withPreventDoubleClick(BorderlessButton);
@@ -27,11 +27,11 @@ const Randomize = (props: Props) => {
 
   const discoverPressed = useCallback(async () => {
     setLoading(true);
-    const pokemon = await client.getRandomAnimal();
+    const animal = await client.getRandomAnimal();
     setLoading(false);
     props.navigation.navigate('DetailsPage', {
-      pokemon,
-      pokemons: [],
+      animal,
+      animals: [],
     });
   }, [props.navigation, setLoading, client]);
 

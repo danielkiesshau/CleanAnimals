@@ -54,7 +54,22 @@ export default class DogsHttpService implements AnimalsHttp {
     return result.data.length > 0 ? this.mapDog(result.data[0]) : null;
   }
 
-  getRandomAnimal() {}
+  async getRandomAnimal() {
+    let response;
+
+    while (
+      (!response && !response?.data[0]?.breeds[0]?.name) ||
+      !response?.data[0]
+    ) {
+      response = await this.client.get('/images/search', {
+        limit: 1,
+        offset: Math.round(Math.random() * 150),
+      });
+      console.log('DEBUG: RESPONSE', response);
+    }
+
+    return this.mapDog(response?.data[0]);
+  }
 
   mapDog(dogRest: DogRest) {
     const breed = dogRest.breeds[0];
