@@ -18,20 +18,24 @@ import { capitalize } from 'utils/stringUtils';
 import theme from 'presentation/styles/theme';
 import HeaderButtons from './components/HeaderButtons';
 import ImageContainer from './components/ImageContainer';
-import Moves from './components/Moves';
-import Section from './components/Section';
-import Stats from './components/Stats';
-import Type from './components/Type';
 import { ContextClientAPI } from '../../../domain/services/Factories/ClientAPI';
 import HttpClient from '../../../infra/http/HttpClient';
+import PokemonDetails from './components/PokemonDetails';
+import DogDetails from './components/DogDetails';
+import { API_CLASS } from '@env';
 
 const GET_PER_PAGINATION = 25;
+const detailComponents = {
+  POKEMON: PokemonDetails,
+  DOG: DogDetails,
+};
+const Details = detailComponents[API_CLASS];
 
 function DetailsPage(props: Props) {
   let isMounted = useRef(true);
   let scrollPosition = useRef(0);
   let animatedOpacity = useRef(new Animated.Value(0));
-  let currentPointer = useRef(Number(props.route?.params?.animal.id));
+  let currentPointer = useRef(0);
   let [scrollView, setScrollView] = useState<ScrollView | undefined>();
 
   const { client } = useContext(ContextClientAPI);
@@ -43,15 +47,23 @@ function DetailsPage(props: Props) {
   const animals = useRef(props.route?.params?.animals || []);
   const [isLoading, setLoading] = useState(false);
 
+  const setHeaderTitle = useCallback(
+    (animalName) => {
+      const title = capitalize(animalName);
+      props.navigation.setOptions({
+        title: title.length > 20 ? title + '...' : title,
+      });
+    },
+    [props.navigation],
+  );
   const headerButtonPressed = useCallback(
     async (isRightButtonPressed) => {
       let newAnimal;
       currentPointer.current += isRightButtonPressed ? 1 : -1;
 
       newAnimal = animals.current[currentPointer.current];
-      props.navigation.setOptions({
-        title: capitalize(newAnimal?.name || animal.name),
-      });
+
+      setHeaderTitle(newAnimal?.name || animal.name);
 
       setAnimal(!newAnimal ? { ...animal, ...pokemonDetailLoad } : newAnimal);
 
@@ -69,7 +81,7 @@ function DetailsPage(props: Props) {
         }
       }
     },
-    [setAnimal, client, props.navigation, isLoading, page, animal],
+    [setAnimal, setHeaderTitle, client, isLoading, page, animal],
   );
 
   useLayoutEffect(() => {
@@ -87,11 +99,16 @@ function DetailsPage(props: Props) {
   }, [props.navigation, isLoading, headerButtonPressed, animal]);
 
   useEffect(() => {
-    props.navigation.setOptions({
-      title: capitalize(props.route?.params?.animal?.name),
-    });
+    currentPointer.current = props.route?.params?.animals.findIndex(
+      (a) => a.name === animal.name,
+    );
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    setHeaderTitle(props.route?.params?.animal?.name);
     return () => {};
-  }, [props.route, props.navigation, props]);
+  }, [setHeaderTitle, props.route, props.navigation, props]);
 
   const onAccordionOpened = useCallback(
     (toValue: number, isOpening: boolean, positionY: number) => {
@@ -163,13 +180,7 @@ function DetailsPage(props: Props) {
         showNormal={showNormal}
         animatedShinyContainer={animatedShinyContainer}
       />
-      <Section isRow title="Type">
-        {animal.type?.map((type) => (
-          <Type key={type} type={type} />
-        ))}
-      </Section>
-      <Stats animal={animal} />
-      <Moves animal={animal} onAccordionOpened={onAccordionOpened} />
+      <Details animal={animal} onAccordionOpened={onAccordionOpened} />
     </Container>
   );
 }

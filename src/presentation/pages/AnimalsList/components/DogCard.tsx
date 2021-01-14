@@ -29,9 +29,13 @@ export default function DogCard(props: Props) {
         resizeMode="cover"
       />
       <ContainerLabels>
-        <Label customColor={themePalette.black} autoCapitalize font={fonts.h1}>
+        <StyledLabel
+          numberOfLines={1}
+          customColor={themePalette.black}
+          autoCapitalize
+          font={fonts.h1}>
           {props.animal.name}
-        </Label>
+        </StyledLabel>
         <RightContainer>
           <Label
             customColor={themePalette.black}
@@ -62,6 +66,11 @@ export const DogCardSkeleton = () => {
   );
 };
 
+const StyledLabel = styled(Label)`
+  flex: 1;
+  margin: 0px 10px;
+`;
+
 const BaseView = styled(SinglePress)`
   height: 70px;
   padding: 0px 0px 0px 0px;
@@ -69,6 +78,7 @@ const BaseView = styled(SinglePress)`
   background-color: ${(props) => props.theme.white3};
   margin: 2px 0px;
 `;
+
 const SkeletonContainer = styled(BaseView).attrs(() => ({
   onPress: () => {},
   activeOpacity: 0,

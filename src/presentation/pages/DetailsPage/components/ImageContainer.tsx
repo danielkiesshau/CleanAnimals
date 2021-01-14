@@ -6,6 +6,7 @@ import withLoading from 'presentation/HOCs/withLoading';
 import fonts from 'presentation/styles/fonts';
 import theme from 'presentation/styles/theme';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { API_CLASS } from '@env';
 
 interface Props {
   animal: any;
@@ -39,16 +40,18 @@ export default function ImageContainer(props: Props) {
           resizeMode="cover"
         />
       </Animated.View>
-      <EyeButton
-        testID="shiny-button"
-        isLoading={!animal.image}
-        onPress={props.toggleShiny}>
-        <Icon
-          color={themePalette.primary}
-          name={'visibility'}
-          size={fonts.icons.a}
-        />
-      </EyeButton>
+      {API_CLASS === 'POKEMON' && (
+        <EyeButton
+          testID="shiny-button"
+          isLoading={!animal.image}
+          onPress={props.toggleShiny}>
+          <Icon
+            color={themePalette.primary}
+            name={'visibility'}
+            size={fonts.icons.a}
+          />
+        </EyeButton>
+      )}
     </Container>
   );
 }
@@ -73,7 +76,7 @@ const Container = styled.View<ImageContainerProps>`
 
 const ImagePokemon = styled.Image`
   height: 265px;
-  width: 265px;
+  width: 100%;
 `;
 
 const ImageAnimalWLoad = withLoading(ImagePokemon);

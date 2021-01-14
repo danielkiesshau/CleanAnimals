@@ -11,6 +11,10 @@ const fonts = {
     fontSize: 15,
     fontWeight: '600',
   },
+  t0: {
+    fontSize: 15,
+    fontWeight: '300',
+  },
   t1: {
     fontSize: 12,
     fontWeight: '500',

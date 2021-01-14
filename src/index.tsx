@@ -12,6 +12,7 @@ import { HomePageStack, RandomizeStack } from './config/routes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Platform, StatusBar } from 'react-native';
 import { ContextClientAPI } from './domain/services/Factories/ClientAPI';
+import NotificationService from './infra/notifications/NotificationService';
 
 enableScreens();
 
@@ -77,8 +78,7 @@ export default function App() {
 
 const useNotifications = () => {
   useEffect(() => {
-    // TODO: descomentar
-    // NotificationService.localNotification('Clean Animals', 'Welcome!');
+    NotificationService.localNotification('Clean Animals', 'Welcome!');
     return () => {};
   }, []);
 };

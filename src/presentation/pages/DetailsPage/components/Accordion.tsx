@@ -11,6 +11,7 @@ interface Props {
   title: string;
   children: Array<any> | any;
   onAccordionOpened: Function;
+  startOpen: boolean;
 }
 
 const PADDING = 25;
@@ -19,7 +20,7 @@ const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 export default function Accordion(props: Props) {
   const positionY = useRef();
   const { onAccordionOpened } = props;
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState();
   const { themePalette } = useContext(theme);
   const accordionAnimations = useAccordionAnimation();
 
@@ -32,6 +33,13 @@ export default function Accordion(props: Props) {
       );
     }
   }, [onAccordionOpened, accordionAnimations.contentHeight, isOpen]);
+
+  useEffect(() => {
+    if (props.startOpen) {
+      toggleAccordion();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const onContentLayout = ({ nativeEvent: { layout } }) => {
     if (!accordionAnimations.contentHeight) {

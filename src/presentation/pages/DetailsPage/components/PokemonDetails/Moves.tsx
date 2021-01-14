@@ -2,8 +2,8 @@ import React from 'react';
 import Pokemon from 'domain/models/Pokemon';
 import Label from 'presentation/components/Label';
 import fonts from 'presentation/styles/fonts';
-import Accordion from './Accordion';
-import Section from './Section';
+import Accordion from '../Accordion';
+import Section from '../Section';
 
 interface Props {
   animal: Pokemon;

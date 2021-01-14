@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components/native';
 import Pokemon from 'domain/models/Pokemon';
 import theme from 'presentation/styles/theme';
-import Section from './Section';
-import Stat from './Stat';
+import Section from '../Section';
+import Card from '../Card';
 
 interface Props {
   animal: Pokemon;
@@ -15,42 +15,42 @@ export default function Stats(props: Props) {
 
   return (
     <StatsContainer isRow isWrap title="Base stats">
-      <Stat
+      <Card
         stat="hp"
         value={animal.stats?.hp.toString()}
         backgroundColor={themePalette.white3}
       />
-      <Stat
+      <Card
         stat="attack"
         value={animal.stats?.attack.toString()}
         backgroundColor={themePalette.secondary}
       />
-      <Stat
+      <Card
         stat="defense"
         value={animal.stats?.defense.toString()}
         backgroundColor={themePalette.secondary}
       />
-      <Stat
+      <Card
         stat="specialAttack"
         value={animal.stats?.specialAttack.toString()}
         backgroundColor={themePalette.white3}
       />
-      <Stat
+      <Card
         stat="specialDefense"
         value={animal.stats?.specialDefense.toString()}
         backgroundColor={themePalette.white3}
       />
-      <Stat
+      <Card
         stat="speed"
         value={animal.stats?.speed.toString()}
         backgroundColor={themePalette.secondary}
       />
-      <Stat
+      <Card
         stat="specialAttack"
         value={animal.stats?.specialAttack.toString()}
         backgroundColor={themePalette.secondary}
       />
-      <Stat
+      <Card
         stat="specialDefense"
         value={animal.stats?.specialDefense.toString()}
         backgroundColor={themePalette.white3}

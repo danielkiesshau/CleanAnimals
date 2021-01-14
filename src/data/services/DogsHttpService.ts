@@ -65,7 +65,6 @@ export default class DogsHttpService implements AnimalsHttp {
         limit: 1,
         offset: Math.round(Math.random() * 150),
       });
-      console.log('DEBUG: RESPONSE', response);
     }
 
     return this.mapDog(response?.data[0]);
