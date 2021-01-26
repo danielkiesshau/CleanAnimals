@@ -1,6 +1,6 @@
 {
   "name": "CleanAnimals",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "android:release": "react-native run-android --variant=release",
