@@ -19,8 +19,6 @@ export default class DogsHttpService implements AnimalsHttp {
       offset: offset,
     });
 
-    // TODO: tratar alguns momentos que o load inicial traz menos do que
-    // o itemsPerPage
     const dogs: Dog[] = response.data.map(this.mapDog).filter((d) => d.name);
     const removeDuplicates = [];
 

@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import codePush from 'react-native-code-push';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   BottomTabBarOptions,
@@ -18,7 +19,7 @@ enableScreens();
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default codePush(() => {
   const { themePalette } = useContext(Theme);
   const { client: clientAPI } = useContext(ContextClientAPI);
   const [client, setClientAPI] = useState(clientAPI);
@@ -74,7 +75,7 @@ export default function App() {
       </Theme.Provider>
     </ContextClientAPI.Provider>
   );
-}
+});
 
 const useNotifications = () => {
   useEffect(() => {
