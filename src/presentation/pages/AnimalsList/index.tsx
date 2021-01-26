@@ -61,7 +61,7 @@ const AnimalsList = (props: Props) => {
       <ContainerSearchBar>
         <Searchbar
           isEditable={!listController.isLoading}
-          placeholder="Write here to search!4"
+          placeholder="Write here to search!"
           ref={(ref) => {
             listController.searchBarRef.current = ref;
           }}
