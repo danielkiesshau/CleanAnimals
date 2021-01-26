@@ -5,42 +5,42 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: load_json" time="0.000501">
+      <testcase classname="fastlane.lanes" name="0: load_json" time="0.000555">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to inc_ver_ios lane" time="0.000195">
+      <testcase classname="fastlane.lanes" name="1: Switch to inc_ver_ios lane" time="0.000188">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: load_json" time="0.000273">
+      <testcase classname="fastlane.lanes" name="2: load_json" time="0.00028">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: increment_build_number" time="1.152187">
+      <testcase classname="fastlane.lanes" name="3: increment_build_number" time="1.243416">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: increment_version_number" time="0.660088">
+      <testcase classname="fastlane.lanes" name="4: increment_version_number" time="0.75562">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: Switch to inc_ver_and lane" time="0.000208">
+      <testcase classname="fastlane.lanes" name="5: Switch to inc_ver_and lane" time="0.000202">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: increment_version_code" time="0.002337">
+      <testcase classname="fastlane.lanes" name="6: increment_version_code" time="0.001711">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="7: increment_version_name" time="0.005104">
+      <testcase classname="fastlane.lanes" name="7: increment_version_name" time="0.001138">
         
       </testcase>
     

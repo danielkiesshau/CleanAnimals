@@ -16,9 +16,10 @@
     "e2e:test:ios:d": "detox test --configuration ios.emu.debug --watch",
     "e2e:build:android:d": "detox build --configuration android.emu.debug",
     "e2e:test:android:d": "detox test --configuration android.emu.debug --watch",
-    "bump-patch": "npm version patch && bundle exec fastlane bump",
-    "bump-minor": "npm version minor && bundle exec fastlane bump",
-    "bump-major": "npm version major && bundle exec fastlane bump",
+    "bump-patch": "npm version patch && bundle exec fastlane bump && npm run commit-version",
+    "bump-minor": "npm version minor && bundle exec fastlane bump && npm run commit-version",
+    "bump-major": "npm version major && bundle exec fastlane bump && npm run commit-version",
+    "commit-version": "git add . && git ci 'new file versions'",
     "codepush:staging": "appcenter codepush release-react -a danielkiesshau/CleanAnimals -c ./bundles/ -d Staging"
   },
   "husky": {
