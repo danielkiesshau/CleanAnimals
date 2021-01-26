@@ -18,7 +18,8 @@
     "e2e:test:android:d": "detox test --configuration android.emu.debug --watch",
     "bump-patch": "npm version patch && bundle exec fastlane bump",
     "bump-minor": "npm version minor && bundle exec fastlane bump",
-    "bump-major": "npm version major && bundle exec fastlane bump"
+    "bump-major": "npm version major && bundle exec fastlane bump",
+    "codepush:staging": "appcenter codepush release-react -a danielkiesshau/CleanAnimals -c ./bundles/ -d Staging"
   },
   "husky": {
     "hooks": {

@@ -35,10 +35,16 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
+        @Override
+        protected String getJSBundleFile() {
+            return CodePush.getJSBundleFile();
+        }
       };
 
   @Override
   public ReactNativeHost getReactNativeHost() {
+
     return mReactNativeHost;
   }
 
@@ -49,9 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
-  protected String getJSBundleFile() {
-    return CodePush.getJSBundleFile();
-  }
+
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
