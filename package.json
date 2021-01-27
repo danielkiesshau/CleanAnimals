@@ -1,6 +1,6 @@
 {
   "name": "CleanAnimals",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "cp:local:gradle": "cp -f local-gradle ./android/app/build.gradle && cp -f local-gradle.properties ./android/gradle.properties",
