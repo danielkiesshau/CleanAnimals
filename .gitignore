@@ -58,3 +58,5 @@ clean-animals.keystore
 
 # CocoaPods
 /ios/Pods/
+
+local-gradle*

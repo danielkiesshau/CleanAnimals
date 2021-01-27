@@ -3,6 +3,9 @@
   "version": "1.0.8",
   "private": true,
   "scripts": {
+    "cp:local:gradle": "cp -f local-gradle ./android/app/build.gradle && cp -f local-gradle.properties ./android/gradle.properties",
+    "cp:release:gradle": "cp -f local-gradle.release ./android/app/build.gradle && cp -f local-gradle.properties.release ./android/gradle.properties",
+    "android:build:local:release": "npm run cp:local:gradle && cd android && ./gradlew assembleRelease && npm run cp:release:gradle",
     "android:release": "react-native run-android --variant=release",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
