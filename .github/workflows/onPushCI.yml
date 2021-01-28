@@ -6,7 +6,7 @@ on:
       - '!master'
 
 jobs:
-  prepare-build:
+  pre-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,12 +19,6 @@ jobs:
       - name: Run unit and integration tests
         run: |
           npm run ci:test
-
-      - name: Set Github Actions Bot Email
-        run: git config --local user.email "action@github.com"
-
-      - name: Set Github Actions Bot Name
-        run: git config --local user.name "GitHub Action"
 
   code-push:
     needs: prepare-build
@@ -40,6 +34,12 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '>= 2.6'
+
+      - name: Set Github Actions Bot Email
+        run: git config --local user.email "action@github.com"
+
+      - name: Set Github Actions Bot Name
+        run: git config --local user.name "GitHub Action"
 
       - name: Codepush Bump
         uses: maierj/fastlane-action@v2.0.0
