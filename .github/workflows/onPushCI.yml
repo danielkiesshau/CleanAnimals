@@ -21,7 +21,7 @@ jobs:
           npm run ci:test
 
   code-push:
-    needs: prepare-build
+    needs: pre-build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -57,7 +57,7 @@ jobs:
           APPCENTER_ACCESS_TOKEN: ${{ secrets.CI_API_KEY }}
 
   build:
-    needs: [prepare-build, code-push]
+    needs: [pre-build, code-push]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
