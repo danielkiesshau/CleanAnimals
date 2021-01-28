@@ -2,7 +2,7 @@ name: On Push CI
 on:
   push:
     branches:
-      - '*'
+      - '*CI'
       - '!master'
 
 jobs:
