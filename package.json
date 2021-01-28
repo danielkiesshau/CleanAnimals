@@ -19,7 +19,7 @@
     "bump-patch": "npm version patch && bundle exec fastlane bump && npm run commit-version",
     "bump-minor": "npm version minor && bundle exec fastlane bump && npm run commit-version",
     "bump-major": "npm version major && bundle exec fastlane bump && npm run commit-version",
-    "codepush:staging": "appcenter codepush release-react -a danielkiesshau/CleanAnimals -c ./bundles/ -d Staging",
+    "codepush:staging": "appcenter codepush release-react -a danielkiesshau/CleanAnimals -c ./bundles/ -d Staging -t *",
     "android:build:release": "cd android && ./gradlew assembleRelease",
     "android:release": "react-native run-android --variant=release"
   },
