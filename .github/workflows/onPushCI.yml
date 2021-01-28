@@ -21,6 +21,13 @@ jobs:
         run: |
           npm run ci:test
 
+      - name: Set Github Actions Bot Email
+        run: git config --local user.email "action@github.com"
+
+      - name: Set Github Actions Bot Name
+        run: git config --local user.name "GitHub Action"
+
+
       - name: Bump version (STAGING-PATCH)
         run: npm run bump-patch
 
