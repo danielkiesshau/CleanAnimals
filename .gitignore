@@ -60,3 +60,5 @@ clean-animals.keystore
 /ios/Pods/
 
 local-gradle*
+
+android/java_pid*
