@@ -20,6 +20,18 @@ jobs:
         run: |
           npm run ci:test
 
+      - name: Bump PATCH
+        run: |
+          npm version patch
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Daniel Kiesshau
+          author_email: danielkiesshau@outlook.com
+          message: 'bumping version'
+          add: '.'
+
       - name: set up JDK 1.8
         uses: actions/setup-java@v1
         with:
