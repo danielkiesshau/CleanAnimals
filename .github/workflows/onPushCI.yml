@@ -29,7 +29,14 @@ jobs:
           git config --global user.name "Continuous Integration"
 
 
-      - name: Bump PATCH
+
+      - name: install fastlane
+        run: gem install fastlane -NV
+
+      - name: Bump PATCH Fastlane
+        run: fastlane bump && npm run commit-version
+
+      - name: Bump PATCH JSON
         run: |
           npm version patch
 
