@@ -20,10 +20,14 @@ jobs:
         run: |
           npm run ci:test
 
-      - name: set Git Info
+      - name: gitconfig Email
         run:
           git config --global user.email "ci@github.com"
+
+      - name: gitconfig Username
+        run:
           git config --global user.name "Continuous Integration"
+
 
       - name: Bump PATCH
         run: |
