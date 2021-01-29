@@ -21,7 +21,7 @@ jobs:
           npm run ci:test
 
   build:
-    needs: [pre-build, code-push]
+    needs: pre-build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
