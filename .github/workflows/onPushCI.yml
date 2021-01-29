@@ -20,6 +20,11 @@ jobs:
         run: |
           npm run ci:test
 
+      - name: set Git Info
+        run:
+          git config --global user.email "ci@github.com"
+          git config --global user.name "Continuous Integration"
+
       - name: Bump PATCH
         run: |
           npm version patch
@@ -27,8 +32,8 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
-          author_name: Daniel Kiesshau
-          author_email: danielkiesshau@outlook.com
+          author_name: Continuous Integration
+          author_email: ci@github.com
           message: 'bumping version'
           add: '.'
 
