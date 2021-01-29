@@ -27,8 +27,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Bump version NPM (PATCH)
-        run: npm version patch
+      - name: Check out code
+        uses: actions/checkout@master
+        with:
+          fetch-depth: '0'
+
+      - name: Bump version and push tag
+        uses: ChloePlanet/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GB_TOKEN }}
+          WITH_V: true
 
       - name: Set Ruby
         uses: actions/setup-ruby@v1
