@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Npm install
+        run: npm ci
+
       - name: Run unit and integration tests
         run: |
           npm run ci:test
