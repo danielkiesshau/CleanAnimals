@@ -35,19 +35,18 @@ jobs:
         with:
           ruby-version: '>= 2.6'
 
-      - name: Set Github Actions Bot Email
-        run: git config --local user.email "action@github.com"
-
-      - name: Set Github Actions Bot Name
-        run: git config --local user.name "GitHub Action"
-
       - name: Codepush Bump
         uses: maierj/fastlane-action@v2.0.0
         with:
           lane: 'bump'
 
-      - name: Commit
-        run: npm run commit-version
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Daniel Kiesshau
+          author_email: danielkiesshau@outlook.com
+          message: 'bumping ersion'
+          add: '.'
 
       - name: Deploy to Codepush (STAGING)
         uses: NishanthShankar/codepush-action@master
