@@ -32,10 +32,13 @@ jobs:
         run: |
           npm version patch
 
-      - name: Bump PATCH Fastlane
+      - name: Setup Ruby
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: '>= 2.6'
+
+
+      - name: Bump PATCH Fastlane
       - uses: maierj/fastlane-action@v2.0.0
         with:
           lane: 'bundle exec bump'
