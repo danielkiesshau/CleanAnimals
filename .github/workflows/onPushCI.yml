@@ -28,17 +28,17 @@ jobs:
         run:
           git config --global user.name "Continuous Integration"
 
-
-
-      - name: install fastlane
-        run: gem install fastlane -NV
-
-      - name: Bump PATCH Fastlane
-        run: fastlane bump && npm run commit-version
-
       - name: Bump PATCH JSON
         run: |
           npm version patch
+
+      - name: Bump PATCH Fastlane
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '>= 2.6'
+      - uses: maierj/fastlane-action@v2.0.0
+        with:
+          lane: 'bundle exec bump'
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
