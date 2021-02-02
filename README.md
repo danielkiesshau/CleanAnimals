@@ -4,17 +4,17 @@
 
 ## Pages
 ##### List
-- list pokemons with pagination
-- filter pokemons
+- list animals with pagination
+- filter animals
 
-##### Discover pokemon
-- discover a random pokemon
+##### Discover animal
+- discover a random animal
 - change app's theme (light/dark)
 
 ##### Detail
-- display details fo the pokemon
-- navigate between pokemons
-- preload more pokemons as user get close to the end of the "horizontal" pagination
+- display details fo the animal
+- navigate between animals
+- preload more animals as user get close to the end of the "horizontal" pagination
 
 ## Technical objectives
 - [x] Clean Code
