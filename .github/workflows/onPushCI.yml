@@ -36,7 +36,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '>= 2.6'
-
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
       - name: Bump PATCH Fastlane
         uses: maierj/fastlane-action@v2.0.0
