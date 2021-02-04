@@ -30,7 +30,6 @@ const detailComponents = {
   DOG: DogDetails,
 };
 const Details = detailComponents[API_CLASS];
-//
 function DetailsPage(props: Props) {
   let isMounted = useRef(true);
   let scrollPosition = useRef(0);
