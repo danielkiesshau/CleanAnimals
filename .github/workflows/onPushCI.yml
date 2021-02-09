@@ -99,7 +99,6 @@ jobs:
           packageName: com.cleananimals
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: beta
-          whatsNewDirectory: whatsNew/
 
 
 
