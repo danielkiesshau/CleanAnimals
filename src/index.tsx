@@ -17,7 +17,6 @@ import NotificationService from './infra/notifications/NotificationService';
 
 enableScreens();
 const Tab = createBottomTabNavigator();
-//
 export default codePush(() => {
   const { themePalette } = useContext(Theme);
   const { client: clientAPI } = useContext(ContextClientAPI);
