@@ -16,7 +16,7 @@ import { ContextClientAPI } from './domain/services/Factories/ClientAPI';
 import NotificationService from './infra/notifications/NotificationService';
 
 enableScreens();
-
+//
 const Tab = createBottomTabNavigator();
 
 export default codePush(() => {
